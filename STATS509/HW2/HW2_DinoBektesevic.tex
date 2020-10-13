@@ -62,12 +62,12 @@
 \section*{Problem 1}
 \begin{enumerate}
 	\item in this case k=1 so the winnings can only be 0 or 2/3, i.e. $X_1=\{0, 2/3\}$. The probability of each coin toss is 1/2. We can write the pmf function as:
-	$$P(x) = \begin{cases} 
+	$$f(x) = \begin{cases} 
 	        1/2 &\mbox{if } x \in X_1 \\
             0 & \mbox{if } x \notin X_1 
         \end{cases} 
     $$
-    essentially saying that the probability of seeing random variable $x$ be either win or lose is 50 percent. the cumulative distribution function, i.e. cdf, is given by $F_X(x) = P(X\leq x)$. In our case this boils down to three cases, corresponding to the two mass points - a win or no win:
+    essentially saying that the probability of seeing random variable $x$ be either win or lose is 50 percent. the cumulative distribution function, i.e. cdf, is given by $F_X(x) = P(X\leq x) = \sum_i p(x_i)$. In our case this boils down to three cases, corresponding to the two mass points - a win or no win:
 	$$F(x) = \begin{cases} 
 	        0 &\mbox{if } x < 0 \\
 	        1/2 &\mbox{if } 0 \leq x \leq 2/3 \\
@@ -76,7 +76,7 @@
     $$
 
     \item in case of k=2 there are 4 different winnings $X_2=\{0, 2/3, 2/9, 8/9\}$ corresponding to four outcome cases (where ordering matters) $x=\{tt, ht, th, hh\} = \{\mbox{0+0}, \mbox{2/3+0}, \mbox{0+2/9}, \mbox{2/3+2/9}\}$. The probability of each outcome is 1/4 because these are two independent events each with probability of 1/2. Written down:
-    $$P(x) = \begin{cases} 
+    $$f(x) = \begin{cases} 
 	        1/4 &\mbox{if } x \in X_2 \\
             0 & \mbox{if } x \notin X_2 
         \end{cases} 
@@ -91,10 +91,7 @@
         \end{cases} 
     $$
 	
-	\item First determine $P(B^C)$ as $P(B)+P(B^C)=1 \rightarrow P(B^C)=1-0.45=0.55$ and then, in a similar manner as previous problem, conclude it's not possible since  $P(A)+P(B)=P(A\cup B) > 1$
-	\item Same as above, determine $P(A^C)=0.4$ and note that $P(A^C\cup B)=0.95<1$ so they could be mutually exclusive.
-	\item No reason they could not be independent. 
-	\item No because they are not mutually exclusive as shown in first-subproblem.
+	\item 
 \end{enumerate}
 
 
