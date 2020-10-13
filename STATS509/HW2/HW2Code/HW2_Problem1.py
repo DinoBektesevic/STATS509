@@ -54,13 +54,14 @@ def plot1c():
     cumsum = []
     for x in xs:
         cumsum.append(np.sum(simEarnings <= x))
-    cumsum = np.array(cumsum) / n  
+    cumsum = np.array(cumsum)/n
     axes[1].plot(xs, cumsum, 'black', label="cdf")
 
     for ax in axes:
         ax.set_xlabel("$X_5$")
         ax.legend()
     axes[0].set_ylabel("Occurence Rate")
+    plt.ylabel("Proportion of observations $\leq x$")
     plt.show()
 
 
