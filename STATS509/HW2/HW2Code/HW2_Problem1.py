@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 np.random.seed(0)
 
 
-def problem1c(n = 1000000):
+def problem1c(n=1000000):
     """Performs n simulations of 5 coin tosses and returns the total winnings
     earned in each simulation. Win earnings scale as  2/3**k where k is the
     toss count, i.e. integer from 1 to 5, for each simulation.
