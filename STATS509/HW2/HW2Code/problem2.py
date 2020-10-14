@@ -15,15 +15,16 @@ def problem2(n=500, lambd=2):
         number of samples drawn from the distribution
     lambd : `float`
         The rate parameter ``lambda*exp(-lambda*x)`` from which scale will be
-        calculated from as ``/lambda``
+        calculated from as ``1/lambda``
 
     Returns
     -------
     x : `np.array`
         Points at which empirical CDF was evaluated at
     empiricalCDF : `np.array`
-        Empirical CDF evaluated for points in ``x``
-
+        Empirical CDF evaluated at points in ``x``
+    exactCDF : `np.array`
+        Exact CDF evaluated at points in ``x``
     """
     scale = 1/lambd
     rv = stats.expon(scale=scale)
