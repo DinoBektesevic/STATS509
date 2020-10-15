@@ -242,6 +242,94 @@ The code that produced the following plots is located at the end of the problem.
 
 \newpage
 \section*{Problem 6}
+\begin{enumerate}
+    \item From hint we know we have to focus on tossing the unfair coin twice. Then we have four possible outcomes $X=\{hh, ht, th, tt\}$. The probability of event $ht = p(1-p)$ could be different than 1/2 but the probabilities of $ht$ and $th$ will be equal. We can write then:
+    $$P(ht \cup th) = P(ht) + P(th) - P(ht \cap th) = p(1-p) + (1-p)p = 2p(1-p)$$
+    So while individual probabilities $P(ht)$ or $P(th)$ the probability to get an event from the smaller sample space $P(x|x \in X \cap hh \ cap tt) = P(X\in\{ht, th\})$ should be 1/2 (I might have mangled the notation a bit).
+    
+    \item 
+    
+    \item 
+\end{enumerate}
+
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 6.d}
+
+The routine in the 6.c prints out the relevant numbers.  In 1000 trials my procedure produced 492 failures and 508 successes.  Seems pretty fair.  The mean number of attempts was 3.10 (two unfair coin tosses are required per attempt), which is near my calculated expectation at 3.125.
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.a}
+
+Discrete uniform, N = 9
+\begin{align*}
+E(X) &= \frac{N+1}{2} = 5 \\
+V(X) &= \frac{N^2-1}{12} = 20/3
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.b}
+
+Binomial, n=2, p=0.4
+
+\begin{align*}
+E(X) &= np = 0.8 \\
+V(X) &= np(1-p) = 0.48
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.c}
+
+Binomial, n=4, p=0.6
+
+\begin{align*}
+E(X) &= np = 2.4 \\
+V(X) &= np(1-p) = 0.96
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.d}
+
+Poisson $\lambda=3/2$
+
+\begin{align*}
+E(X) &= \lambda = 3/2 \\
+V(X) &= \lambda = 3/2
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.e}
+
+Rectangular on $[0,2]$
+
+\begin{align*}
+E(X) &= (a+b)/2 = 1 \\
+V(X) &= (b-a)^2/12 = 1/3
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.f}
+
+Exponential $\lambda=2$
+
+\begin{align*}
+E(X) &= 1/\lambda = 1/2 \\
+V(X) &= 1/\lambda^2 = 1/4
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.g}
+
+Power on $[0,1]$, $\theta=2$
+
+\begin{align*}
+E(X) &= \theta/(1+\theta) = 2/3 \\
+V(X) &= \theta\left[ (1+\theta)^2(2+\theta)\right]^{-1} = 1/18
+\end{align*}
+
+\end{document}
+
+
 
 
 \newpage
