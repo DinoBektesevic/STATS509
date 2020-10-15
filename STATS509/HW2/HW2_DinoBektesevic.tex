@@ -243,22 +243,73 @@ The code that produced the following plots is located at the end of the problem.
 \newpage
 \section*{Problem 6}
 \begin{enumerate}
-    \item From hint we know we have to focus on tossing the unfair coin twice. Then we have four possible outcomes $X=\{hh, ht, th, tt\}$. The probability of event $ht = p(1-p)$ could be different than 1/2 but the probabilities of $ht$ and $th$ will be equal. We can write then:
-    $$P(ht \cup th) = P(ht) + P(th) - P(ht \cap th) = p(1-p) + (1-p)p = 2p(1-p)$$
-    So while individual probabilities $P(ht)$ or $P(th)$ the probability to get an event from the smaller sample space $P(x|x \in X \cap hh \cap tt) = P(X\in\{ht, th\})$ should be 1/2 (I might have mangled the notation a bit).
+    \item From hint we know we have to focus on tossing the unfair coin twice. Then we have four possible outcomes $X=\{hh, ht, th, tt\}$. In this sample space the probability of events $ht = p(1-p) = (1-p)p = th$ could be different from 0.5, i.e. for $p=0.2$ the probability of $ht=th=0.2\cdot 0.8=0.16 \neq 0.5$, but the probabilities of $ht$ and $th$ will be equal. However, while individual probabilities $P(ht)$ or $P(th)$ are not 0.5, the probability to get an event from the smaller sample space $P(x|x \in X \cap hh \cap tt) = P(X\in\{ht, th\})$ should be 0.5. I might have mangled the notation a bit, but the point is toss the coin until one gets $ht$ or $th$ outcome, ignoring others. The probability to either get the $ht$ or $th$ in that order are then 50\%. 
     
-    \item 
+    \item The probability that in a single toss we first toss a head and then a tail, or first a tail and then a head would be:
+    $$P(ht \cup th) = P(ht) + P(th) - P(ht \cap th) = p(1-p) + (1-p)p = 2p(1-p)$$
+    Geometric distribution lets us model the number of failures before the first success if all of the trials are mutually independent. The distribution is defined as:
+    $P(Y=k) = p(1-p)^k$
+    where $k$ is the number of failures before the first success, each with probability $p$. In this case, we do not consider each instance the coin is tossed, but each time we toss it twice. Then probability of each double-toss is given by expression above. So we carefully denote two different $p$'s in these equations by saying $p' = p$ and rewriting:
+    $P(Y=k) = p'(1-p')^k$
+    The expectation value of the geometric distribution is given as:
+    $$E=\frac{1}{p'}$$
+    so in our case we can expect to have to toss pairs of coins:
+    $$E = \frac{1}{2p(1-p)}$$
+    Since the question is potentially confusing, inquiring about the number of times requiring to toss the actual coin not pairs, we can double that expectation value - relying on the linearity of expectation value - to get the actual number of times we had to toss the actual coin and not pairs:
+    $$E = \frac{1}{p(1-p)}$$
     
     \item \lstinputlisting[language=Python]{HW2Code/problem6.py}
     
-    \item Average number of attempts to reach success for all simulations was 2.524
+    \item Average number of coin tosses, across 1000 simulations, until success was 6.13. When we climb up to 10 000 simulations I get 6.21 and I get really close to theoretically predicted value of $\frac{1}{0.2\cdot 0.8}=6.25$ with the average value across a million simulations of 6.2501. Now this is the total number of count tosses total, the total number of the $ht$ and $th$ event tosses are then half of that, due to linearity of expectation values we can just move a factor in or out. 
 \end{enumerate}
 
 
 \newpage
 \section*{Problem 7}
+For each of the following distribution calculate expectation value and variance. Expressions taken from Goldberger table 3.1.
 \begin{enumerate}
-    \item 
+    \item Discrete uniform with N=9
+    \begin{align*}
+        E(X) &= \frac{N+1}{2} = 5 \\
+        V(X) &= \frac{N^2-1}{12} = 6.666...
+    \end{align*}
+    
+    \item Binomial with n=2 and p=0.4
+    \begin{align*}
+    E(X) &= np = 0.8 \\
+    V(X) &= np(1-p) = 0.48
+    \end{align*}
+    
+    \item Binomial with n=4 and p=0.6
+    \begin{align*}
+    E(X) &= np = 2.4 \\
+    V(X) &= np(1-p) = 0.96
+    \end{align*}
+    
+    \item Poisson with $\lambda=2$
+    \begin{align*}
+    E(X) &= \lambda = 1.5 \\
+    V(X) &= \lambda = 1.5
+    \end{align*}
+    
+    \item Rectangular on $[0,2]$ (again, assuming uniform)
+    \begin{align*}
+    E(X) &= \frac{a+b}{2} = 1 \\
+    V(X) &= \frac{(b-a)^2}{12} = 0.333
+    \end{align*}
+
+    \item Exponential with $\lambda=2$
+    \begin{align*}
+    E(X) &= \frac{1}{\lambda} = 0.5 \\
+    V(X) &= \frac{1}{\lambda^2} = 0.25
+    \end{align*}
+    
+    \item Powerlaw with $\theta=2$ on $[0,1]$
+    \begin{align*}
+    E(X) &= \theta/(1+\theta) = 0.75 \\
+    V(X) &= \theta\left[ (1+\theta)^2(2+\theta)\right]^{-1} = 0.0555...
+    \end{align*}
 \end{enumerate}
+
 
 \end{document}
