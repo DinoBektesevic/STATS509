@@ -141,13 +141,304 @@
 
 \newpage
 \lstinputlisting[language=Python]{HW2Code/problem2.py}
-  
-    
 \end{enumerate}	
 	
 	
 \newpage
 \section*{Problem 4}
+For each of the following, use the CDF approach to obtain the PDF of Y:
+\begin{enumerate}
+    \item $Y=2X$ if $X$ is a distributed exponential distribution. The exponential distribution is defined as:
+    $$
+    F(x;\lambda) = \begin{cases}
+                    1-e^{-\lambda x} & x \ge 0, \\
+                    0 & x < 0.
+                    \end{cases}
+    $$
+    In a similar manner we can define $G(y)=P(Y\leq y)$ as the CDF of Y. Since CDF is just an integrated PDF we know we can recover the integrand, i.e. the PDF, by deriving $G$. First, since we are given the CDF of X, but not of Y we need to write out the explicit form of $G$:
+    \begin{align*}
+        G(y) &= P(Y\leq y) = P(2X \leq y) = P(X \leq y/2) = F(y/2) \\
+        & = \begin{cases}
+            1-e^{-\lambda y/2} & y \ge 0, \\
+            0 & y < 0.
+           \end{cases}
+    \end{align*}
+    Deriving case $y\ge 0$ we get:
+    \begin{align*}
+        g(y) &= \frac{\partial}{\partial y} G(y) = \frac{\partial}{\partial y} \left( 1-e^{-\frac{\lambda y}{2}} \right) \\
+             &=  -e^{-\frac{\lambda y}{2}}  \frac{\partial}{\partial y} \left( -\lambda \frac{y}{2} \right) \\
+             &= \frac{\lambda}{2} e^{-\frac{\lambda}{2}y}
+    \end{align*}
+    Finally we note that deriving the case $y,0$ retrieves just $0$. 
+    
+    \item $Y=-\ln{X}$ if $X$ is a Rectangular on $[0.1]$ I, again, assume Rectangular distribution is the Uniform distribution given by:
+	$$ f(x)=\begin{cases}
+            \frac{1}{b - a} & \mathrm{for}\ a \le x \le b, \\
+            0 & \mathrm{for}\ x<a\ \mathrm{or}\ x>b
+            \end{cases}
+    $$
+    whose CDF we determined in a previous problem as:
+     $$ \F(t) = \int_{-\infty}^{\infty} f(t) dt = 
+        \begin{cases}
+            0 & \mathrm{for}\ t < 0 \\
+            t & \mathrm{for}\ 0 \leq t \leq 1 \\
+            1 & \mathrm{for}\  t > 1
+        \end{cases}
+    $$
+    Again, write the CDF of $Y$ in terms of $F$ as:
+    $$G(y) &= P(Y\leq y) = P(-\ln{X} \leq y) = P(\ln{X} \geq -y) = P(X \geq e^-y)$$
+    Here we have to notice the complementarity $P(X\geq a) + P(X< a) = 1$ from which it follows that  $G(y) = 1 - P(X \leq e^{-y}) = 1 - F(e^{-y})$. Finally, we can write 
+	$$ G(y)=\begin{cases}
+            0& \mathrm{for}\ y \leq 0, \\
+            1 - e^{-y} & \mathrm{for}\ y > 0
+            \end{cases}
+    $$
+    Noting that differentiating first case will just produce $0$, we focus on the case $y>0$:
+    \begin{align*}
+        g(y) &= \frac{\partial}{\partial y} G(y) = \frac{\partial}{\partial y} \left( 1-e^{-y} \right) \\
+             &=  e^{-y}
+    \end{align*}
+    
+    \newpage
+    \item $Y=X^2$ if X follows normal distribution. Again the trick is to find a clever way to write the CDF $G(y)$. The CDF of normal distribution can not be expressed using elementary functions and is instead given as an integral:
+    $$F(x) = \frac 1 {\sqrt{2\pi}} \int_{-\infty}^x e^{-t^2/2} \, dt$$
+    We can write $G$ as:
+    \begin{align*}
+        G(y) &= P(Y\leq y) = P(X^2 \leq y) = \\
+             &= P(-\sqrt{y} \leq X \leq \sqrt{y}) \\
+             &= P(X \leq \sqrt{y}) - P( X\leq -\sqrt{y}) = F(\sqrt{y}) - F(-\sqrt{y})
+    \end{align*}
+    Simply because it's just the way it is: 
+    \begin{center}
+        \includegraphics[width=3.5in]{HW2Figures/Picasso.png}
+    \end{center}
+    In addition to the ways things just are what they are it's also important to remember that the derivative $\partial_x F(x) = f(x)$ just the normal distribution. Finally differentiating the CDF we have:
+    \begin{align*}
+        g(y) &= \frac{\partial}{\partial y} \left[F(\sqrt y) - F(- \sqrt y) \right] \\
+             &=  \frac{\partial \sqrt y }{\partial y} \frac{\partial F(\sqrt y) }{\partial y} - \frac{\partial - \sqrt y}{\partial y} \frac{\partial F(- \sqrt y) }{\partial y} \\
+             & = \frac{y^{-1/2}}{2} f(\sqrt y) -  \frac{y^{-1/2}}{2} f(-\sqrt y) \\
+    \end{align*}
+    Where we just applied the chain rule $\partial_x f(g(x)) = g'(x) f'(g(x))$. Since the normal distribution is symmetric around zero we can say that $f(\sqrt y) = f(-\sqrt y)$, pull the common factors out and simplify:
+    $$g(y) = y^{-\frac{1}{2}} f(\sqrt y)$$
+\end{enumerate}
+
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 5.a}
+\begin{center}
+\includegraphics[width=3.5in]{prob5a.png}
+\end{center}
+\begin{center}
+\includegraphics[width=3.5in]{prob5b.png}
+\end{center}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 5.b}
+\begin{center}
+\includegraphics[width=3.5in]{prob5c.png}
+\end{center}
+\begin{center}
+\includegraphics[width=3.5in]{prob5d.png}
+\end{center}
+\vspace{\baselineskip}
+\noindent \textbf{\large 5 - code}
+The code that generated the figures for problems 5 a and b:
+
+\begin{minted}[fontsize=\footnotesize, linenos]{python}
+import numpy
+from scipy.stats import poisson, binom
+import matplotlib.pyplot as plt
+
+# Poisson
+samples = numpy.array([10**x for x in range(1,8)]) # exponentially growing samples
+lambd = 2
+Es = []
+Vs = []
+rv = poisson(lambd)
+for sample in samples:
+    draws = rv.rvs(sample)
+    Es.append(numpy.mean(draws))
+    Vs.append(numpy.var(draws))
+
+plt.figure()
+plt.semilogx(samples, Es, 'o-k', label="computed E(X)")
+plt.semilogx([min(samples), max(samples)], [lambd, lambd], "--r", label=r"theoretical E(X)")
+plt.xlabel("n samples")
+plt.ylabel("E(X)")
+plt.legend()
+plt.title(r"Poisson $\lambda=2$")
+plt.savefig("prob5a.png")
+
+plt.figure()
+plt.semilogx(samples, Vs, 'o-k', label="computed V(X)")
+plt.semilogx([min(samples), max(samples)], [lambd, lambd], "--r", label=r"theoretical V(X)")
+plt.xlabel("n samples")
+plt.ylabel("V(X)")
+plt.legend()
+plt.title(r"Poisson $\lambda=2$")
+plt.savefig("prob5b.png")
+
+# Binomial
+n = 400
+p = 0.3
+rv = binom(n,p)
+Es = []
+Vs = []
+for sample in samples:
+    draws = rv.rvs(sample)
+    Es.append(numpy.mean(draws))
+    Vs.append(numpy.var(draws))
+
+E_expect = 120
+V_expect = 84
+plt.figure()
+plt.semilogx(samples, Es, 'o-k', label="computed E(X)")
+plt.semilogx([min(samples), max(samples)], [E_expect, E_expect], "--r", label=r"theoretical E(X)")
+plt.xlabel("n samples")
+plt.ylabel("E(X)")
+plt.legend()
+plt.title(r"Binom n=400 p=0.3")
+plt.savefig("prob5c.png")
+
+plt.figure()
+plt.semilogx(samples, Vs, 'o-k', label="computed V(X)")
+plt.semilogx([min(samples), max(samples)], [V_expect, V_expect], "--r", label=r"theoretical V(X)")
+plt.xlabel("n samples")
+plt.ylabel("V(X)")
+plt.legend()
+plt.title(r"Binom n=400 p=0.3")
+plt.savefig("prob5d.png")
+\end{minted}
+
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 6.a}
+
+Consider flipping an unfair coin twice.  The possible outcomes are:
+
+$$
+TT \quad HT \quad TH \quad HH
+$$
+
+The probability of flipping a heads first, tails second will be equal to the probability of flipping a tails first, heads second.  So the two events of equal probability we will look for are $HT$ vs $TH$.  We ignore $HH$ and $TT$ because the coin is unfair and the probability of flipping two heads is not equal to the probability of flipping two tails.
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 6.b}
+
+The geometric distribution seems suitible to answer this question, how many attempts are required until the desired event happens?  Here we consider a pair of coin flips as one attempt.  The probability of the event happening is $P(HT \cup TH)$:
+
+$$
+P = 2p(1-p),
+$$
+
+where $p$ is the probability of flipping heads (or tails) with a single unfair coin toss.  So plugging in the expected value (thank you wikipedia) from the geometric distribution, we expect to use $\sim 1/P$ attempts.
+
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 6.c}
+
+\begin{minted}[fontsize=\footnotesize, linenos]{python}
+import numpy
+
+p = 0.2
+nTrials = 1000
+nFailures = 0
+nSuccesses = 0
+attemptList = []
+for trial in range(nTrials):
+    nAttempts = 1
+    while True:
+        # i didn't use binomial to sample, simply weights
+        flip1 = numpy.random.choice([0,1], p=[0.2, 0.8])
+        flip2 = numpy.random.choice([0,1], p=[0.2, 0.8])
+        if flip1 != flip2:
+            # the event we've been waiting for!
+            if flip1 == 0:
+                nFailures += 1
+            else:
+                nSuccesses += 1
+            break
+        nAttempts += 1
+    attemptList.append(nAttempts)
+
+P = 2*(1-p)*p
+print("expected number of attempts", (1-P)/P)
+print("fails: %i  successes: %i  mean number of attempts: %.2f"%(nFailures, nSuccesses, numpy.mean(attemptList)))
+\end{minted}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 6.d}
+
+The routine in the 6.c prints out the relevant numbers.  In 1000 trials my procedure produced 492 failures and 508 successes.  Seems pretty fair.  The mean number of attempts was 3.10 (two unfair coin tosses are required per attempt), which is near my calculated expectation at 3.125.
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.a}
+
+Discrete uniform, N = 9
+\begin{align*}
+E(X) &= \frac{N+1}{2} = 5 \\
+V(X) &= \frac{N^2-1}{12} = 20/3
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.b}
+
+Binomial, n=2, p=0.4
+
+\begin{align*}
+E(X) &= np = 0.8 \\
+V(X) &= np(1-p) = 0.48
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.c}
+
+Binomial, n=4, p=0.6
+
+\begin{align*}
+E(X) &= np = 2.4 \\
+V(X) &= np(1-p) = 0.96
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.d}
+
+Poisson $\lambda=3/2$
+
+\begin{align*}
+E(X) &= \lambda = 3/2 \\
+V(X) &= \lambda = 3/2
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.e}
+
+Rectangular on $[0,2]$
+
+\begin{align*}
+E(X) &= (a+b)/2 = 1 \\
+V(X) &= (b-a)^2/12 = 1/3
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.f}
+
+Exponential $\lambda=2$
+
+\begin{align*}
+E(X) &= 1/\lambda = 1/2 \\
+V(X) &= 1/\lambda^2 = 1/4
+\end{align*}
+
+\vspace{\baselineskip}
+\noindent \textbf{\large 7.g}
+
+Power on $[0,1]$, $\theta=2$
+
+\begin{align*}
+E(X) &= \theta/(1+\theta) = 2/3 \\
+V(X) &= \theta\left[ (1+\theta)^2(2+\theta)\right]^{-1} = 1/18
+\end{align*}
 
 
 \newpage
