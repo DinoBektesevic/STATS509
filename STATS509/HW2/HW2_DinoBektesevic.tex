@@ -210,23 +210,34 @@ For each of the following, use the CDF approach to obtain the PDF of Y:
     \end{align*}
     Simply because it's just the way it is: 
     \begin{center}
-        \includegraphics[width=3.5in]{HW2Figures/Picasso.png}
+        \includegraphics[width=1.5in]{HW2Figures/Picasso.png}
     \end{center}
-    In addition to the ways things just are what they are it's also important to remember that the derivative $\partial_x F(x) = f(x)$ just the normal distribution. Finally differentiating the CDF we have:
+    In addition to the ways things just are what they are it's also important to remember that the derivative of a CDF is just the PDF: $\partial_x F(x) = f(x)$, i.e. the normal distribution. Finally differentiating the CDF we have:
     \begin{align*}
         g(y) &= \frac{\partial}{\partial y} \left[F(\sqrt y) - F(- \sqrt y) \right] \\
              &=  \frac{\partial \sqrt y }{\partial y} \frac{\partial F(\sqrt y) }{\partial y} - \frac{\partial - \sqrt y}{\partial y} \frac{\partial F(- \sqrt y) }{\partial y} \\
              & = \frac{y^{-1/2}}{2} f(\sqrt y) -  \frac{y^{-1/2}}{2} f(-\sqrt y) \\
     \end{align*}
     Where we just applied the chain rule $\partial_x f(g(x)) = g'(x) f'(g(x))$. Since the normal distribution is symmetric around zero we can say that $f(\sqrt y) = f(-\sqrt y)$, pull the common factors out and simplify:
-    $$g(y) = y^{-\frac{1}{2}} f(\sqrt y)$$
+    $$g(y) = y^{-\frac{1}{2}} f(\sqrt y) = \frac{1}{\sqrt{2\pi y}}e^{-\frac{y}{2}} $$
 \end{enumerate}
-
-
-
 
 \newpage
 \section*{Problem 5}
+The code that produced the following plots is located at the end of the problem.
+\begin{enumerate}
+    \item 
+    \begin{center}
+    \includegraphics[width=3in]{STATS509/HW2/HW2Figures/problem5a.png}
+    \end{center}
+     \item 
+    \begin{center}
+    \includegraphics[width=3in]{STATS509/HW2/HW2Figures/problem5b.png}
+    \end{center}
+\end{enumerate}
+\newpage
+\lstinputlisting[language=Python]{HW2Code/problem5.py}
+
 
 
 \newpage
