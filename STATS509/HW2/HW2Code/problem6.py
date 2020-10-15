@@ -20,8 +20,6 @@ def simulate(nSimulations, p):
     nAttempts : `array`
         Number of coin tosses that were required until HT or TH were tossed.
     """
-    nSims = 0
-
     nAttempts = []
     for sim in range(nSimulations):
         nTries = 0
@@ -36,7 +34,7 @@ def simulate(nSimulations, p):
 
 
 if __name__ == "__main__":
-    nSimulations = 100000
+    nSimulations = 1000
     p = 0.2
     nAttempts = simulate(nSimulations, p)
     print(f"Average number of coin tosses, across all simulations, until success was {np.mean(nAttempts)}")
