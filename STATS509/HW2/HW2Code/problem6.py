@@ -23,4 +23,4 @@ if __name__ == "__main__":
     nSimulations = 1000
     p = 0.2
     nAttempts = simulate(nSimulations, p)
-    print(f"Average number of attempts to reach success for all simulations was {2*np.mean(nAttempts)}")
+    print(f"Average number of attempts to reach success for all simulations was {np.mean(nAttempts)}")
