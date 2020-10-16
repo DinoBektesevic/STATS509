@@ -60,8 +60,9 @@
 \maketitle
 
 \section*{Problem 1}
+Find PMF and CDF for $X_1$ and $X_2$
 \begin{enumerate}
-	\item in this case k=1 so the winnings can only be 0 or 2/3, i.e. $X_1=\{0, 2/3\}$. The probability of each coin toss is 1/2. We can write the pmf function as:
+	\item in the case k=1 so the winnings can only be 0 or 2/3, i.e. $X_1=\{0, 2/3\}$. The probability of each coin toss is 1/2. We can write the pmf function as:
 	$$f(x) = \begin{cases} 
 	        1/2 &\mbox{if } x \in X_1 \\
             0 & \mbox{if } x \notin X_1 
@@ -75,7 +76,7 @@
         \end{cases} 
     $$
 
-    \item in case of k=2 there are 4 different winnings $X_2=\{0, 2/3, 2/9, 8/9\}$ corresponding to four outcome cases (where ordering matters) $x=\{tt, ht, th, hh\} = \{\mbox{0+0}, \mbox{2/3+0}, \mbox{0+2/9}, \mbox{2/3+2/9}\}$. The probability of each outcome is 1/4 because these are two independent events each with probability of 1/2. Written down:
+    \item in the of k=2 there are 4 different winnings $X_2=\{0, 2/3, 2/9, 8/9\}$ corresponding to four outcome cases (where ordering matters) $x=\{tt, ht, th, hh\} = \{\mbox{0+0}, \mbox{2/3+0}, \mbox{0+2/9}, \mbox{2/3+2/9}\}$. The probability of each outcome is 1/4 because these are two independent events each with probability of 1/2. Written down:
     $$f(x) = \begin{cases} 
 	        1/4 &\mbox{if } x \in X_2 \\
             0 & \mbox{if } x \notin X_2 
@@ -92,7 +93,7 @@
     $$
 	
 	\newpage
-	\item I run a million simulations counting up all the winnings from each toss in each simulation in Python.
+	\item by simulating winnings. I run a million simulations counting up all the winnings from each toss in each simulation in Python.
 	\begin{center}
     \includegraphics[width=2.5in]{STATS509/HW2/HW2Figures/problem1c.png}
     \end{center}
@@ -102,6 +103,7 @@
 
 \newpage
 \section*{Problem 2}
+Simulate and plot empirical CDF of exponential random variable.
 \begin{center}
     \includegraphics[width=3in]{STATS509/HW2/HW2Figures/problem2.png}
 \end{center}
@@ -224,7 +226,7 @@ For each of the following, use the CDF approach to obtain the PDF of Y:
 
 \newpage
 \section*{Problem 5}
-The code that produced the following plots is located at the end of the problem.
+Simulate data from a given distribution and verify Goldberg table 3.1. The code that produced the following plots is located at the end of the problem.
 \begin{enumerate}
     \item 
     \begin{center}
