@@ -169,11 +169,17 @@ Which is exactly the definition of the expectation value we started from, except
 	
 \newpage
 \section*{Problem 4}
+This question aims to make concrete the moment generating function via simulation in {\tt R}: ({\it Note: this is a computational exercise; almost no theoretical work is required.})
 \begin{enumerate}
-    \item This question aims to make concrete the moment generating function via simulation in {\tt R}: ({\it Note: this is a computational exercise; almost no theoretical work is required.})
     \item Simulate $1000$ values from $X \sim {\cal N}(5,1)$ distribution, that is, the Normal Distribution with mean $5$, variance $1$.
+    \lstinputlisting[linerange={0-269,452-454}]{HW3Code/problem4.py}
+    
     \item Let $V = e^{0.01 X}$. Using your simulations from (a), obtain $1000$ simulations from $V$. Using your simulations find approximately $E(V) = E(e^{0.01 X})$. {\it Hint: Both of these steps are very easy in {\tt R}.}
+    \lstinputlisting[linerange={0-269,452-454}]{HW3Code/problem4.py}
+    
     \item Let $W = e^{-0.01 X}$. Using your simulations from (a), obtain $1000$ simulations from $W$. Using your simulations find approximately $E(W) = E(e^{-0.01 X})$.
+    \lstinputlisting[linerange={0-269,452-454}]{HW3Code/problem4.py}
+    
     \item Using your answers to (b) and (c), find $ \left. \frac{\partial}{\partial t} E(e^{tX}) \right|_{t=0}$ approximately. Is this what you expect? Explain.\par
         {\it Hint: 
         $$ \left. \frac{\partial}{\partial t} E(e^{tX}) \right|_{t=0}\;\; \approx\;\; \frac{ E(e^{\delta X}) - E(e^{-\delta X})}{2\delta},$$
