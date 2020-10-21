@@ -172,19 +172,38 @@ Which is exactly the definition of the expectation value we started from, except
 This question aims to make concrete the moment generating function via simulation in {\tt R}: ({\it Note: this is a computational exercise; almost no theoretical work is required.})
 \begin{enumerate}
     \item Simulate $1000$ values from $X \sim {\cal N}(5,1)$ distribution, that is, the Normal Distribution with mean $5$, variance $1$.
-    \lstinputlisting[linerange={0-269,452-454}]{HW3Code/problem4.py}
+    
+    \lstinputlisting[linerange={0-3,5-5}]{HW3Code/problem4.py}
+    
     
     \item Let $V = e^{0.01 X}$. Using your simulations from (a), obtain $1000$ simulations from $V$. Using your simulations find approximately $E(V) = E(e^{0.01 X})$. {\it Hint: Both of these steps are very easy in {\tt R}.}
-    \lstinputlisting[linerange={0-269,452-454}]{HW3Code/problem4.py}
+    
+    \lstinputlisting[linerange={9-10}]{HW3Code/problem4.py}
+    \lstinline[language=Python]{>>> Empirical expectation value is 1.0513345653017423}
     
     \item Let $W = e^{-0.01 X}$. Using your simulations from (a), obtain $1000$ simulations from $W$. Using your simulations find approximately $E(W) = E(e^{-0.01 X})$.
-    \lstinputlisting[linerange={0-269,452-454}]{HW3Code/problem4.py}
+    
+    \lstinputlisting[linerange={14-15}]{HW3Code/problem4.py}
+     \lstinline[language=Python]{>>> Empirical expectation value is 0.9514016522849649}
     
     \item Using your answers to (b) and (c), find $ \left. \frac{\partial}{\partial t} E(e^{tX}) \right|_{t=0}$ approximately. Is this what you expect? Explain.\par
-        {\it Hint: 
-        $$ \left. \frac{\partial}{\partial t} E(e^{tX}) \right|_{t=0}\;\; \approx\;\; \frac{ E(e^{\delta X}) - E(e^{-\delta X})}{2\delta},$$
-        for small $\delta$.}
+    {\it Hint:  $$ \left. \frac{\partial}{\partial t} E(e^{tX}) \right|_{t=0}\;\; \approx\;\; \frac{ E(e^{\delta X}) - E(e^{-\delta X})}{2\delta},$$ for small $\delta$.}
+        
+        \lstinputlisting[linerange={19-20}]{HW3Code/problem4.py}
+         \lstinline[language=Python]{>>> Empirical expectation value is 5.003428743342296}
+         
+         I expected this. A thousand samples is large enough to be close to the truth, given no errors were made in code. Mathematically, we expand into series the term:
+         $$E(e^{\delta X}) = 1 + \delta E(X) + ... $$
+         keeping just the first two terms we can substitute them into the expression for derivative approximation:
+         \begin{align*}
+          \left. \frac{\partial}{\partial t} E(e^{tX}) \right|_{t=0}\;\; &\approx\;\; \frac{ E(e^{\delta X}) - E(e^{-\delta X})}{2\delta} \\
+            &= \frac{1 + \delta E(X)  - (1 - \delta E(X))}{2\delta} \\
+            &= \frac{2\delta E[X]}{2\delta} = E[X] = 5
+        \end{align*}
+         when $\delta<<1$.
+         
 \end{enumerate}
+
 
 \newpage
 \section*{Problem 5}
@@ -192,18 +211,63 @@ A random variable $X$ with support on $\mathbb{R}$ has pdf
 $$ f_X(x) = e^{-c|x|}$$
 where $c >0$ is a fixed constant.
 \begin{enumerate}
+
     \item Find $c$.
+    
+    From normalization condition, applying symmetry, we have:
+    \begin{align*}
+      1 &= \int_{-\infty}^\infty e^{-c|x|}dx \\
+      &= 2\int_{0}^\infty e^{-cx}dx  \\
+      &= \frac{2}{c} (-e^{-cx})\big|_0^\infty = \frac{2}{c} (-0+1) \\
+      &= \frac{2}{c} \\
+      c &= 2
+    \end{align*}    
+
     \item Find the mgf $M_X(t) = E[e^{tX}]$ for $X$. {\it Hint: It may be helpful to split the integral into two pieces.}
-    \item  State the range of values of $t$ for which $M_X(t)$ is defined. In other words, the range of values of $t$ for which $E[e^{tX}] < \infty$.\par
+    
+    \begin{align*}
+      M_X(t) &= E[e^{tX}] = \int e^{tx} e^{-c|x|} dx  \\
+      &= \int_{-\infty}^0 e^{tx} e^{cx} dx + \int_{0}^\infty e^{tx} e^{-cx} dx  \\
+      &= \int_{-\infty}^0 e^{(t+2)x} dx + \int_{0}^\infty e^{(t-2)x} dx  \\
+      &= \frac{e^{(t+2)x}}{t+2}\bigg|_{-\infty}^0 + \frac{e^{(t-2)x}}{t-2}\bigg|_0^{\infty}  \\
+      &= \frac{1}{t+2} \left[ 1 - \lim_{x\rightarrow -\infty} e^{(t+2)x} \right]  +  \frac{1}{t-2} \left[ \lim_{x\rightarrow \infty} e^{(t-2)x} - 1 \right]  \\
+    \end{align*}    
+    
+    \item  State the range of values of $t$ for which $M_X(t)$ is defined. In other words, the range of values of $t$ for which $E[e^{tX}] < \infty$.
+    
+    Moment generating function will be undefined when $t+2<0$ because term $\lim_{x\rightarrow -\infty} e^{(t+2)x} \rightarrow \infty$ diverges, i.e. $e^\infty$. The expression will also be undefined for $t-2>0$ again because $\lim_{x\rightarrow \infty} e^{(t-2)x} \rightarrow \infty$ term diverges, i.e. $e^\infty$ again. Moreover for $t\in \{-2, 2\}$. the MGF is yet again undefined due to factors $(t\pm 2)^{-1}$. So only for $-2<t<2$ do we have an usable expression: 
+    $$M_X(t) = \frac{1}{t+2}  -  \frac{1}{t-2} = \frac{-4}{t^2-4} $$
+    
+    \newpage
     \item Using your answer to (b), or otherwise, find $E[X]$, $E[X^2]$ and $V(X)$.
+    \begin{align*}
+        M'(t)  &= \frac{-1}{(t+2)^2} + \frac{1}{(2-t)^2} \\
+        M''(t) &= \frac{2}{(t+2)^3} + \frac{2}{(2-t)^3} \\
+    \end{align*}
+    And we know that the following relationships hold:
+    \begin{align*}
+        E[X] &= M'(0) = 0\\
+        E[X^2] &= M''(0) = \frac{1}{2}\\
+        V[X] &= E[X^2] - E[X]^2 = \frac{1}{2} \\
+    \end{align*}
 \end{enumerate}
+
+
 
 \newpage
 \section*{Problem 6}
 Suppose that $X$ and $Y$ are random variables, and $Y = a + bX$.  
 Find an expression for the mgf for $Y$, $M_Y(t)$ in terms of the mgf for $X$, $M_X(t)$.
 
-
+    \begin{align*}
+        M_Y(t) &= E\left[e^{tY}\right] = E\left[e^{t(a+bX)}\right]\\
+        &= E\left[e^{ta+tbX}\right] = E\left[e^{ta}e^{tbX}\right] \\
+        &= e^{ta} E\left[e^{tbX}\right] \\
+        &= e^{ta} M_X(tb) \\
+    \end{align*}
+    
+    
+    
 
 \newpage
 \section*{Problem 7}
@@ -211,15 +275,73 @@ Let $X$ be a random variable with mgf $M_X(t)$. For $t >0$ define the random var
 (Here we are defining a set of random variables, one for each value of $t$.)
 \begin{enumerate}
     \item Find a relation between $P(X \geq a)$ and $P(Z_t \geq e^{ta})$. 
+    
+    \begin{align*}
+        P(Z_t \geq e^{ta}) &= P(e^{tX} \geq e^{ta}) \\
+        &= P(tX \geq ta) \\
+        &= P(X \geq a)
+    \end{align*}
+    Because $\ln$ is a nice function and $t>0$. 
+    
     \item By using the result from (a) and applying Markov's inequality find an upper bound on {\color{blue} $P(X \geq a)$} in terms of $M_X(t)$. 
+    
+    \begin{align*}
+        P(X \geq a) &\leq \frac{E[X]}{a} \\
+        P(e^{tX} \geq e^{ta}) &\leq \frac{E[e^{tX}]}{e^{ta}} \\
+        P(Z_t \geq e^{ta}) &\leq \frac{M_X(t)}{e^{ta}} \\
+        P(X \geq a) &\leq \frac{M_X(t)}{e^{ta}} \\
+    \end{align*}
+    Where we used a) in the last line of the problem. 
+    
     \item Now suppose that $X$ is a Poisson distribution with parameter  $\lambda$. Use Markov's inequality, as given in the Lecture 4, Slide 4 to obtain an upper bound on $P(X \geq k\lambda)$ where $k> 0$.
+    
+    \begin{align*}
+        P(X \geq k\lambda) &\leq \frac{E[X]}{k\lambda} \\
+        &\leq \frac{\lambda}{k\lambda} = \frac{1}{k}
+    \end{align*}
+    
 \end{enumerate}
+
 Since $X$ is a Poisson random variable $M_X(t) = \exp\left[\lambda(e^t - 1)\right]$. 
+
 \begin{itemize}
-    \item[(d)] Use the result in (b) to find an upper bound on $P(X \geq k\lambda)$, for $k\geq 1$, in terms of $t$, $k$ and $\lambda$.
-    \item[(e)] By differentiating your answer to {\color{blue}(d)} with respect to $t$, find the value of $t$ that gives the tightest upper bound on $P(X \geq k\lambda)$, and state this upper bound.
-    \item[(f)] Let $\lambda=2$ and $k=3$, compute the upper bound from (c), the upper bound from (e) and by using {\tt ppois} in {\tt R}, find the exact probability $P(X \geq k\lambda)$.\par
+    \item[d.] Use the result in (b) to find an upper bound on $P(X \geq k\lambda)$, for $k\geq 1$, in terms of $t$, $k$ and $\lambda$.
+    \begin{align*}
+        P(X \geq k\lambda ) &\leq \frac{M_X(t)}{e^{tk\lambda}} \\
+        &\leq e^{-tk\lambda} e^{\lambda(e^t-1)} \\
+        &\leq e^{\lambda e^t-(1+tk)\lambda} = e^{\lambda e^t}e^{-\lambda kt}e^{-1}
+    \end{align*}
+    
+    \newpage
+    \item[e.] By differentiating your answer to {\color{blue}(d)} with respect to $t$, find the value of $t$ that gives the tightest upper bound on $P(X \geq k\lambda)$, and state this upper bound.
+    
+    \begin{align*}
+        \frac{\partial}{\partial t} e^{\lambda e^t}e^{-\lambda kt}e^{-1} &= 0 \\
+        e^{\lambda e^t - \lambda k t - 1}(\lambda e^t - \lambda k) &= 0 \\
+        \frac{e^{\lambda e^t}e^{-\lambda kt}}{e} \lambda (e^t - k) &= 0 \\
+        e^{\lambda e^t}e^{-\lambda kt} (e^t - k) &= 0 \\
+        \rightarrow (e^t - k)  \rightarrow t &= \ln k
+    \end{align*}
+    Technically we should be looking at the second derivative to confirm this is a maximum or minimum but I think it's safe to assume the extrema is an upper bound on $P(X \geq k\lambda)$:
+    \begin{align*}
+        P(X \geq k\lambda) &\leq e^{\lambda e^{\ln k}}e^{-\lambda k\ln k}e^{-1} \\
+        &\leq \frac{e^{\lambda k}e^{-\lambda k\ln k}}{e} = \frac{e^{\lambda k(1-\ln k)}}{e}
+    \end{align*}
+    
+    \item[f.] Let $\lambda=2$ and $k=3$, compute the upper bound from (c), the upper bound from (e) and by using {\tt ppois} in {\tt R}, find the exact probability $P(X \geq k\lambda)$.\par
     {\it Hint: when computing the exact probability be careful to include the probability that $P(X=6)$.}
+    
+    
+\end{itemize}
+
+
+
+\item[8.] 
+Let $X$ be a standard normal random variable.
+\begin{itemize}
+\item[(a)] Find the mgf for $X$;\\
+{\it As always, remember to specify the values of $t$ for which it is defined.}
+\item[(b)] Use (a) to find $E(X)$, $E(X^2)$, $V(X)$ and $E(X^3)$.
 \end{itemize}
 
 
