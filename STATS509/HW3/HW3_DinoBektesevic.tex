@@ -157,7 +157,12 @@ So that
     &=\int_0^\infty 1- \left(1 - \int_x^\infty f(t) dt\right) dx \\
     &= \int_0^\infty\int_x^\infty f(t) dtdx 
 \end{align*}
-If we want to follow the hint and perform the integration over x first, with the current problem setup it is obvious that we would not be logically consistent if we did not address the integration limits. Because of how we set up the variables in the CDF definition we can see that $t\geq x$ and from the problem set up we know that $x\geq 0$ we can say that $0\leq x \leq t$. In effect, instead of going from 0 to infinity, adding up all of f(t)'s for each x to infinity as we go along, we are going from 0 to infinity in t, but adding up all individual x's from 0 to t. 
+
+If we want to follow the hint and perform the integration over x first, with the current problem setup it is obvious that we would not be logically consistent if we did not address the integration limits. Because of how we set up the variables in the CDF definition we can see that $t\geq x$ and from the problem set up we know that $x\geq 0$ we can say that $0\leq x \leq t$.
+\begin{center}
+\includegraphics[width=200px]{STATS509/HW3/picasso2.png}
+\end{center}
+In effect, instead of going from 0 to infinity, adding up all of f(t)'s for each x to infinity as we go along, we are going from 0 to infinity in t, but adding up all individual x's from 0 to t. 
 \begin{align*}
     E[X] &=  \int_0^\infty\int_x^\infty f(t) dtdx  =  \int_0^\infty\int_0^t f(t) dxdt  \\
     &= \int_0^\infty \left[xf(t)\right]\big|_0^t dt \\
@@ -331,18 +336,71 @@ Since $X$ is a Poisson random variable $M_X(t) = \exp\left[\lambda(e^t - 1)\righ
     \item[f.] Let $\lambda=2$ and $k=3$, compute the upper bound from (c), the upper bound from (e) and by using {\tt ppois} in {\tt R}, find the exact probability $P(X \geq k\lambda)$.\par
     {\it Hint: when computing the exact probability be careful to include the probability that $P(X=6)$.}
     
-    
+    \lstinputlisting{HW3Code/problem7f.py}
+    \lstinline[language=Python]{>>> Upper bound as estimated in problem c: 0.3333333333333333} \newline
+    \lstinline[language=Python]{>>> Upper bound as estimated in problem E: 0.20358458038762214} \newline
+    \lstinline[language=Python]{>>> Upper limit as evaluated via CDF: 0.1847367554762278}\newline
+
 \end{itemize}
 
 
 
-\item[8.] 
+\newpage
+\section*{Problem 8}
 Let $X$ be a standard normal random variable.
-\begin{itemize}
-\item[(a)] Find the mgf for $X$;\\
-{\it As always, remember to specify the values of $t$ for which it is defined.}
-\item[(b)] Use (a) to find $E(X)$, $E(X^2)$, $V(X)$ and $E(X^3)$.
-\end{itemize}
+\begin{enumerate}
+    \item Find the mgf for $X$;\\
+    {\it As always, remember to specify the values of $t$ for which it is defined.}
+    
+    The standard definition of the PDF of a normal distribution is:
+    $$ N(0,1) = f(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}} $$
+    So by the definition of an MGF:
+    \begin{align*}
+        M(t) &= \int_{-\infty}^\infty e^{tx} \frac{1}{2\pi} e^{-\frac{x^2}{2}} dx \\
+        M(t) &=  \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{tx-\frac{x^2}{2}} dx \\
+        M(t) &=  \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{\frac{1}{2}(-x^2 + 2tx - t^2 + t^2)} dx \\
+        M(t) &=  \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{1}{2}(x^2 - 2tx + t^2 - t^2)} dx \\
+        M(t) &=  \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{1}{2}((x-t)^2 - t^2)} dx \\
+        M(t) &=  \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{1}{2}(x-t)^2 + \frac{t^2}{2}} dx \\
+        M(t) &=  \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{1}{2}(x-t)^2} e^{\frac{t^2}{2}} dx \\
+        M(t) &=  \frac{e^{\frac{t^2}{2}}}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{1}{2}(x-t)^2} dx \\
+        & u = x - t \rightarrow du = dx \\
+        M(t) &=  \frac{e^{\frac{t^2}{2}}}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{u^2}{2}} du \\
+        M(t) &=  \frac{e^{\frac{t^2}{2}}}{\sqrt{2\pi}} \sqrt{2\pi} \\
+        M(t) &=  e^{\frac{t^2}{2}} \\
+    \end{align*}
+
+    \newpage
+    \item Use (a) to find $E(X)$, $E(X^2)$, $V(X)$ and $E(X^3)$.
+    
+    Following the definitions for expectation value:
+    \begin{align*}
+        E[X] &=  M'(0) \\
+        &=  te^{\frac{t^2}{2}}\bigg|_{t=0} \\
+        &= 0
+    \end{align*}
+    for expectation of:
+    \begin{align*}
+        E[X^2] &=  M''(0) \\
+        &= \frac{\partial}{\partial t} \left( te^{\frac{t^2}{2}} \right) \\
+        &= \left[ t^2e^{\frac{t^2}{2}} +  e^{\frac{t^2}{2}} \right] \bigg|_{t=0} \\
+        &= 1
+    \end{align*}
+    for expectation of: 
+    \begin{align*}
+        E[X^3] &=  M'''(0) \\
+        &= \frac{\partial^2}{\partial t^2} \left( te^{\frac{t^2}{2}} \right) \\
+        &= \frac{\partial}{\partial t} \left( t^2e^{\frac{t^2}{2}} +  e^{\frac{t^2}{2}} \right)\\
+        &= \left[ t^3e^{\frac{t^2}{2}} + 2te^{\frac{t^2}{2}} +  te^{\frac{t^2}{2}} \right] \bigg|_{t=0} \\
+        &= 0
+    \end{align*}
+    for variance:
+    \begin{align*}
+        V[X] &= E[X^2] - E[X]^2 \\
+        &= 1
+    \end{align*}
+    
+\end{enumerate}
 
 
 \end{document}
