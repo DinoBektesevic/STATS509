@@ -1,0 +1,300 @@
+\documentclass{article}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,amsopn,bm}
+\usepackage[margin=.9in]{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+ 
+\lstset{language=Python, 
+        basicstyle=\ttfamily\tiny, 
+        keywordstyle=\color{keywords},
+        commentstyle=\color{comments},
+        stringstyle=\color{red},
+        showstringspaces=false}
+
+\newcommand{\field}[1]{\mathbb{#1}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\E}{\mathbb{E}} 
+\newcommand{\Z}{\mathbb{Z}} 
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\field{R}} % real domain
+% \newcommand{\C}{\field{C}} % complex domain
+\newcommand{\F}{\field{F}} % functional domain
+\newcommand{\T}{^{\textrm T}} % transpose
+\def\diag{\text{diag}}
+
+%% operator in linear algebra, functional analysis
+\newcommand{\inner}[2]{#1\cdot #2}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\twonorm}[1]{\|#1\|_2^2}
+% operator in functios, maps such as M: domain1 --> domain 2
+\newcommand{\Map}[1]{\mathcal{#1}}
+\renewcommand{\theenumi}{\alph{enumi}} 
+
+\newcommand{\Perp}{\perp \! \! \! \perp}
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\newcommand{\vct}[1]{\boldsymbol{#1}} % vector
+\newcommand{\mat}[1]{\boldsymbol{#1}} % matrix
+\newcommand{\cst}[1]{\mathsf{#1}} % constant
+\newcommand{\ProbOpr}[1]{\mathbb{#1}}
+\newcommand{\points}[1]{\small\textcolor{magenta}{\emph{[#1 points]}} \normalsize}
+\date{{}}
+
+\setlength\parindent{0px}
+
+\begin{document}
+\title{Homework \#4}
+\author{\normalsize{Winter 2020, STATS 509}\\
+\normalsize{Dino Bektesevic}}
+\maketitle
+
+\section*{Problem 1}
+Suppose that $X$ is a positive random variable so that 
+$P(X > 0) = 1$. Prove that for any $t<0$, $M_X(t) = E[e^{tX}] < \infty$.
+
+\emph{Hint: Find a relationship between $e^{tX}$ and $1$, for $t < 0$.
+Use the fact that if for all $x$, $g(x) \leq h(x)$ then $\int g(x) dx \leq \int h(x)dx$.}
+
+\begin{align*}
+    M_X(t)  &= E[e^{tX}] = \int_{-\infty}^\infty e^{tx} f_X(x) dx \\
+    &= \int_0^\infty e^{tx} f_X(x) dx
+\end{align*}
+
+For $t<0$:
+$$ e^{tx} f_X(x) \leq f_X(x) \forall f_X(x)$$
+because $e^{kx}\leq 1 \forall k<0$ so it follows:
+\begin{align*}
+    \int_0^\infty e^{tx} f_X(x) dx &\leq \int_0^\infty f_X(x) dx \\
+     \int_0^\infty e^{tx} f_X(x) dx &\leq P(X>0) \\
+      \int_0^\infty e^{tx} f_X(x) dx &\leq 1
+\end{align*}
+
+
+
+
+\newpage
+\section*{Problem 2.}
+Let $X$ be an exponential random variable with parameter $\lambda > 0$.
+\begin{enumerate}
+    \item Use Chebyshev's inequality to find an upper bound on $Pr(|X- E[X] | \geq k)$
+
+    \begin{align*}
+        P(|X-c|) \geq d) &\leq \frac{E[(X-c)^2]}{d^2} \\
+        P(|X-\mu|) \geq k) &\leq \frac{E[(X-\mu)^2]}{k^2} \\
+        P(|X-\mu|) \geq k) &\leq \frac{V[X]}{k^2} \\
+        P(|X-\mu|) \geq k) &\leq \left(\frac{1}{k\lambda}\right)^2
+    \end{align*}
+
+    \item Calculate $E[ |X - E[X]|]$ and then use Markov's inequality to find a different upper bound on $Pr(|X- E[X] | \geq k)$.\par
+    {\it Hint: first remove the absolute value by splitting the integral into two pieces. Each piece can then be integrated using the Exponential CDF (or just integrating directly) and integration by parts.}
+    
+    \begin{align*}
+        E[|X - E[X]|] &= E[|X - \mu|] = \int_{-\infty}^\infty |x-\mu|f_X(x) dx \\
+        &= \int_{0}^\infty |x-\mu|\lambda e^{-\lambda x} dx \\
+        &= \int_0^{1/\lambda} \left(\frac{1}{\lambda} - x\right)\lambda e^{-\lambda x} dx 
+            + \int_{1/\lambda}^\infty \left(x - \frac{1}{\lambda} \right)\lambda e^{-\lambda x} dx \\
+        &= \int_0^{1/\lambda} e^{-\lambda x} dx 
+            - \int_0^{1/\lambda} x e^{-\lambda x} dx
+            + \int_{1/\lambda}^\infty xe^{-\lambda x} dx 
+            - \int_{1/\lambda}^\infty e^{-\lambda x} dx \\
+        &= -\frac{e^{-\lambda x}}{\lambda} \bigg|_0^{1/\lambda} 
+            - \frac{\lambda x}{\lambda^2}\frac{e^{-\lambda x}}{\lambda} \bigg|_0^{1/\lambda}
+            - \frac{\lambda x}{\lambda^2}\frac{e^{-\lambda x}}{\lambda} \bigg|_{1/\lambda}^\infty 
+            + \frac{e^{-\lambda x}}{\lambda} \bigg|_{1/\lambda}^\infty \\
+        &= \left(-\frac{1}{e\lambda}+ \frac{1}{\lambda}\right) 
+            - \left(\frac{1}{e\lambda^3} - 0 \right) 
+            - \left(0 - \frac{1}{e\lambda^3}\right) 
+            - \left(-0 + \frac{1}{e\lambda}\right) \\
+        &= \frac{1}{\lambda} - \frac{1}{e\lambda} - \frac{1}{e\lambda} = \frac{1}{\lambda} - \frac{2}{e\lambda}\\
+        &= \frac{e-2}{e\lambda}
+    \end{align*}
+    Markov's inequality is then:
+    $$P(|X-\mu|\geq k) = \frac{e-2}{e \lambda k}$$
+
+    \item[(c)] For which values of $k$ is the bound in (b) lower than that given in (a)?
+    
+    \begin{align*}
+        1 &> \frac{P_b}{P_a}\\
+        1 &>\frac{(e-2)\lambda^2 k^2}{e\lambda k} \\ %\frac{\frac{e-2}{e\lambda k}}{\frac{1}{\lambda^2 k^2}}
+        1 &> \frac{e-2}{e}\lambda k \\
+        k &< \frac{e}{\lambda (e-2)} \approx \frac{3.784}{\lambda}
+    \end{align*}
+\end{enumerate}
+
+
+
+\newpage
+\section*{Problem 3} 
+If the joint probability density of the two random variables $X$ and $Y$ is given by:
+$$ f_{XY}(x,y) =\left\{
+    \begin{array}{ll}
+        2 & \hbox{for } 0 < x < y <1 \\
+        0 & \hbox{otherwise.}
+    \end{array}
+\right.$$
+
+\begin{enumerate}
+    \item Find $P(Y<0.5)$. {\it Hint: Draw a graph.}  
+
+    \begin{align*}
+        P(Y<0.5) &= \int_0^1 \int_0^y f(x,y)dxdy \\
+        &= \int_0^1 \int_0^y 2 dxdy = 2 \frac{y^2}{2}\bigg |_0^1 \\
+        &= 1
+    \end{align*}
+
+
+    \item Find $P(X<0.5)$. 
+    
+    \begin{align*}
+        P(X<0.5) &= \int_0^{0.5}\int_x^1 f(x,y)dydx \\
+        &= \int_0^1 (2-x) dx = 2x|_0^{0.5} -  \frac{x^2}{2}\bigg |_0^{0.5} \\
+        &= 1 - \frac{1}{8} = \frac{7}{8}
+    \end{align*}
+    
+    
+    \item Find $P(X+Y < 1)$ 
+    
+    \begin{align*}
+        P(X+Y<1) &= \int_0^{0.5}\int_x^{1-x} f(x,y)dydx \\
+        &= 2\int_0^{0.5} (1-2x) dx = 2\left(x|_0^{0.5} -  2\frac{x^2}{2}\bigg |_0^{0.5}\right) \\
+        &= 2\frac{1}{4} = \frac{1}{2}
+    \end{align*}
+        
+    
+    \item Find the joint CDF $F(x,y)$. {\it (You will need to consider several cases.)}  
+    $$F(x,y) = \begin{cases} 
+	        0   &\mbox{if } x < 0 \mbox{ or } y<0   \\
+	        0   &\mbox{if } y > 1 \mbox{ or } x > y \\
+            2xy &\mbox{if } y < 1 \mbox{ and } x<y
+        \end{cases}  
+    $$
+\end{enumerate}
+
+
+
+
+\newpage
+\section*{Problem 4} 
+Suppose that $X$ and $Y$ are continuous random variables with the following joint cdf:
+
+\begin{equation}\label{eq:one}
+F_{XY}(x,y) = \widetilde{F}(x)\widetilde{F}(y)
+\end{equation}
+
+where $\widetilde{F}(\cdot)$ is a (univariate) cdf. 
+
+{{(Aside)} \it It follows from {\rm (\ref{eq:one})} that $X$ and $Y$ are independent random variables with the same
+marginal distribution.} 
+
+\begin{itemize}
+    \item[(a)] For a fixed value $t$, express $P(X \leq t, Y \leq t)$ in terms of $\widetilde{F}(\cdot)$.\par
+    {\it Hint: Recall the definition of  a joint cdf $F_{XY}(x,y)$.}
+    
+    \item[(b)] Let $T= \max (X,Y)$. Using your answer to (a) find the cdf $F_T(t)$ and the pdf $f_T(t)$ for $T$:\par
+    {\it Hint: If $X\leq t$ {\bf and} $Y\leq t$, what can one say about $\max(X,Y)$?}
+
+\end{itemize}
+
+
+
+
+\newpage
+\section*{Problem 5}  If the joint CDF for two random variables, $X$ and $Y$, is  
+given by:
+\[
+F_{XY}(x,y) =\left\{\begin{array}{ll}
+(1-e^{-x^2})(1-e^{-y^2}) & \hbox{for } x>0, y>0\\[4pt]
+0 & \hbox{otherwise}
+\end{array}
+\right.
+\]
+Find the joint pdf $f_{XY}(x,y)$.
+
+
+
+\newpage
+\section*{Problem 6}  Let $X$ and $Y$ have the joint density function (here $k>0$ is an unknown constant):
+\[
+f_{XY}(x,y) = \left\{\begin{array}{cc}
+k(x-y), & 0\leq y\leq x \leq 1;\\[4pt]
+0 & \hbox{otherwise,}
+\end{array}
+\right.
+\]
+
+\begin{itemize}
+\item[(a)] Sketch the support of the joint density. You will need to use this in answering the next three question parts.
+\item[(b)] Find the constant of proportionality $k$.
+\item[(c)] Find the marginal densities $f_X(x)$ and $f_Y(y)$.
+\item[(d)] Find the conditional densities of $f_{Y|X}(y\mid x)$ and $f_{X|Y}(x\mid y)$.\par
+ Remember to carefully state for which values of the conditioning variable these are defined.
+\end{itemize}
+
+\eject
+
+
+
+
+\newpage
+\section*{Problem 7} 
+If the joint probability density of the two random variables $X$ and $Y$ is given by:
+\[
+f_{XY}(x,y) =\left\{\begin{array}{ll}
+4xy & \hbox{for } 0 < y<1,\; 0<x <1,\\
+0 & \hbox{otherwise.}
+\end{array}
+\right.
+\]
+Let $D=(X-Y)$ and $S=(X+Y)$.  
+\begin{itemize}
+\item[(a)] Solve for $X$  and $Y$ in terms of $D$ and $S$.
+
+\item [(b)] Find the support of $f_{DS}(d,s)$ and draw a sketch.
+
+\item[(c)] Find the joint pdf $f_{DS}(d,s)$.
+
+\item[(d)] Find the marginal densities $f_D(d)$ and $f_S(s)$.
+
+\item[(e)] Find the conditional densities of $f_{D|S}(d\mid s)$ and $f_{S|D}(s\mid d)$.\par
+
+ Remember to carefully state for which values of the conditioning variable these are defined.
+\end{itemize}
+
+
+
+\newpage
+\section*{Problem 8} The random variables $(X,Y)$ have the following joint pdf:
+\[
+f_{XY}(x,y) =\left\{\begin{array}{ll}
+2y & \hbox{for } 0 < x < 1 \hbox{ and } 0 < y <1,\\ 
+0 & \hbox{otherwise.}
+\end{array}
+\right.
+\]
+Consider the transformation: $U = XY$ and $ V=X$.
+
+\begin{itemize}
+\item[(a)] Draw the support of the joint density $f_{XY}(x,y)$ for $(X,Y)$.
+
+\item[(b)] Solve for $X$ and $Y$ in terms of $U$ and $V$.
+
+\item[(c)] Carefully find the support for the joint density for $(U,V)$.
+ Then find the joint density $f_{UV}(u,v)$, remember to include the support.
+\item[(d)] Find the marginal densities $f_U(u)$ for $U$ and  $f_V(v)$ for $V$.
+
+
+\end{itemize}
+
+
+\end{document}
