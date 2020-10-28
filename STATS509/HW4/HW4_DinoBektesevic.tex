@@ -124,19 +124,16 @@ Let $X$ be an exponential random variable with parameter $\lambda > 0$.
            + \frac{2}{e\lambda} - \frac{1}{\lambda}  
            + \frac{2}{e\lambda} + \frac{1}{\lambda} 
            - \frac{1}{e\lambda}\\
-        &= \frac{2}{e\lambda} + \frac{1}{\lambda} \\
-        &= \frac{4-2\lambda}{e\lambda^2}
+        &= \frac{2}{e\lambda} + \frac{1}{\lambda} 
     \end{align*}
     Markov's inequality is then:
-    $$P(|X-\mu|\geq k) = \frac{e-2}{e \lambda k}$$
+    $$P(|X-\mu|\geq k) = \frac{1}{2 e \lambda k}$$
 
     \item[(c)] For which values of $k$ is the bound in (b) lower than that given in (a)?
     
     \begin{align*}
         1 &> \frac{P_b}{P_a}\\
-        1 &>\frac{(e-2)\lambda^2 k^2}{e\lambda k} \\ %\frac{\frac{e-2}{e\lambda k}}{\frac{1}{\lambda^2 k^2}}
-        1 &> \frac{e-2}{e}\lambda k \\
-        k &< \frac{e}{\lambda (e-2)} \approx \frac{3.784}{\lambda}
+        k &< \frac{2e}{\lambda} \approx \frac{5.44}{\lambda}
     \end{align*}
 \end{enumerate}
 
@@ -156,9 +153,9 @@ $$ f_{XY}(x,y) =\left\{
     \item Find $P(Y<0.5)$. {\it Hint: Draw a graph.}  
 
     \begin{align*}
-        P(Y<0.5) &= \int_0^1 \int_0^y f(x,y)dxdy \\
-        &= \int_0^1 \int_0^y 2 dxdy = 2 \frac{y^2}{2}\bigg |_0^1 \\
-        &= 1
+        P(Y<0.5) &= \int_0^{0.5} \int_0^y f(x,y)dxdy \\
+        &= \int_0^{0.5} \int_0^y 2 dxdy = 2 \frac{y^2}{2}\bigg |_0^{0.5} \\
+        &= \frac{1}{4}
     \end{align*}
 
 
@@ -166,8 +163,8 @@ $$ f_{XY}(x,y) =\left\{
     
     \begin{align*}
         P(X<0.5) &= \int_0^{0.5}\int_x^1 f(x,y)dydx \\
-        &= \int_0^1 (2-x) dx = 2x|_0^{0.5} -  \frac{x^2}{2}\bigg |_0^{0.5} \\
-        &= 1 - \frac{1}{8} = \frac{7}{8}
+        &= \int_0^1 (2-2x) dx = 2x|_0^{0.5} -  2\frac{x^2}{2}\bigg |_0^{0.5} \\
+        &= 1 - \frac{1}{4} = \frac{3}{4}
     \end{align*}
     
     
@@ -215,9 +212,12 @@ marginal distribution.}
     \item[(b)] Let $T= \max (X,Y)$. Using your answer to (a) find the cdf $F_T(t)$ and the pdf $f_T(t)$ for $T$:\par
     {\it Hint: If $X\leq t$ {\bf and} $Y\leq t$, what can one say about $\max(X,Y)$}?
     
-    Because $T= \max (X,Y)$, for $T\leq t$ to hold both $X\leq t$ and $Y\leq t$ have to be satisfied:
+    For $T\leq t$ to hold both $X\leq t$ and $Y\leq t$ have to be satisfied. This is by definition the case for a CDF, so then the joint CDF is just
     
-    By definition:
+    $$ F_T(t) = \Tilde{F}^2(t)$$
+    
+    By definition the PDF:
+    
     \begin{align*}
         f_T(t) = \frac{\partial}{\partial t} F_T(t) &=  \frac{\partial}{\partial t} \Tilde{F}^2(t) \\
         &= 2\Tilde{F}(t)\Tilde{f(t)}
@@ -231,89 +231,226 @@ marginal distribution.}
 \newpage
 \section*{Problem 5}  If the joint CDF for two random variables, $X$ and $Y$, is  
 given by:
-\[
-F_{XY}(x,y) =\left\{\begin{array}{ll}
-(1-e^{-x^2})(1-e^{-y^2}) & \hbox{for } x>0, y>0\\[4pt]
-0 & \hbox{otherwise}
-\end{array}
-\right.
-\]
+$$
+F_{XY}(x,y) = \begin{cases}
+    (1-e^{-x^2})(1-e^{-y^2}) & \hbox{for } x>0, y>0\\[4pt]
+    0 & \hbox{otherwise}
+    \end{cases}
+$$
 Find the joint pdf $f_{XY}(x,y)$.
+
+\begin{align*}
+    \frac{\partial^2}{\partial x \partial y} F(x,y) &=  \frac{\partial^2}{\partial x \partial y} (1-e^{-x^2})(1-e^{-x^2}) \\
+    &= \frac{\partial}{\partial x} \left[ (1-e^{-x^2}) 2ye^{-y^2} \right] \\
+    &=  2xe^{-x^2} 2ye^{-y^2} \\
+    &= 4 xy e^{-(x^2+y^2)}
+\end{align*}
 
 
 
 \newpage
 \section*{Problem 6}  Let $X$ and $Y$ have the joint density function (here $k>0$ is an unknown constant):
-\[
-f_{XY}(x,y) = \left\{\begin{array}{cc}
-k(x-y), & 0\leq y\leq x \leq 1;\\[4pt]
-0 & \hbox{otherwise,}
-\end{array}
-\right.
-\]
+$$ f_{XY}(x,y) = \begin{cases}
+    k(x-y), & 0\leq y\leq x \leq 1;\\[4pt]
+    0 & \hbox{otherwise,}
+\end{cases}$$
 
-\begin{itemize}
-\item[(a)] Sketch the support of the joint density. You will need to use this in answering the next three question parts.
-\item[(b)] Find the constant of proportionality $k$.
-\item[(c)] Find the marginal densities $f_X(x)$ and $f_Y(y)$.
-\item[(d)] Find the conditional densities of $f_{Y|X}(y\mid x)$ and $f_{X|Y}(x\mid y)$.\par
- Remember to carefully state for which values of the conditioning variable these are defined.
-\end{itemize}
+\begin{enumerate}
+    \item Sketch the support of the joint density. You will need to use this in answering the next three question parts.
 
-\eject
+    \item Find the constant of proportionality $k$.
+    
+    \begin{align*}
+    1 &= \int_0^1\int_0^x k(x-y)dydx\\
+      &= k \int_0^1 \left[xy - \frac{y^2}{2}\right]\bigg |_0^x dx \\
+      &= k \int_0^1 \left[x^2 - \frac{x^2}{2}\right] dx \\
+      &= k \left[ \frac{x^3}{3} - \frac{1}{2}\frac{x^3}{3} \right] \bigg |_0^1 \\
+      &= k \left( \frac{1}{3} - \frac{1}{6}\right) = \frac{k}{6}\\
+    k &= 6
+    \end{align*}
 
+    \item Find the marginal densities $f_X(x)$ and $f_Y(y)$.
+    
+    \begin{align*}
+    f_X(x) &= \int_0^1 6(x-y) dy \\
+    &= \left[6xy - 3y^2\right]\bigg|_0^1 \\
+    &= 6x-3
+    \end{align*}
+    
+    \begin{align*}
+    f_Y(y) &= \int_0^1 6(x-y) dx \\
+    &= \left[3x^2 - 6yx\right]\bigg|_0^1 \\
+    &= 3 - 6y
+    \end{align*}
+
+    \newpage
+    \item Find the conditional densities of $f_{Y|X}(y\mid x)$ and $f_{X|Y}(x\mid y)$.\par
+    Remember to carefully state for which values of the conditioning variable these are defined.
+    
+    By definition : $f_{Y\mid X}(y \mid x) = \frac{f_{X, Y}(x, y)}{f_X(x)}$. So on $0\leq x \leq 1$ we have:
+    $$ f_{Y\mid X}(y \mid x) = \frac{6(x-y)}{6x-3} = \frac{2(x-y)}{2x-1} $$
+    and on $0\leq y\leq 1 $ we have:
+    $$ f_{X\mid Y}(x \mid y) = \frac{6(x-y)}{3-6y} = \frac{2(x-y)}{1-3y} $$
+   
+\end{enumerate}
 
 
 
 \newpage
 \section*{Problem 7} 
 If the joint probability density of the two random variables $X$ and $Y$ is given by:
-\[
-f_{XY}(x,y) =\left\{\begin{array}{ll}
-4xy & \hbox{for } 0 < y<1,\; 0<x <1,\\
-0 & \hbox{otherwise.}
-\end{array}
-\right.
-\]
+$$ f_{XY}(x,y) = \begin{cases}
+    4xy & \hbox{for } 0 < y<1,\; 0<x <1,\\
+    0 & \hbox{otherwise.}
+    \end{cases}$$
 Let $D=(X-Y)$ and $S=(X+Y)$.  
-\begin{itemize}
-\item[(a)] Solve for $X$  and $Y$ in terms of $D$ and $S$.
 
-\item [(b)] Find the support of $f_{DS}(d,s)$ and draw a sketch.
+\begin{enumerate}
+    \item Solve for $X$  and $Y$ in terms of $D$ and $S$.
 
-\item[(c)] Find the joint pdf $f_{DS}(d,s)$.
+    \begin{align*}
+        D + S &= X - Y + X + Y \\
+        D + S &= 2X \\
+        X &= \frac{D + S}{2}
+    \end{align*}
 
-\item[(d)] Find the marginal densities $f_D(d)$ and $f_S(s)$.
+    \begin{align*} 
+        y = S - \frac{D + S}{2} \\
+        y = \frac{S - D}{2}
+    \end{align*}
 
-\item[(e)] Find the conditional densities of $f_{D|S}(d\mid s)$ and $f_{S|D}(s\mid d)$.\par
+    \item Find the support of $f_{DS}(d,s)$ and draw a sketch.
+    
+    The boundary lines are given by the following equations, left to right in a clockwise direction:
+    \begin{align*}
+        s &= -d \\
+        s &= d+2 \\
+        s &= -d+2 \\
+        s &= d
+    \end{align*}
+    where we notice that boundaries are symmetrical around $s=0$. 
 
- Remember to carefully state for which values of the conditioning variable these are defined.
-\end{itemize}
+    \item Find the joint pdf $f_{DS}(d,s)$.
+    
+    By definition:
+    $$f_{DV}(d,v) = f_{XY}(g_1(x,y), g_2(x,y)) |J|$$
+    where $g_1(x,y)=0.5(D+S)$, $g_2(x,y)=0.5(S-D)$ and:
+    
+    \begin{align*}
+    J &= \begin{vmatrix}
+        \frac{\partial x}{\partial d} & \frac{\partial y}{\partial d} \\ 
+        \frac{\partial x}{\partial v} & \frac{\partial y}{\partial v}
+        \end{vmatrix} 
+     = \begin{vmatrix}
+        \frac{1}{2} & -\frac{1}{2} \\ 
+        \frac{1}{2} & \frac{1}{2}
+        \end{vmatrix} \\
+    &= \frac{1}{4} + \frac{1}{4} \\
+    &= - \frac{1}{2}
+    \end{align*}
+    
+    So putting it all back into the definition:
+    
+    \begin{align*}
+     f_{DS}(u,v) &= f_{XY}\left(\frac{D + S}{2}, \frac{S - D}{2}\right) \bigg|\frac{1}{2}\bigg| \\
+     &= \frac{1}{2} f_{XY}\left(\frac{D + S}{2}, \frac{S - D}{2}\right) \\
+     &= \begin{cases}
+        \frac{1}{2} 4\frac{S+D}{2}\frac{S-D}{2} = S^2-D^2 & \hbox{for } ummm....\\ 
+        0 & \hbox{otherwise.}
+        \end{cases}
+    \end{align*}
+
+    \newpage
+    \item Find the marginal densities $f_D(d)$ and $f_S(s)$.
+    
+    \begin{align*}
+    f_{D}(d) &= \int_{-\infty}^\infty s^2 - d^2 ds \\
+    &= \begin{cases}
+       \int_{-d}^{d+2} s^2 - d^2 ds &\hbox{ for } -1 < d < 0, \\
+       \int_{d}^{2-d} s^2 - d^2 ds  &\hbox{ for } 0\leq d < 1 \\
+       0 &\hbox{otherwise.}
+       \end{cases}
+    \end{align*}
+    
+    \begin{align*}
+    f_{S}(s) &= \int_{-\infty}^\infty s^2 - d^2 dd \\
+    &= \begin{cases}
+       \int_{s-2}^{2-s} s^2 - d^2 dd &\hbox{ for } 1 < s < 2, \\
+       \int_{d}^{2-d} s^2 - d^2 dd  &\hbox{ for } 0 < s\leq 1 \\
+       0 &\hbox{otherwise.}
+       \end{cases}
+    \end{align*}
+    
+    
+    \item Find the conditional densities of $f_{D|S}(d\mid s)$ and $f_{S|D}(s\mid d)$.\par
+    Remember to carefully state for which values of the conditioning variable these are defined.
+    
+    
+\end{enumerate}
 
 
 
 \newpage
 \section*{Problem 8} The random variables $(X,Y)$ have the following joint pdf:
-\[
-f_{XY}(x,y) =\left\{\begin{array}{ll}
-2y & \hbox{for } 0 < x < 1 \hbox{ and } 0 < y <1,\\ 
-0 & \hbox{otherwise.}
-\end{array}
-\right.
-\]
+$$f_{XY}(x,y) = \begin{cases}
+    2y & \hbox{for } 0 < x < 1 \hbox{ and } 0 < y <1,\\ 
+    0 & \hbox{otherwise.}
+    \end{cases}
+$$
 Consider the transformation: $U = XY$ and $ V=X$.
 
-\begin{itemize}
-\item[(a)] Draw the support of the joint density $f_{XY}(x,y)$ for $(X,Y)$.
+\begin{enumerate}
+    \item Draw the support of the joint density $f_{XY}(x,y)$ for $(X,Y)$.
 
-\item[(b)] Solve for $X$ and $Y$ in terms of $U$ and $V$.
+    \item Solve for $X$ and $Y$ in terms of $U$ and $V$.
 
-\item[(c)] Carefully find the support for the joint density for $(U,V)$.
- Then find the joint density $f_{UV}(u,v)$, remember to include the support.
-\item[(d)] Find the marginal densities $f_U(u)$ for $U$ and  $f_V(v)$ for $V$.
-
-
-\end{itemize}
+    $$V=X \rightarrow X=V$$
+    $$U=XY \rightarrow Y=\frac{U}{V}$$    
+    
+    \item Carefully find the support for the joint density for $(U,V)$. Then find the joint density $f_{UV}(u,v)$, remember to include the support.
+    
+    By definition:
+    $$f_{UV}(u,v) = f_{XY}(g_1(x,y), g_2(x,y)) |J|$$
+    where $g_1(x,y)=v$, $g_2(x,y)=u/v$ and:
+    
+    \begin{align*}
+    J &= \begin{vmatrix}
+        \frac{\partial x}{\partial u} & \frac{\partial y}{\partial u} \\ 
+        \frac{\partial x}{\partial v} & \frac{\partial y}{\partial v}
+        \end{vmatrix} 
+     = \begin{vmatrix}
+        0 & \frac{1}{v} \\ 
+        1 & -\frac{u}{v^2}
+        \end{vmatrix} \\
+    &= 0\cdot -\frac{u}{v^2} - \frac{1}{v}\cdot 1 \\
+    &= - \frac{1}{v}
+    \end{align*}
+    
+    So putting it all back into the definition:
+    
+    \begin{align*}
+     f_{UV}(u,v) &= f_{XY}\left(v, \frac{u}{v}\right) \bigg|- \frac{1}{v}\bigg| \\
+     &= \frac{1}{v} f_{XY}\left(v, \frac{u}{v}\right) \\
+     &= \begin{cases}
+        \frac{1}{v} 2\frac{u}{v} & \hbox{for } 0 < u < v < 1\\ 
+        0 & \hbox{otherwise.}
+        \end{cases}
+    \end{align*}
+    
+    \item Find the marginal densities $f_U(u)$ for $U$ and  $f_V(v)$ for $V$.
+    
+    \begin{align*}
+    f_{U}(u) &= \int_0^1 \frac{2u}{v^2} dv \\
+    &= 2u \left(-\frac{1}{v}\bigg|_0^1\right) 
+    \end{align*}
+     
+    \begin{align*}
+    f_{V}(v) &= \int_0^v \frac{2u}{v^2} du \\
+    &= \left(-\frac{2u^2}{2v^2}\bigg|_0^1\right) \\
+    &= \frac{1}{v^2}
+    \end{align*}
+     
+\end{enumerate}
 
 
 \end{document}
