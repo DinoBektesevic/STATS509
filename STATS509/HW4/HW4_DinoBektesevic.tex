@@ -105,19 +105,27 @@ Let $X$ be an exponential random variable with parameter $\lambda > 0$.
         &= \int_0^{1/\lambda} \left(\frac{1}{\lambda} - x\right)\lambda e^{-\lambda x} dx 
             + \int_{1/\lambda}^\infty \left(x - \frac{1}{\lambda} \right)\lambda e^{-\lambda x} dx \\
         &= \int_0^{1/\lambda} e^{-\lambda x} dx 
-            - \int_0^{1/\lambda} x e^{-\lambda x} dx
-            + \int_{1/\lambda}^\infty xe^{-\lambda x} dx 
+            - \int_0^{1/\lambda} \lambda xe^{-\lambda x} dx
+            + \int_{1/\lambda}^\infty \lambda  xe^{-\lambda x} dx 
             - \int_{1/\lambda}^\infty e^{-\lambda x} dx \\
         &= -\frac{e^{-\lambda x}}{\lambda} \bigg|_0^{1/\lambda} 
-            - \frac{\lambda x}{\lambda^2}\frac{e^{-\lambda x}}{\lambda} \bigg|_0^{1/\lambda}
-            - \frac{\lambda x}{\lambda^2}\frac{e^{-\lambda x}}{\lambda} \bigg|_{1/\lambda}^\infty 
+            + \lambda \frac{\lambda x+1}{\lambda^2}e^{-\lambda x} \bigg|_0^{1/\lambda}
+            - \lambda \frac{\lambda x+1}{\lambda^2}e^{-\lambda x} \bigg|_{1/\lambda}^\infty 
+            + \frac{e^{-\lambda x}}{\lambda} \bigg|_{1/\lambda}^\infty \\
+        &= -\frac{e^{-\lambda x}}{\lambda} \bigg|_0^{1/\lambda} 
+            + \lambda \frac{\lambda x+1}{\lambda^2}e^{-\lambda x} \bigg|_0^{1/\lambda}
+            - \lambda \left(\frac{\lambda x}{\lambda^2}e^{-\lambda x} + \frac{e^{-\lambda x}}{\lambda^2} \right)\bigg|_{1/\lambda}^\infty 
             + \frac{e^{-\lambda x}}{\lambda} \bigg|_{1/\lambda}^\infty \\
         &= \left(-\frac{1}{e\lambda}+ \frac{1}{\lambda}\right) 
-            - \left(\frac{1}{e\lambda^3} - 0 \right) 
-            - \left(0 - \frac{1}{e\lambda^3}\right) 
-            - \left(-0 + \frac{1}{e\lambda}\right) \\
-        &= \frac{1}{\lambda} - \frac{1}{e\lambda} - \frac{1}{e\lambda} = \frac{1}{\lambda} - \frac{2}{e\lambda}\\
-        &= \frac{e-2}{e\lambda}
+            + \lambda \left(\frac{2}{e\lambda^2} - \frac{1}{\lambda^2} \right) 
+            - \lambda \left(0 + 0 - \frac{2}{e\lambda^2} - \frac{1}{\lambda^2}\right) 
+            + \left(0 - \frac{1}{e\lambda}\right) \\
+        &= -\frac{1}{e\lambda} + \frac{1}{\lambda} 
+           + \frac{2}{e\lambda} - \frac{1}{\lambda}  
+           + \frac{2}{e\lambda} + \frac{1}{\lambda} 
+           - \frac{1}{e\lambda}\\
+        &= \frac{2}{e\lambda} + \frac{1}{\lambda} \\
+        &= \frac{4-2\lambda}{e\lambda^2}
     \end{align*}
     Markov's inequality is then:
     $$P(|X-\mu|\geq k) = \frac{e-2}{e \lambda k}$$
@@ -201,8 +209,19 @@ marginal distribution.}
     \item[(a)] For a fixed value $t$, express $P(X \leq t, Y \leq t)$ in terms of $\widetilde{F}(\cdot)$.\par
     {\it Hint: Recall the definition of  a joint cdf $F_{XY}(x,y)$.}
     
+    By definition $F(x,y)= P(X\leq x, Y\leq y)$ so it follows that:
+    $$P(X \leq t, y\leq t) = F_{XY}(t,t) = \Tilde{F}(t)\Tilde{F}(t) = \Tilde{F}^2(t)$$
+    
     \item[(b)] Let $T= \max (X,Y)$. Using your answer to (a) find the cdf $F_T(t)$ and the pdf $f_T(t)$ for $T$:\par
-    {\it Hint: If $X\leq t$ {\bf and} $Y\leq t$, what can one say about $\max(X,Y)$?}
+    {\it Hint: If $X\leq t$ {\bf and} $Y\leq t$, what can one say about $\max(X,Y)$}?
+    
+    Because $T= \max (X,Y)$, for $T\leq t$ to hold both $X\leq t$ and $Y\leq t$ have to be satisfied:
+    
+    By definition:
+    \begin{align*}
+        f_T(t) = \frac{\partial}{\partial t} F_T(t) &=  \frac{\partial}{\partial t} \Tilde{F}^2(t) \\
+        &= 2\Tilde{F}(t)\Tilde{f(t)}
+    \end{align*}
 
 \end{itemize}
 
