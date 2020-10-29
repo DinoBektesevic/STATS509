@@ -364,7 +364,7 @@ Let $D=(X-Y)$ and $S=(X+Y)$.
      f_{DS}(u,v) &= f_{XY}\left(\frac{D + S}{2}, \frac{S - D}{2}\right) \bigg|\frac{1}{2}\bigg| \\
      &= \frac{1}{2} f_{XY}\left(\frac{D + S}{2}, \frac{S - D}{2}\right) \\
      &= \begin{cases}
-        \frac{1}{2} 4\frac{S+D}{2}\frac{S-D}{2} = S^2-D^2 & \hbox{for } ummm....\\ 
+        \frac{1}{2} 4\frac{s+d}{2}\frac{s-d}{2} = s^2-d^2 & \hbox{ when inside the diamond } \\ 
         0 & \hbox{otherwise.}
         \end{cases}
     \end{align*}
@@ -381,18 +381,61 @@ Let $D=(X-Y)$ and $S=(X+Y)$.
        \end{cases}
     \end{align*}
     
+    Let's split the integrals out for simplicity:
+
+    \begin{align*}
+        \int_{-d}^{d+2} s^2 - d^2 ds &=  \int_{-d}^{d+2} s^2 ds -  d^2\int_{-d}^{d+2} ds \\
+        &= \frac{s^3}{3}\bigg |_{-d}^{d+2} - d^2 s|_{-d}^{d+2} \\
+        &= \frac{(d+2)^3}{3} - \frac{-d^3}{3} - d^2(2d+2) \\
+        &= \frac{(d+2)^3}{3} - \frac{5}{3} d^3 - 2d^2
+    \end{align*}
+    
+    and
+    
+    \begin{align*}
+        \int_{d}^{2-d} s^2 - d^2 ds &=  \int_{d}^{2-d} s^2 ds -  d^2\int_{d}^{2-d} ds \\
+        &= \frac{s^3}{3}\bigg |_{d}^{2-d} - d^2 s|_{d}^{2-d} \\
+        &= \frac{(2-d)^3}{3} - \frac{d^3}{3} - d^2(2-2d) \\
+        &= \frac{(d+2)^3}{3} - \frac{7}{3} d^3 - 2d^2 
+    \end{align*}
+    
+    So in the end:
+    
+    \begin{align*}
+    f_{D}(d) &= \int_{-\infty}^\infty s^2 - d^2 ds \\
+    &= \begin{cases}
+       \frac{(d+2)^3}{3} - \frac{5}{3} d^3 - 2d^2 &\hbox{ for } -1 < d < 0, \\
+       \frac{(d+2)^3}{3} - \frac{7}{3} d^3 - 2d^2   &\hbox{ for } 0\leq d < 1 \\
+       0 &\hbox{otherwise.}
+       \end{cases}
+    \end{align*}
+    
+    \newpage
+    We repeat the same for $f_{S}(s)$ and get something like:
+    
     \begin{align*}
     f_{S}(s) &= \int_{-\infty}^\infty s^2 - d^2 dd \\
     &= \begin{cases}
        \int_{s-2}^{2-s} s^2 - d^2 dd &\hbox{ for } 1 < s < 2, \\
-       \int_{d}^{2-d} s^2 - d^2 dd  &\hbox{ for } 0 < s\leq 1 \\
+       \int_{-s}^{s} s^2 - d^2 dd  &\hbox{ for } 0 < s\leq 1 \\
        0 &\hbox{otherwise.}
-       \end{cases}
+       \end{cases} \\
+    &= \begin{cases}
+       4s^2 - 2s^3 - \frac{2}{3}(2-s)^3 &\hbox{ for }  1 < s < 2, \\
+       \frac{4}{3}s^3  &\hbox{ for } 0 < s\leq 1 \\
+       0 &\hbox{otherwise.}
+       \end{cases} \\
     \end{align*}
     
     
     \item Find the conditional densities of $f_{D|S}(d\mid s)$ and $f_{S|D}(s\mid d)$.\par
     Remember to carefully state for which values of the conditioning variable these are defined.
+    
+    We follow the definition: 
+    
+    $$f_{Y\mid X}(y \mid x) = \frac{f_{X, Y}(x, y)}{f_X(x)}$$
+    
+    Note that life is worth living so we leave writing out the expressions explicitly to the reader.
     
     
 \end{enumerate}
@@ -446,7 +489,7 @@ Consider the transformation: $U = XY$ and $ V=X$.
      f_{UV}(u,v) &= f_{XY}\left(v, \frac{u}{v}\right) \bigg|- \frac{1}{v}\bigg| \\
      &= \frac{1}{v} f_{XY}\left(v, \frac{u}{v}\right) \\
      &= \begin{cases}
-        \frac{1}{v} 2\frac{u}{v} & \hbox{for } 0 < u < v < 1\\ 
+        \frac{1}{v} 2\frac{u}{v} = 2\frac{u}{v^2} & \hbox{for } 0 < u < v < 1\\ 
         0 & \hbox{otherwise.}
         \end{cases}
     \end{align*}
@@ -454,14 +497,16 @@ Consider the transformation: $U = XY$ and $ V=X$.
     \item Find the marginal densities $f_U(u)$ for $U$ and  $f_V(v)$ for $V$.
     
     \begin{align*}
-    f_{U}(u) &= \int_0^1 \frac{2u}{v^2} dv \\
-    &= 2u \left(-\frac{1}{v}\bigg|_0^1\right) 
+    f_{U}(u) &= \int_u^1 \frac{2u}{v^2} dv \\
+    &= 2u \left(-\frac{1}{v}\bigg|_u^1\right) \\
+    &= 2u(\frac{1}{u} - 1) = 2 - 2u \\
+    &= 2(1-u)
     \end{align*}
      
     \begin{align*}
     f_{V}(v) &= \int_0^v \frac{2u}{v^2} du \\
-    &= \left(-\frac{2u^2}{2v^2}\bigg|_0^1\right) \\
-    &= \frac{1}{v^2}
+    &= \frac{2}{v^2} \frac{u^2}{2}\bigg|_0^v \\
+    &= \frac{2}{v^2} \frac{v^2}{2} = 1
     \end{align*}
      
 \end{enumerate}
