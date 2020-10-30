@@ -72,8 +72,8 @@ Use the fact that if for all $x$, $g(x) \leq h(x)$ then $\int g(x) dx \leq \int 
 \end{align*}
 
 For $t<0$:
-$$ e^{tx} f_X(x) \leq f_X(x) \forall f_X(x)$$
-because $e^{kx}\leq 1 \forall k<0$ so it follows:
+$$ 0 < e^{tx} f_X(x) \leq f_X(x) \forall f_X(x)$$
+because $e^{tx}\leq 1 \forall t<0$ so it follows:
 \begin{align*}
     \int_0^\infty e^{tx} f_X(x) dx &\leq \int_0^\infty f_X(x) dx \\
      \int_0^\infty e^{tx} f_X(x) dx &\leq P(X>0) \\
@@ -109,31 +109,27 @@ Let $X$ be an exponential random variable with parameter $\lambda > 0$.
             + \int_{1/\lambda}^\infty \lambda  xe^{-\lambda x} dx 
             - \int_{1/\lambda}^\infty e^{-\lambda x} dx \\
         &= -\frac{e^{-\lambda x}}{\lambda} \bigg|_0^{1/\lambda} 
-            + \lambda \frac{\lambda x+1}{\lambda^2}e^{-\lambda x} \bigg|_0^{1/\lambda}
-            - \lambda \frac{\lambda x+1}{\lambda^2}e^{-\lambda x} \bigg|_{1/\lambda}^\infty 
-            + \frac{e^{-\lambda x}}{\lambda} \bigg|_{1/\lambda}^\infty \\
-        &= -\frac{e^{-\lambda x}}{\lambda} \bigg|_0^{1/\lambda} 
-            + \lambda \frac{\lambda x+1}{\lambda^2}e^{-\lambda x} \bigg|_0^{1/\lambda}
-            - \lambda \left(\frac{\lambda x}{\lambda^2}e^{-\lambda x} + \frac{e^{-\lambda x}}{\lambda^2} \right)\bigg|_{1/\lambda}^\infty 
+            + \frac{\lambda x+1}{\lambda}e^{-\lambda x} \bigg|_0^{1/\lambda}
+            - \frac{\lambda x+1}{\lambda}e^{-\lambda x} \bigg|_{1/\lambda}^\infty 
             + \frac{e^{-\lambda x}}{\lambda} \bigg|_{1/\lambda}^\infty \\
         &= \left(-\frac{1}{e\lambda}+ \frac{1}{\lambda}\right) 
             + \lambda \left(\frac{2}{e\lambda^2} - \frac{1}{\lambda^2} \right) 
             - \lambda \left(0 + 0 - \frac{2}{e\lambda^2} - \frac{1}{\lambda^2}\right) 
             + \left(0 - \frac{1}{e\lambda}\right) \\
-        &= -\frac{1}{e\lambda} + \frac{1}{\lambda} 
-           + \frac{2}{e\lambda} - \frac{1}{\lambda}  
-           + \frac{2}{e\lambda} + \frac{1}{\lambda} 
-           - \frac{1}{e\lambda}\\
-        &= \frac{2}{e\lambda} + \frac{1}{\lambda} 
+        &= \frac{e-1}{ea} 
+           + \frac{2-e}{ea} 
+           + \frac{2}{ea}
+           - \frac{1}{ea} \\
+        &= \frac{2}{e\lambda}
     \end{align*}
     Markov's inequality is then:
-    $$P(|X-\mu|\geq k) = \frac{1}{2 e \lambda k}$$
+    $$P(|X-\mu|\geq k) = \frac{2}{e \lambda k}$$
 
     \item[(c)] For which values of $k$ is the bound in (b) lower than that given in (a)?
     
     \begin{align*}
         1 &> \frac{P_b}{P_a}\\
-        k &< \frac{2e}{\lambda} \approx \frac{5.44}{\lambda}
+        k &< \frac{e}{2\lambda} \approx \frac{1}{\lambda}
     \end{align*}
 \end{enumerate}
 
@@ -176,14 +172,43 @@ $$ f_{XY}(x,y) =\left\{
         &= 2\frac{1}{4} = \frac{1}{2}
     \end{align*}
         
-    
+    \newpage
     \item Find the joint CDF $F(x,y)$. {\it (You will need to consider several cases.)}  
-    $$F(x,y) = \begin{cases} 
-	        0   &\mbox{if } x < 0 \mbox{ or } y<0   \\
-	        0   &\mbox{if } y > 1 \mbox{ or } x > y \\
-            2xy &\mbox{if } y < 1 \mbox{ and } x<y
-        \end{cases}  
+    
+    In counter-clockwise order of appearance starting from y axis we have at least the following cases to consider:
     $$
+    \mbox{Case} = \begin{cases} 
+	        0                   &\mbox{if } y > 0     \mbox{ and } x < 0 \\
+	        0                   &\mbox{if } y < 0     \mbox{ and } x < 0 \\
+	        0                   &\mbox{if } y < 0     \mbox{ and } x > 0 \\
+	        0                   &\mbox{if } 0 < y < 1 \mbox{ and } x > y \\
+	        \int_0^y \int_y^x   &\mbox{if } 0 < x < y < 1 \\
+	        1                   &\mbox{if } y > 1     \mbox{ and } x > 1 \\
+	        \int_0^x \int_x^1   &\mbox{if } y > 1     \mbox{ and } 0 < x < 1 \\
+        \end{cases}
+    $$
+    
+    Since
+    
+    \begin{align*}
+         \int_0^y \int_y^x 2dxdy &= 2\int_0^y(x-y)dy &= 2xy -y^2 \\
+         \int_0^x \int_x^1 2dxdy &= 2\int_0^x(1-x)dy &= 2x - x^2
+    \end{align*}
+    
+    we can write:
+    
+    $$
+    F_{XY}(x,y) = \begin{cases} 
+	        0        &\mbox{if } y > 0     \mbox{ and } x < 0 \\
+	        0        &\mbox{if } y < 0     \mbox{ and } x < 0 \\
+	        0        &\mbox{if } y < 0     \mbox{ and } x > 0 \\
+	        0        &\mbox{if } 0 < y < 1 \mbox{ and } x > y \\
+	        2xy-y^2  &\mbox{if } 0 < x < y < 1 \\
+	        1        &\mbox{if } y > 1     \mbox{ and } x > 1 \\
+	        2x-x^2   &\mbox{if } y > 1     \mbox{ and } 0 < x < 1 \\
+        \end{cases}
+    $$
+
 \end{enumerate}
 
 
@@ -435,9 +460,7 @@ Let $D=(X-Y)$ and $S=(X+Y)$.
     
     $$f_{Y\mid X}(y \mid x) = \frac{f_{X, Y}(x, y)}{f_X(x)}$$
     
-    Note that life is worth living so we leave writing out the expressions explicitly to the reader.
-    
-    
+    but note that life is better lived afk.
 \end{enumerate}
 
 
