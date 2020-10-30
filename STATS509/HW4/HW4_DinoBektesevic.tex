@@ -116,10 +116,10 @@ Let $X$ be an exponential random variable with parameter $\lambda > 0$.
             + \lambda \left(\frac{2}{e\lambda^2} - \frac{1}{\lambda^2} \right) 
             - \lambda \left(0 + 0 - \frac{2}{e\lambda^2} - \frac{1}{\lambda^2}\right) 
             + \left(0 - \frac{1}{e\lambda}\right) \\
-        &= \frac{e-1}{ea} 
-           + \frac{2-e}{ea} 
-           + \frac{2}{ea}
-           - \frac{1}{ea} \\
+        &= \frac{e-1}{e\lambda} 
+           + \frac{2-e}{e\lambda} 
+           + \frac{2}{e\lambda}
+           - \frac{1}{e\lambda} \\
         &= \frac{2}{e\lambda}
     \end{align*}
     Markov's inequality is then:
@@ -301,25 +301,26 @@ $$ f_{XY}(x,y) = \begin{cases}
     \item Find the marginal densities $f_X(x)$ and $f_Y(y)$.
     
     \begin{align*}
-    f_X(x) &= \int_0^1 6(x-y) dy \\
-    &= \left[6xy - 3y^2\right]\bigg|_0^1 \\
-    &= 6x-3
+    f_X(x) &= \int_0^x 6(x-y) dy \\
+    &= \left[6xy - 3y^2\right]\bigg|_0^x \\
+    &= 6x^2-3x^2 = 3x^2
     \end{align*}
     
     \begin{align*}
-    f_Y(y) &= \int_0^1 6(x-y) dx \\
-    &= \left[3x^2 - 6yx\right]\bigg|_0^1 \\
-    &= 3 - 6y
+    f_Y(y) &= \int_y^1 6(x-y) dx \\
+    &= \left[3x^2 - 6yx\right]\bigg|_y^1 \\
+    &= 3 - 6y - 3y^2 + 6y^2 = 3(y^2-2y +1)\\
+    &=3(y-1)^2
     \end{align*}
 
     \newpage
     \item Find the conditional densities of $f_{Y|X}(y\mid x)$ and $f_{X|Y}(x\mid y)$.\par
     Remember to carefully state for which values of the conditioning variable these are defined.
     
-    By definition : $f_{Y\mid X}(y \mid x) = \frac{f_{X, Y}(x, y)}{f_X(x)}$. So on $0\leq x \leq 1$ we have:
-    $$ f_{Y\mid X}(y \mid x) = \frac{6(x-y)}{6x-3} = \frac{2(x-y)}{2x-1} $$
-    and on $0\leq y\leq 1 $ we have:
-    $$ f_{X\mid Y}(x \mid y) = \frac{6(x-y)}{3-6y} = \frac{2(x-y)}{1-3y} $$
+    By definition : $f_{Y\mid X}(y \mid x) = \frac{f_{X, Y}(x, y)}{f_X(x)}$. So on $0 \leq y < x \leq 1$ we have:
+    $$ f_{Y\mid X}(y \mid x) = \frac{6(x-y)}{3x^2} = \frac{2(x-y)}{x^2} $$
+    and on $0\leq y < x \leq 1 $ we have:
+    $$ f_{X\mid Y}(x \mid y) = \frac{6(x-y)}{3(y-1)^2} = \frac{2(x-y)}{(y-1)^2} $$
    
 \end{enumerate}
 
