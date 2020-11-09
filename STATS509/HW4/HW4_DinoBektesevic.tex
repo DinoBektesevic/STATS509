@@ -368,13 +368,13 @@ Let $D=(X-Y)$ and $S=(X+Y)$.
     \item Find the joint pdf $f_{DS}(d,s)$.
     
     By definition:
-    $$f_{DV}(d,v) = f_{XY}(g_1(x,y), g_2(x,y)) |J|$$
+    $$f_{DV}(d,s) = f_{XY}(g_1(x,y), g_2(x,y)) |J|$$
     where $g_1(x,y)=0.5(D+S)$, $g_2(x,y)=0.5(S-D)$ and:
     
     \begin{align*}
     J &= \begin{vmatrix}
         \frac{\partial x}{\partial d} & \frac{\partial y}{\partial d} \\ 
-        \frac{\partial x}{\partial v} & \frac{\partial y}{\partial v}
+        \frac{\partial x}{\partial s} & \frac{\partial y}{\partial s}
         \end{vmatrix} 
      = \begin{vmatrix}
         \frac{1}{2} & -\frac{1}{2} \\ 
@@ -387,7 +387,7 @@ Let $D=(X-Y)$ and $S=(X+Y)$.
     So putting it all back into the definition:
     
     \begin{align*}
-     f_{DS}(u,v) &= f_{XY}\left(\frac{D + S}{2}, \frac{S - D}{2}\right) \bigg|\frac{1}{2}\bigg| \\
+     f_{DS}(u,s) &= f_{XY}\left(\frac{D + S}{2}, \frac{S - D}{2}\right) \bigg|\frac{1}{2}\bigg| \\
      &= \frac{1}{2} f_{XY}\left(\frac{D + S}{2}, \frac{S - D}{2}\right) \\
      &= \begin{cases}
         \frac{1}{2} 4\frac{s+d}{2}\frac{s-d}{2} = s^2-d^2 & \hbox{ when inside the diamond } \\ 
