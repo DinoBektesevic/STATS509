@@ -127,12 +127,6 @@ Suppose that $X$ is a continuous random variable with support on $\mathbb{R}$. S
     
     \item Find the mean of $X$. {\it Hint: use the fact that $E[X] = t^*$ if and only if $E[X-t^*]=0$. Again split the integral; also see Midterm Qu.3(b)} 
     
-    \begin{align*}
-        E[X] &= \int_{-\infty}^\infty xf_X dx \\
-        &= \int_{-\infty}^t xf(t-x)dx + \int_t^\infty xf(x+t)dx \\
-        &= \int_t^\infty xf(t+x)dx + \int_t^\infty xf(x+t)dx \\
-        &= 2\int_t^\infty xf(x+t)dx
-    \end{align*}
 \end{enumerate}
 
 
@@ -142,6 +136,7 @@ Suppose that $X$ is a continuous random variable with support on $\mathbb{R}$. S
 Consider a continuous random variable with pdf $f_X(x)$ and CDF $F_X(x)$.
 \begin{enumerate}
     \item Show that $\int_{-\infty}^t F_X(x) dx = \int_{-\infty}^t f(u) (t-u) du$.\par {\it Hint: recall HW3 Qu.3}
+    
     \item Similarly show that $\int_{t}^\infty (1-F_X(x)) dx = \int_{t}^\infty f(u) (u-t) du$.
 \end{enumerate}
 Define $h(t) \equiv E|X-t|$; the average absolute value of the prediction error, when using the constant $t$ as a prediction (for all units).
@@ -155,7 +150,33 @@ Define $h(t) \equiv E|X-t|$; the average absolute value of the prediction error,
 
 \newpage
 \section*{Problem 4.} Goldberger Question 6.2
+A known joint distribution of $X$ - price and $Y$ - quantity. Best linear predictor $E^*[X|Y]$ is used to predict quantity given price with an error $U = Y-E^*(Y|X)$. Other BLP predicts price given quantity with an error $V = X - E^*[X|Y]$. Let $\sigma_{XY} = C(X,Y)$ and $\sigma_{UV} = C(U,V)$ and $\rho$ the correlation of $X$ and $Y$. 
 
+\begin{enumerate}
+    \item Show $\sigma_{UV} = (1 - \rho^2)\sigma_{XY}$
+        \begin{align*}
+            \sigma_{UV} &= Cov(U,V) = Cov(Y - E[Y|X], X-E[X|Y]) \\
+            &= Cov(X, Y) - Cov(Y, E[X|Y]) - Cov(X, E[Y|X]) + Cov(E[Y|X], E[X|Y]) \\
+            &= Cov(X,Y) - Cov(Y, d+cY) = - Cov(X, b+aX) + Cov(d+cY b+aX) \\
+        \end{align*}
+    but since they used a linear predictor we know that 
+        \begin{align*}
+            a &= E[X] - bE[X] \\
+            b &=  \frac{Cov(X,Y)}{V(X} \\
+            c &= \frac{Cov(X,Y)}{V(Y} \\
+            d &= E[Y] - cE[Y]
+        \end{align*}
+    substituting and canceling out terms then gives us:
+        \begin{align*}
+            \sigma_{UV} &= Cov(X,Y) - cV(Y) - aV(X) + bdCov(X,y) \\
+            &= Cov(X,Y)(1+bd) - cV(Y) - aV(X) \\
+            &= Cov(X,Y)(1+\rho^2) - 2Cov(X,Y) \\
+            &= \rho^2 Cov(X,Y) - Cov(X, Y) \\
+            &= (\rho^2-1) Cov(X, Y)
+        \end{align*}
+        
+    \item Since $0 \leq \rho^2 \leq 1$ we can say that $-\sigma_{UV} \leq sigma_{XY}$
+\end{enumerate}
 
 
 \newpage
