@@ -87,12 +87,7 @@ def problem5c(x, y):
         A 2D array where first column are sorted x coordinates of the data and
         second column are the returned fitted values.
     """
-    uniqueX = np.unique(x)
-    conditioned = np.zeros(uniqueX.shape)
-    for i, xi in enumerate(uniqueX):
-        conditioned[i] = np.mean(y[np.where(x == xi)])
-
-    return sm.nonparametric.lowess(conditioned, uniqueX)
+    return sm.nonparametric.lowess(y, x, frac=0.75)
 
 
 def plotAll():
@@ -105,12 +100,13 @@ def plotAll():
     linPredictor = problem5a(x, y)
     means, binEdges, _ = problem5b(x, y)
     lowess = problem5c(x, y)
+    print(lowess)
 
     plt.scatter(x, y, color='gray', label="Data", alpha=0.2)
     plt.plot(sampleX, linPredictor(sampleX), color=colors["tab:blue"], label="Best Linear Predictor")
     plt.plot(binEdges[1:]-0.25, means, color=colors["tab:orange"], label="Binned mean")
     #plt.bar(binEdges[:-1], means, width=0.5, align='edge', color=colors["tab:orange"], alpha=0.2, label="Binned means")
-    plt.plot(uniqueX, lowess[:, 1], color=colors["tab:green"], label="LOESS smoothed fit")
+    plt.plot(lowess[:,0], lowess[:, 1], color=colors["tab:green"], label="LOESS smoothed fit")
 
     plt.ylabel("ln(PartyRatio)")
     plt.xlabel("log(PopDensity)")
