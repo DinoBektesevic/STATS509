@@ -115,6 +115,15 @@ Suppose that $X$ is a continuous random variable with support on $\mathbb{R}$. S
 \begin{enumerate}
     \item Find the median of $X$. {\it Hint: use the fact that the pdf integrates to $1$ and then split the integral into two pieces.}
     
+    \begin{align*}
+        1 &= \int_{-\infty}^\infty f_X dx \\
+        &= \int_{-\infty}^t f(x)dx + \int_t^\infty f(t)dx \\
+        &= \int_{-\infty}^t f(t-x)dx + \int_{-\infty}^t f(t-x)dx \\
+        &= 2\int_{-\infty}^t f(t-x)dx = 2\int_{-\infty}^t f(u)du \\
+        &= 2F(X=t) \\
+        &\rightarrow F(X=t) = \frac{1}{2}
+    \end{align*}
+    so the median is defined as $F(X=t')=1/2$ this implies $t$ is the median of $X$.
     
     \item Find the mean of $X$. {\it Hint: use the fact that $E[X] = t^*$ if and only if $E[X-t^*]=0$. Again split the integral; also see Midterm Qu.3(b)} 
     
