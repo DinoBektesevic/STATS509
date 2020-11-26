@@ -9,20 +9,61 @@ np.random.seed(0)
 
 
 def problem2a():
+    """Plots the PDF
+
+    f(t) = 1/sqrt(1/4-t)
+
+    from problem 2a.
+    """
     x = np.linspace(0, 0.25, 10000)
     y = 1 / ( np.sqrt(0.25 - x) )
     plt.scatter(x, y, s=3)
     plt.show()
 
 
-def readNewcombData(filepath="../HW6Problems/newcomb-light-data.csv"):
+def readNewcombData(filepath="../HW6Problems/newcomb-light-data.csv"):\
+    """Reads supplied Newcombs data and returns read columns.
+    """
     a = np.genfromtxt(filepath, delimiter=",", skip_header=1)
     return a[:,0], a[:,1]
 
 
 def calcPosterior(data, mu0, tau20, nu0=1, phi20=1, muGridRange=None,
                   phi2GridRange=None, muGrid=None, phi2Grid=None, nSamples=101):
+    """Calculates posterior given in problem 5a by evaluating it over a grid.
 
+    Parameters
+    ----------
+    data : `array`
+        Data (Newcombs observed times)
+    mu0 : `float`
+        Mean of Newcombs normal prior for the mean
+    tau20 : `float`
+        STD of Newcombs normal prior for the mean
+    nu0 : `float`, optional
+        Nu of Newcombs gamma prior on sigma. Defaults to 1.
+    phi20: `float`, optional
+        Phi^2 of Newcoms gamma prior on sigma. Defaults to 1.
+    muGridRange: `tuple` or None, optional
+        If given places ``nSamples`` number of samples on a grid defined by
+        min(muGridRange), max(muGridRange). Note either the range or the grid
+        itself need to be provided.
+    phi2GridRange: `tuple`, or None, optional
+        If given places ``nSamples`` number of samples on a grid defined by
+        min(phi2GridRange), max(phi2GridRange). Note either the range or the
+        grid itself need to be provided.
+    muGrid : `array` or `None`, optional
+        Sampling grid.
+    phi2Grid : `array` or `None`, optional
+        Sampling grid.
+    nSamples : `int`, optional
+        Number of samples in case only grid ranges are provided. Defaults to 101
+
+    Returns
+    --------
+    posterior : `array`
+        Grid sampled posterior
+    """
     G, H = nSamples, nSamples
 
     if muGrid is not None:
@@ -57,6 +98,9 @@ def calcPosterior(data, mu0, tau20, nu0=1, phi20=1, muGridRange=None,
 
 
 def plotPosterior(ax, posterior, xRange, yRange, xlabel="mu", ylabel="phi^2"):
+    """Given an axis, posterior and physical ranges of the posterior plots the
+    posterior streched by its physical axes.
+    """
     ax.imshow(posterior.T, origin="lower", extent=(*xRange, *yRange))
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
@@ -67,6 +111,22 @@ def plotPosterior(ax, posterior, xRange, yRange, xlabel="mu", ylabel="phi^2"):
 
 
 def plotMarginal(ax, posterior, xRange, axis=0, label=''):
+    """Given posterior and a physical range calculates the marginal
+    of the posterior for a given axis and plots it.
+
+    Parameters
+    ----------
+    ax : `matplotlib.pyplot.Axes`
+        Plotting axis, (unfortunate naming convention)
+    posterior : `array`
+        Posterior discretized on a grid.
+    xRange : `array`
+        Range over which maginalization will happen
+    axis : `int`, optional
+        Axis over which to marginalize the posterior, 0 - row-vise, 1-column-vise
+    label : `str`, optional
+        Plot label.
+    """
     marginal = posterior.sum(axis=axis)
     x = np.linspace(*xRange, num=len(marginal))
     ax.plot(x, marginal, label=label)
@@ -77,6 +137,9 @@ def plotMarginal(ax, posterior, xRange, axis=0, label=''):
 
 
 def problem5a():
+    """Calculates the discretized posterior from problem 5. Plots the posterior
+    and the two marginals.
+    """
     day, time = readNewcombData()
 
     muGridRange = [24.75, 24.9]
@@ -99,6 +162,28 @@ def problem5a():
 
 
 def gibsSampler(data, nSamples=10000, mu0=30, tau20=0.01, nu0=1, phi20=1):
+    """Performs Gibbs sampling as per problem 5.
+
+    Parameters
+    ----------
+    data : `array`
+        Data (Newcombs observed times)
+    nSamples : `int`, optional
+        Number of samples. Defaults to 10000
+    mu0 : `float`
+        Mean of Newcombs normal prior for the mean
+    tau20 : `float`
+        STD of Newcombs normal prior for the mean
+    nu0 : `float`, optional
+        Nu of Newcombs gamma prior on sigma. Defaults to 1.
+    phi20: `float`, optional
+        Phi^2 of Newcoms gamma prior on sigma. Defaults to 1.
+
+    Returns
+    -------
+    samples : `array`
+        Samples.        
+    """
     mean = np.mean(data)
     var = np.var(data)
     n = len(data)
@@ -121,6 +206,9 @@ def gibsSampler(data, nSamples=10000, mu0=30, tau20=0.01, nu0=1, phi20=1):
 
 
 def problem5b():
+    """Produces discretized posterior, gibs sampled posterior plots and
+    statistics as instructed in problem 5b.
+    """
     day, time = readNewcombData()
 
     mu0 = 30
@@ -143,27 +231,32 @@ def problem5b():
     ax.scatter(samples[:,0], samples[:,1], s=1, color="white", marker='+')
     plt.show()
 
-    print(f"mu 25th 50th and 97.5th qunatiles: {np.percentile(samples[:,0], [2.5, 50, 97.5])}")
-    print(f"phi^2 25th 50th and 97.5th qunatiles: {np.percentile(samples[:,1], [2.5, 50, 97.5])}")
+    print(f"mu 25th 50th and 97.5th quantiles: {np.percentile(samples[:,0], [2.5, 50, 97.5])}")
+    print(f"phi^2 25th 50th and 97.5th quantiles: {np.percentile(samples[:,1], [2.5, 50, 97.5])}")
     stdev = 1/np.sqrt(samples[:,1])
-    print(f"sigma_phi^2 25th 50th and 97.5th qunatiles: {np.percentile(stdev, [2.5, 50, 97.5])}")
+    print(f"sigma_phi^2 25th 50th and 97.5th quantiles: {np.percentile(stdev, [2.5, 50, 97.5])}")
 
     d = 7.44373
     speedOfLight = d / (samples[:,0]*1e-6)
     speedQ25, speedQ50, speedQ975 = np.percentile(speedOfLight, [2.5, 50, 97.5])
     print("c (km/s) quantiles: %.6e, %.6e, %.6e"%(speedQ25, speedQ50, speedQ975))
+    print(f"From sample mean c(km/s): {d / time.mean()*1e-6}")
+    print(f"With sample std c(km/s): {d / time.std()*1e-6}")
+
+
+    print(f"Measured mean time: {time.mean()}")
+    print(f"Measured mean std: {time.std()}")
 
     plt.figure()
     plt.hist(time, bins=30)
     plt.xlabel("Time (ms)")
     plt.ylabel("Count")
 
-    print(f"Sample mean c(km/s): {d / time.mean()*1e-6}")
-    print(f"Sample std c(km/s): {d / time.std()*1e-6}")
+
     plt.show()
 
 
 if __name__ == "__main__":
-    #problem2a()
-    #problem5a()
+    problem2a()
+    problem5a()
     problem5b()
