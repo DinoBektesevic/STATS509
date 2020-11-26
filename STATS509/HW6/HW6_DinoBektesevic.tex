@@ -98,8 +98,7 @@ The researcher conducts two studies. In the first study she obtains a random sam
         c &= \frac{(\alpha + f + t + \beta + m -1)!}{(\alpha + f + t -2)! (\beta+m)!}
     \end{align*}
     
-    \item[(e)] Using the definition of expectation, or o
-    therwise, find $E[\theta \,|\, t, m, f]$, the mean of the researcher's posterior distribution.
+    \item[(e)] Using the definition of expectation, or otherwise, find $E[\theta \,|\, t, m, f]$, the mean of the researcher's posterior distribution.
     
     \begin{align*}
         E[\theta | t, m, f] &= \int_0^1 \theta f(\theta| t, m, f) d\theta \\
@@ -118,15 +117,15 @@ The researcher conducts two studies. In the first study she obtains a random sam
 \subsection*{Problem 2} 
 Suppose that we have a Beta$(1,1)$ prior for $p$, the mean of a Bernoulli random variable.
 \begin{enumerate}
-    \item[(a)] Find the density for $\psi = p(1-p)$, the variance of a Bernoulli random variable. (Hint: use the CDF method.) Plot this density.
+        \item[(a)] Find the density for $\psi = p(1-p)$, the variance of a Bernoulli random variable. (Hint: use the CDF method.) Plot this density.
     
     \begin{align*}
         P(\psi \leq t) &= P(p(1-p) \leq t) \\
         &= P(p-p^2 \leq t) \\
         &= P(-p^2 + p -t \leq 0) \\
-        &= P\left( p \leq \frac{1}{2} - \sqrt{\frac{1}{4} - t}\right) + P\left( p \geq \frac{1}{2} - \sqrt{\frac{1}{4} - t}\right)
+        &= P\left( p \leq \frac{1}{2} - \sqrt{\frac{1}{4} - t}\right) + P\left( p \geq \frac{1}{2} + \sqrt{\frac{1}{4} - t}\right)
     \end{align*}
-    Since $p$ follows Beta(1,1), which is uniform over [0,1], we can just say that
+    The above expression are essentially CDFs and since $p\approx Beta(1,1)$, which is uniform over [0,1], we can just say that
     $$P(\psi \leq t) = 1- 2\sqrt{\frac{1}{4} - t}$$
     
     The pdf then is:
@@ -138,9 +137,13 @@ Suppose that we have a Beta$(1,1)$ prior for $p$, the mean of a Bernoulli random
     \end{align*}
     for $t\in [0, \frac{1}{4}$
     
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{STATS509/HW6/HW6Figures/problem2a.png}
+    \end{center}
+    
     \item[(b)] The Beta$(1,1)$ density for $p$ has sometimes been claimed to be a `non-informative' prior, i.e.~representing a state of belief corresponding to knowing `nothing'. Using the plot from (a) comment briefly on this claim. 
     
-    Non-informative priors don'e exactly correspond to knowing "nothing", but instead to the belief that $p$ is equally probable to be any value from 0 to 1. Given this assumption we can see from the plot that variance of $V(\theta)$ is not uniform too, but that, given that assumption, more likely to be larger than, lets say, 0.15. 
+    Non-informative priors don't exactly correspond to knowing "nothing", but instead to the belief that $p$ is equally probable to be any value from 0 to 1. Given this assumption we can see from the plot that variance of $V(\theta)$ is not uniform too, but that, given that assumption, more likely to be larger than, lets say, 0.15. 
 \end{enumerate}
 
 
@@ -276,101 +279,264 @@ Since prior information about $\mu$ would come from work by others on the speed 
     \item[(a)] Obtain a discrete approximation to the posterior distribution $p(\mu,\phi^2 \mid y_1,\ldots ,y_n)$. Use this to obtain:
     \begin{enumerate}
         \item[(i)] a heat-map showing the discrete approximation to the joint posterior,
+        
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{STATS509/HW6/HW6Figures/problem5ai.png}
+        \end{center}
+        
         \item[(ii)] discrete approximations to the marginal densities, $p(\mu \mid y_1,\ldots ,y_n)$ and $p(\phi^2 \mid y_1,\ldots ,y_n)$; construct plots showing these approximations.
+        
+         \begin{center}
+            \includegraphics[width=0.4\textwidth]{STATS509/HW6/HW6Figures/problem5aii1.png}
+            \includegraphics[width=0.4\textwidth]{STATS509/HW6/HW6Figures/problem5aii2.png}
+        \end{center}
+        
     \end{enumerate}
     {\it Hints: (1) check that the prior parameters {\tt mu0, tau20, nu0, phi20} corresponding to $\mu_0$, $\tau^2_0$, $\nu_0$ and $\phi^2_0$ are set correctly. (2) To find the limits for your grid of values {\tt mu.grid} and {\tt phi2.grid}, it may be useful to do part (b) below first. (3) The range for {\tt mu.grid} needs to be made quite small since the data is highly informative. (4) For the same reason the range for {\tt phi2.grid} needs to be made large (up to $100$), but should not include $0$ or negative numbers as then the density is not defined.}
-    
-    
-    \item[(b)] Use the Gibbs sampler to obtain $10,000$ (dependent) draws from the posterior distribution $p(\mu,\phi^2 \mid y_1,\ldots ,y_n)$. 
-    
-    
 
-\begin{enumerate}
-    \item[(i)] Construct a scatterplot showing these $10,000$ draws.
+    \newpage
+    \item[(b)] Use the Gibbs sampler to obtain $10,000$ (dependent) draws from the posterior distribution $p(\mu,\phi^2 \mid y_1,\ldots ,y_n)$. 
+    \begin{enumerate}
+        \item[(i)] Construct a scatterplot showing these $10,000$ draws.
     
-    \item[(ii)] Find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the marginal posterior $p(\mu \mid y_1,\ldots ,y_n)$ (by finding these quantiles in your sample of $10,000$ draws).
+        \begin{center} 
+            \includegraphics[width=0.5\textwidth]{STATS509/HW6/HW6Figures/problem5bi.png}
+        \end{center}
     
-    \item[(iii)] Find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the marginal posterior $p(\phi^2 \mid y_1,\ldots ,y_n)$ (again by using your $10,000$ draws).
+        \item[(ii)] Find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the marginal posterior $p(\mu \mid y_1,\ldots ,y_n)$ (by finding these quantiles in your sample of $10,000$ draws).
+        
+        \lstinline[language=Python]{mu 25th 50th and 97.5th qunatiles: [24.79595245 24.8261025  24.85651072]}
+
+        \item[(iii)] Find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the marginal posterior $p(\phi^2 \mid y_1,\ldots ,y_n)$ (again by using your $10,000$ draws).
+        
+        \lstinline[language=Python]{phi^2 25th 50th and 97.5th qunatiles: [45.1711972  64.86764863 89.2792161 ]}
     
-    \item[(iv)] Find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the marginal posterior $p(\sigma \mid y_1,\ldots ,y_n)$ for the population s.d. 
+        \item[(iv)] Find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the marginal posterior $p(\sigma \mid y_1,\ldots ,y_n)$ for the population s.d. 
+        
+        \lstinline[language=Python]{sigma_phi^2 25th 50th and 97.5th qunatiles: [0.1058339  0.12416121 0.14878844]}
     
-    \item[(v)] As noted, the distance between Newcomb's lab and the mirror on the Washington Monument was $7.44373\; km$. Express the speed of light ($c$ in $km/s$) as a simple function of $\mu$. Use this information to find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the posterior $p(c \mid y_1,\ldots ,y_n)$ {\it Hint: this requires one line of R code using the vector of samples for $\mu$, which is stored in {\tt samples[,1]}.}
+        \item[(v)] As noted, the distance between Newcomb's lab and the mirror on the Washington Monument was $7.44373\; km$. Express the speed of light ($c$ in $km/s$) as a simple function of $\mu$. Use this information to find the $2.5\%$, $50\%$ and $97.5\%$ quantiles of the posterior $p(c \mid y_1,\ldots ,y_n)$ {\it Hint: this requires one line of R code using the vector of samples for $\mu$, which is stored in {\tt samples[,1]}.}
+        
+         \lstinline[language=Python]{c (km/s) quantiles: 2.994680e+05, 2.998348e+05, 3.001994e+05} \newline
+         \lstinline[language=Python]{From sample mean c(km/s): 2.998334970980085e-07} \newline
+        \lstinline[language=Python]{With sample std c(km/s): 0.0006980497158762172} 
     
-    \item[(vi)] Compare your answer in (v) to the best current measurements of the speed of light. 
+        \item[(vi)] Compare your answer in (v) to the best current measurements of the speed of light. 
+        
+        Pretty close to current textbook values of 2.99792458e5 km/s.
     
-    \item[(vii)] Look at a simple histogram of the observed data; compute the sample mean and sample standard deviation. Do you see anything that might make you question the assumption that the observations follow a normal distribution?
+        \item[(vii)] Look at a simple histogram of the observed data; compute the sample mean and sample standard deviation. Do you see anything that might make you question the assumption that the observations follow a normal distribution?
+    
+         \lstinline[language=Python]{Measured mean time: 24.826212121212123}\newline
+         \lstinline[language=Python]{Measured mean std: 0.010663610099255412}
+    
+        \begin{center} 
+            \includegraphics[width=0.5\textwidth]{STATS509/HW6/HW6Figures/problem5bvii.png}
+        \end{center}
+        
+        The two largest outliers are significantly smaller than the measured mean making the sample distribution suspicious, but given that even in these outliers are in absolute terms very close to the mean I don't think it's a problem.
 \end{enumerate}
 
 {\it\scriptsize Note: the script contains various techniques for checking convergence of the Gibbs sampler, e.g. computing the auto-correlation and examining parallel boxplots. These can safely be ignored in this example!}
 \end{enumerate}
-
 {\small If you are interested, historical information on the Newcomb experiment is given here:
-
 \hspace{-1cm}{\scriptsize \url{https://www.stat.washington.edu/tsr/s509/examples/newcomb/background-on-newcomb-experiment.pdf}}\par
 }
-
 \eject
 
 \subsection*{Gibbs sampling}
 
-This question provides intuition as to why Gibbs sampling works. The idea is that the `target distribution' that we wish to draw samples from 
-(in Bayesian analyses this is the posterior distribution) is preserved by the steps in the procedure. (In more technical language, the procedure creates a Markov chain with a stationary distribution that is the target distribution.)
+This question provides intuition as to why Gibbs sampling works. The idea is that the `target distribution' that we wish to draw samples from (in Bayesian analyses this is the posterior distribution) is preserved by the steps in the procedure. (In more technical language, the procedure creates a Markov chain with a stationary distribution that is the target distribution.)
 
-\begin{enumerate}
-\item[6.] Consider the following joint density:
-Let  $X,Y$ be random variables with the following joint pdf:
+\subsection*{Problem 6.}
+Consider the following joint density: Let  $X,Y$ be random variables with the following joint pdf:
 \begin{equation}\label{eq:one}
-f_{XY}(x,y) = \left\{  \begin{array}{cl}
-2 &   0< x <1,\hbox{ and } 0 < y < x < 1 \\[5pt]
-0   & \hbox{otherwise,}
-\end{array}
-  \right.
+    f_{XY}(x,y) = \left\{  \begin{array}{cl}
+        2 &   0< x <1,\hbox{ and } 0 < y < x < 1 \\[5pt]
+        0   & \hbox{otherwise,}
+        \end{array}
+    \right.
 \end{equation}
-\begin{enumerate}
-\item[(a)] Find the conditional densities $f(x\mid y)$ and $f(y \mid x)$.
-\item [(b)] Consider the following two step Gibbs simulation scheme for finding a new point
-$(X_{new}, Y_{new})$ given an existing point $(X_{old}, Y_{old})$:
-\begin{align*}
-X_{new} \sim&\quad X \mid Y_{old}\\
-Y_{new} \sim&\quad Y \mid X_{new}
-\end{align*}
-where these are the conditional distributions computed in (a).
 
 \begin{enumerate}
-\item[(i)] Show that if $(X_{old},Y_{old})$ has the joint density given by (\ref{eq:one})
-then $(X_{new},Y_{old})$ also has the joint density  (\ref{eq:one}).\par
-{\it Hint: note that 
-\[
-f(x_{new},x_{old},y_{old}) = f(x_{new}\mid y_{old})f(x_{old},y_{old}),
-\]
-then integrate out $x_{old}$.}
-\item[(ii)] Similarly show that if $(X_{old},Y_{old})$ has the joint density given by (\ref{eq:one})
-then  $(X_{new},Y_{new})$ also has the joint density  (\ref{eq:one}).
+    \item[(a)] Find the conditional densities $f(x\mid y)$ and $f(y \mid x)$.
+    
+    \begin{align*}
+        f(x|y) = \frac{f(x,y)}{f(y)}& \\
+        \\
+        &f(y) = \int_y^1 f(x,y) dx \\
+        &= \int_y^1 2dx \\
+        &= 2(1-y) \\
+        \\
+        f(x|y) = \frac{2}{2(1-y)}&
+    \end{align*}
+    And the other way around:
+    \begin{align*}
+        &f(x) = \int_0^x f(x,y) dx = 2x \\
+        \\
+        f(x|y) = \frac{1}{x}&
+    \end{align*}
+    
+    \newpage
+    \item [(b)] Consider the following two step Gibbs simulation scheme for finding a new point $(X_{new}, Y_{new})$ given an existing point $(X_{old}, Y_{old})$:
+    \begin{align*}
+        X_{new} \sim&\quad X \mid Y_{old}\\
+        Y_{new} \sim&\quad Y \mid X_{new}
+    \end{align*}
+    where these are the conditional distributions computed in (a).
+    \begin{enumerate}
+        \item[(i)] Show that if $(X_{old},Y_{old})$ has the joint density given by (\ref{eq:one}) then $(X_{new},Y_{old})$ also has the joint density  (\ref{eq:one}).\par
+        {\it Hint: note that 
+        $$f(x_{new},x_{old},y_{old}) = f(x_{new}\mid y_{old})f(x_{old},y_{old}),$$
+        then integrate out $x_{old}$.}
+        
+        \begin{align*}
+            f(x_n, y_o) &= \int_{y_o}^1 f(x_n|y_o)f(x_o,y_o)dx_o \\
+            &= \frac{1}{1-y_o} \int_{y_o}^1 2 dx_o \\
+            &= \frac{2}{1-y_o}(1-y_o) \\
+            &=2
+        \end{align*}
+
+        \item[(ii)] Similarly show that if $(X_{old},Y_{old})$ has the joint density given by (\ref{eq:one}) then  $(X_{new},Y_{new})$ also has the joint density  (\ref{eq:one}).
+        
+        \begin{align*}
+            f(x_n, y_n) &= \int_0^{x_n} f(y_n|x_n)f(x_n,y_o)dy_o \\
+            &= \int_0^{x_n} \frac{1}{x_n} 2dy_o \\
+            &= \frac{2}{x_n}\int_0^{x_n}dy_o \\
+            &=2
+        \end{align*}
+    \end{enumerate}
+
+    \newpage
+    \item[(c)] A friend  suggests using the following sampling scheme instead:
+    \begin{align*}
+        X^*_{new} \sim &\quad  X \mid Y_{old}\\
+        Y^*_{new} \sim &\quad Y \mid X_{old}
+    \end{align*}
+    Show that even  if $(X_{old},Y_{old})$ has the joint density given by (\ref{eq:one}), $(X^*_{new},Y^*_{new})$ does {\bf not} have the density (\ref{eq:one}). {\it Hint: consider the support of $(X^*_{new},Y^*_{new})$. It may also help to draw a picture.}
+    
+    \begin{align*}
+        f(x^*_n, y^*_n) &= \int_{y^*_n}^1 \int_0^{x^*_n} f(y^*_n, x_o, y_o) dy_o dx_o \\
+        &= \int_{y^*_n}^1 \int_0^{x^*_n} f(y^*_n|x_o, x^*_n, y_o) f(x_o, x^*_n, y_o) dy_o, dx_o \\
+        &= \int_{y^*_n}^1 \int_0^{x^*_n} f(y^*_n|x_o) f(x_o, x^*_n, y_o) dy_o dx_o\\
+        &= \int_{y^*_n}^1 \int_0^{x^*_n} f(y^*_n|x_o) f(x^*_n|y_o) f(x_o, y_o) dy_o, dx_o\\
+        &= \int_{y^*_n}^1 f(y^*_n|x_o) \int_0^{x^*_n} f(x^*_n|y_o) f(x_o, y_o) dy_o, dx_o \\
+        &=  \int_{y^*_n}^1 f(y^*_n|x_o) dx_o \frac{2}{x^*_n} x^*_n\\
+        &= 2 \int_{y^*_n}^1 \frac{1}{x_o} dx_o \\
+        &= -2 \ln{y^*_n}
+    \end{align*}
 \end{enumerate}
-\item[(c)] A friend  suggests using the following sampling scheme instead:
-\begin{align*}
-X^*_{new} \sim &\quad  X \mid Y_{old}\\
-Y^*_{new} \sim &\quad Y \mid X_{old}
-\end{align*}
-Show that even  if $(X_{old},Y_{old})$ has the joint density given by (\ref{eq:one}),
-$(X^*_{new},Y^*_{new})$ does {\bf not} have the density (\ref{eq:one}).\par
-{\it Hint: consider the support of $(X^*_{new},Y^*_{new})$. It may also help to draw a picture.}
-
-\end{enumerate}
-\end{enumerate}
 
 
 
-
-
+\newpage
 \subsection*{Sampling Distributions}
-
 Questions from Goldberger:
+
+\subsection*{Problem 7}
+Qu.~8.3 (This is review of material from Chapters 2 and 3.)
+
 \begin{enumerate}
-\item[7.] Qu.~8.3 (This is review of material from Chapters 2 and 3.)
-\item[8.] Qu.~8.4  (See section 8.3 on p.85.)
-\item[9.]  Goldberger Qu. 8.7\par
-{\it Hint: For part (b) read pages 87-88, Section 8.5.}
+    \item Bernouli with $p=0.5$
+    
+    \begin{align*}
+        E[X] &= 0.5 \\
+        V[X] &= 0.5(1-0.5) = 0.25 \\
+        P(A) &= P(0.4\leq X \leq 0.6) = 
+    \end{align*}
+    
+    \item Normal with parameters $\mu=0.5$ and $\sigma^2=0.25$
+    
+    \begin{align*}
+        E[X] &= 0.5 \\
+        V[X] &= 0.25 \\
+        P(A) &= P(0.4\leq X \leq 0.6) = 0.159
+    \end{align*}
+    
+    \item Exponential with $\lambda=2$
+    
+    \begin{align*}
+        E[X] &= 0.5 \\
+        V[X] &= 0.25 \\
+        P(A) &= P(0.4\leq X \leq 0.6) = 0.148
+    \end{align*}
 \end{enumerate}
+
+
+\newpage
+\subsection*{Problem 8}
+Qu.~8.4  (See section 8.3 on p.85.)
+
+From section 8.3 we have that:
+\begin{enumerate}
+    \item if $X\approx$Bernoulli, then $n\bar X\approx$Binomial(n,p)
+    \item if $X\approx$Normal, then $\bar X\approx$Normal($\mu, \sigma^2/n$)
+    \item if $X\approx$Exponential, then $2n\lambda \bar X\approx$Chi-square(k)
+\end{enumerate}
+ n=10
+ 
+\begin{enumerate}
+    \item Bernoulli with $p=0.5$
+    
+    \begin{align*}
+        E[\bar X] &= 0.5 \\
+        V[\bar X] &= 0.5(1-0.5) = 0.025 \\
+        P(A) &= P(0.4\leq X \leq 0.6) = 0.451
+    \end{align*}
+    
+    \item Normal with parameters $\mu=0.5$ and $\sigma^2=0.25$
+    
+    \begin{align*}
+        E[\bar X] &= 0.5 \\
+        V[\bar X] &= 0.025 \\
+        P(A) &= P(0.4\leq X \leq 0.6) = 0.451
+    \end{align*}
+    
+    \item Exponential with $\lambda=2$
+    
+    \begin{align*}
+        E[\bar X] &= 0.5 \\
+        V[\bar X] &= 0.25 \\
+        P(A) &= P(0.4\leq X \leq 0.6) = 0.451
+    \end{align*}
+\end{enumerate}
+
+\newpage
+\subsection*{Problem 9}
+Goldberger Qu. 8.7\par
+{\it Hint: For part (b) read pages 87-88, Section 8.5.}
+
+\begin{enumerate}
+    \item The function $Y$ is concave. So by Jensen's inequality we have
+    
+    $$E[g(X)] \leq g\left( E[X] \right)$$
+    Given is that $E[\bar X] = 1/\lambda$ so $1/E[\bar X] = \lambda$. Applying Jensen's inequality to the problem then yields:
+    
+    $$\lambda = \frac{1}{E[\bar X]} \leq E\left[\frac{1}{\bar X}\right] = E[T]$$
+    
+    \item If $\lambda =2$ and $n=10$ find E(T) and V(T):
+    From problem 8 we know that if X~Exponential then $2n\lambda\bar X \approx$ Chi-Square(2n) so we define $W=2n\lambda\bar X \approx \chi^2(2n)$ and look for:
+    \begin{align*}
+        E[1/W] &= E\left[ \frac{1}{2n\lambda\bar X} \right] \\
+        &= \frac{1}{2n\lambda} E\left[ \frac{1}{\bar X} \right] \\
+        &= \frac{1}{2n\lambda} E[T] \\
+        E[T] &= 2n\lambda E[1/W] \\
+        &= \frac{2n\lambda}{2n -2} \\
+        &= \frac{40}{18} \approx 2.222\hdots
+    \end{align*}
+    
+    and the variance:
+    \begin{align*}
+        E[1/W^2] &= E\left[ \frac{1}{4n^2\lambda^2\bar X^2} \right] \\
+        &= \frac{1}{4n^2\lambda^2} E\left[ \frac{1}{\bar X^2} \right] \\
+        &= \frac{1}{4n^2\lambda^2} E[T^2] \\
+        E[T^2] &= 4n^2\lambda^2 E[1/W^2] \\
+        &= \frac{4n^2\lambda^2}{(2n -2)(2n-4)} \\
+        &= \frac{1600}{288} \approx 5.5555\hdots
+    \end{align*}
+    $$\rightarrow V[T] = E[T^2] - E[T]^2 \approx 3.3333\hdots$$
+    Where we used the expectation values of inverse Chi-square RV found in the book chapter 8.5 (page 88). 
+\end{enumerate}
+
 
 \end{document}
