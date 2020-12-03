@@ -85,17 +85,34 @@ The researcher plans to obtain a random sample of size $25$: $X_1,\ldots , X_{25
     \item[c.] What is the distribution of $\bar{X}$? {\it Hint: see lecture notes.}\par
     What is the mean and variance of this distribution?
         
+    \newpage
     \item[d.] Use {\tt R} or Python, replicate the experiment $10,000$ times. \par
     {\it Hint: Recall that a Bernoulli$(p)$ random variable is just a Binomial$(1,p)$ random variable; thus to obtain a sample of size $25$ from a Bernoulli$(0.89)$ random variable, one might use:\par
     {\tt p <- 0.89\par
         n <- 25\par
         x <- rbinom(n,1,p)
     }\par
-The vector {\tt x} will contain the $25$ Bernoulli$(p)$ observations, from which you can compute the sample mean. This should then be put in a loop which repeats this process, 10K times, storing the result.} Construct a histogram with the distribution of $\bar{X}$ for each sample. Does the distribution of sample means appear to be normal? Explain your answer. 
+    The vector {\tt x} will contain the $25$ Bernoulli$(p)$ observations, from which you can compute the sample mean. This should then be put in a loop which repeats this process, 10K times, storing the result.} Construct a histogram with the distribution of $\bar{X}$ for each sample. Does the distribution of sample means appear to be normal? Explain your answer. 
+    
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{STATS509/HW7/HW7Figures/Problem1.png}
+    \end{center}
+    
+    The distribution does not look normal. 
+    
+    \lstinputlisting[linerange={0-22}]{STATS509/HW7/HW7Code/HW7_DinoBektesevic.py}
+    
     
     \item[e.] Find the mean and variance of $\bar{X}$, based on your 10K simulations.  Does this agree with your calculation in c.?
 
+    \lstinline[language=Python]{Mean of means: 0.8891480000000002}\newline
+    \lstinline[language=Python]{Variance of means: 0.003957434095999998}
+
     \item[f] Compute the mean squared error of $\bar{X}$ as an estimate of the unknown proportion $\theta=0.89$ (i.e. find the squared error of the estimate, which is $(\bar{X} - \theta)^2$, in each repetition and then average over all repetitions). What do you notice? Give a simple explanation by referring to a result from the course.
+    
+    \lstinline[language=Python]{Mean squared error: 0.0039581600000000005}
+    It is very close to the variance of means calculated above. 
+    
     \end{itemize}
 
 \newpage
@@ -103,9 +120,25 @@ The vector {\tt x} will contain the $25$ Bernoulli$(p)$ observations, from which
 Given a sample $X_1,\ldots , X_n$  of independent Poisson$(\lambda)$ random variables, a researcher  intends to use $\bar{X}$, the sample mean, as an estimate of $\lambda$.  Suppose that $n=20$, and $\lambda=4$.
 \begin{itemize}
     \item[a.] Write down the mean and variance of this distribution.
+    
     \item[b.] Using {\tt R} or Python, replicate the experiment $10,000$ times. Construct a histogram with the distribution of $\bar{X}$ for each sample. Does the distribution of sample means appear to be normal? Explain your answer.
+    
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{STATS509/HW7/HW7Figures/Problem2.png}
+    \end{center}
+    
+    The distribution looks normal. 
+    \lstinputlisting[linerange={0-4,25-42}]{STATS509/HW7/HW7Code/HW7_DinoBektesevic.py}
+    
     \item[c.] Find the mean and variance of $\bar{X}$, based on your 10K simulations. Does this agree with your calculation in a.?
+    
+    \lstinline[language=Python]{Mean of means: 3.9952959999999997}\newline
+    \lstinline[language=Python]{Variance of means: 0.16090299238400002}
+    
     \item[d.] Compute the mean squared error of $\bar{X}$ as an estimate of $\lambda$. Again what do you notice? 
+    
+    \lstinline[language=Python]{Mean squared error: 0.16092512}
+    It is very close to the variance of means calculated above. 
 \end{itemize}
 
 
