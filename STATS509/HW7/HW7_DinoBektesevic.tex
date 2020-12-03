@@ -110,7 +110,7 @@ The researcher plans to obtain a random sample of size $25$: $X_1,\ldots , X_{25
 
     \item[f] Compute the mean squared error of $\bar{X}$ as an estimate of the unknown proportion $\theta=0.89$ (i.e. find the squared error of the estimate, which is $(\bar{X} - \theta)^2$, in each repetition and then average over all repetitions). What do you notice? Give a simple explanation by referring to a result from the course.
     
-    \lstinline[language=Python]{Mean squared error: 0.0039581600000000005}
+    \lstinline[language=Python]{Mean squared error: 0.0039581600000000005} \newline
     It is very close to the variance of means calculated above. 
     
     \end{itemize}
@@ -137,7 +137,7 @@ Given a sample $X_1,\ldots , X_n$  of independent Poisson$(\lambda)$ random vari
     
     \item[d.] Compute the mean squared error of $\bar{X}$ as an estimate of $\lambda$. Again what do you notice? 
     
-    \lstinline[language=Python]{Mean squared error: 0.16092512}
+    \lstinline[language=Python]{Mean squared error: 0.16092512} \newline
     It is very close to the variance of means calculated above. 
 \end{itemize}
 
@@ -216,6 +216,7 @@ Suppose that we wish to test $H_0$: $\lambda =\lambda_0$ vs. $H_1$: $\lambda \ne
     
 \end{itemize}
 
+
 \newpage
 \subsection*{Problem 4}
 Suppose that we are planning an experiment to test hypotheses about the mean of a population that is known to be normal with standard deviation $\sigma =4$. We wish to test the null hypothesis  $H_0: \mu = 0$ vs.~the alternative $H_A: \mu> 0$. We intend to use a likelihood ratio test with significance level $\alpha = 0.05$.
@@ -254,6 +255,11 @@ Suppose that we are planning an experiment to test hypotheses about the mean of 
 
     \item[c.] Continuing from b., the scientist who is planning the experiment wishes to have power at least $90\%$. (Thus your calculation in b. shows that more than $36$ observations are required.) Find approximately the smallest sample size at which this power can be achieved, against the specific alternative $\mu=0.3$.\par 
     {\it Hint: repeat the calculation performed in {\rm b.} at different sample sizes using trial and error: you may wish to use {\tt R} or a spreadsheet to speed up this calculation.}
+    
+     \lstinline[language=Python]{n = 1528, Power = 0.9000476355273681}
+     
+    \lstinputlisting[linerange={0-4,44-55}]{STATS509/HW7/HW7Code/HW7_DinoBektesevic.py}
+   
 
    \item[d.] Suppose that the researcher obtains $200$ samples, and observes $\bar{x} = 0.65$. Compute the p-value for this hypothesis test.
    
