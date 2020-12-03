@@ -204,12 +204,12 @@ Suppose that we wish to test $H_0$: $\lambda =\lambda_0$ vs. $H_1$: $\lambda \ne
     
     \item[e.] Use your answer to d. to find the LRT statistic for the hypothesis test with $\lambda_0=1$.\par
     
-    \begin{align}
+    \begin{align*}
         \lambda_{lrt}(y_1\hdots y_n) &= e^{-n(\lambda_0 - \bar y)} \left(\frac{\lambda_0}{\bar y}\right)^{n\bar y} \\
         &= e^{-200(1-0.6) }\left(\frac{200}{122}\right)^{200\frac{122}{200}} \\
         &= e^{-80}\left(\frac{200}{122}\right)^{122} \\
         &= 2.79\cdot 10^{-9}
-    \end{align}
+    \end{align*}
 
     \item[f] Report the approximate p-value.\par
     {\it Hint: calculate $-2\log$(LRT), and compare to the appropriate $\chi^2$ distribution. See Lecture 10, slide 43. Recall that small values of the LRT correspond to evidence against $H_0$.}
@@ -247,8 +247,8 @@ Suppose that we are planning an experiment to test hypotheses about the mean of 
         1 - \beta &=  1- P \left(Y < \frac{\sqrt{n}(c - \mu)}{\sigma}  \bigg | \mu=0.3 \right) \\
         &=  1 - \Phi  \left(\frac{\sqrt{n}(c - \mu)}{\sigma}\right) \\
         &= 1- \Phi\left( \frac{\sqrt{n}(c - \mu)}{\sigma}  \bigg | \mu=0.3 \right) \\
-        &= 1- \Phi\left( \frac{\sqrt{n}(\frac{6.579416}{\sqrt{n}} - \mu)}{\sigma}  \bigg | \mu=0.3 \right) \\
-        &= 1- \Phi\left( \frac{6(\frac{6.579416}{6} - 0.3}{4} \right) \\
+        &= 1- \Phi\left( \frac{\sqrt{n} \left(\frac{6.579416}{\sqrt{n}} - \mu \right)}{\sigma}  \bigg | \mu=0.3 \right) \\
+        &= 1- \Phi\left( \frac{6\frac{6.579416}{6} - 0.3}{4} \right) \\
         &= 1- \Phi(1.194854 ) \\
         &= 0.116
     \end{align*}
@@ -265,7 +265,7 @@ Suppose that we are planning an experiment to test hypotheses about the mean of 
    
    \begin{align*}
        p_v &= P(\bar X > \bar x | H_0) \\
-       &= 1 - \Phi(\frac{\sqrt{200}(0.65 - 0)}{4} \\
+       &= 1 - \Phi \left( \frac{\sqrt{200}(0.65 - 0)}{4} \right)\\
        &= 0.0108
    \end{align*}
 \end{itemize}
