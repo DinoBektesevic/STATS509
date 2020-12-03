@@ -41,7 +41,20 @@ def problem2():
     plt.show()
 
 
+def problem4c():
+    mu, sigma = 0.3, 4
+    n = 36
+
+    xi = lambda ni: sigma * 1.6499/np.sqrt(ni)
+    power = lambda n_i: 1 - stats.norm.cdf(xi(n_i), loc=mu, scale=sigma/np.sqrt(n_i))
+
+    while power(n) < 0.9:
+        n += 1
+
+    print(f"n = {n}, Power = {power(n)}")#, end='\r')
+
 
 if __name__ == "__main__":
-    problem1()
-    problem2()
+    #problem1()
+    #problem2()
+    problem4c()
