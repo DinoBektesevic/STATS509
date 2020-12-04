@@ -81,9 +81,9 @@ A researcher plans to carry out an opinion survey regarding a yes/no question. S
     
     First draw is just a single Bernoulli experiment with $p=0.89$ so:
     \begin{align*}
-        P(X=X_1) &= p^k(1-p)^{1-k} = p = 0.89 \\
-        E[X_1] = p = 0.89 \\
-        V[X_1] = p(1-p) = 0.0979 \\
+        P(k) &= p^k(1-p)^{1-k} \\
+        E[X_1] &= p = 0.89\\
+        V[X_1] &= p(1-p) = 0.0979\\
     \end{align*}
 \end{itemize}
 
@@ -95,7 +95,7 @@ The researcher plans to obtain a random sample of size $25$: $X_1,\ldots , X_{25
     
     Each draw is just a single Bernoulli experiment with $p=0.89$ because of i.i.d. so:
     \begin{align*}
-        P(X_i=x_1) &= p^k(1-p)^{1-k} = p = 0.89 \\
+        P(X_i=x_i) &= p^{x_i}(1-p)^{1-{x_i}} \\
         E[X_i] &= p = 0.89 \\
         V[X_i] &= p(1-p) = 0.0979 \\
         Cov(X_i, X_j) &= E[X_iX_j] - E[X_i]E[X_j] = 0
@@ -104,18 +104,8 @@ The researcher plans to obtain a random sample of size $25$: $X_1,\ldots , X_{25
     If it's the joint distribution we are after then:
     \begin{align*}
         P(X_1=x_1 \hdots X_{25}=x_{25}) &= P(X_1=x_1)\hdots P(X_{25}=x_{25}) \\
-        &= \prod_{i=1}^{25} P(X_i=x_i) = 0.89^{25} \\
-        &= 0.054 \\
-        E[P(X_i)] &= E\left[ \prod_{i=1}^{25} P(X_i=x_i)\right] \\
-        &= \prod_{i=1}^{25} E[P(X_i=x_i)] = 0.89^{25} \\
-        &= 0.054 \\
-        V[P(X_i)] &= E[ (X_1\cdots X_{25})^2 ] - \left( E[ X_1\cdots X_{25} ] \right)^2 \\
-        &= E[X_1^2] \cdots E[X_{25}^2] - E[X_1]^2 \cdots E[X_{25}]^2 \\
-        &= \prod_{i=1}^{25} E[X_i^2] - \prod_{i=1}^{25} (E[X_i])^2 \\
-        &= \prod_{i=1}^{25} V[X_i] + E[X_i]^2  - \prod_{i=1}^{25} (E[X_i])^2 \\
-        &= (0.0979 + 0.89^2)^{25} - 0.89^{50} \\
-        &= 0.0513 \\
-        Cov(X_i, X_j) &= 0
+        &= \prod_{i=1}^{25} P(X_i=x_i) = \prod_{i=1}^{25} p^{x_i}(1-p)^{1-x_i} \\
+        &= p^{\sum_{i=1}^{25} x_i}(1-p)^{\sum_{i=1}^{25} x_i}
     \end{align*}
     
 
@@ -217,7 +207,7 @@ Suppose that $Y_1,\ldots ,Y_n$ are i.i.d samples from a Poisson distribution wit
         \frac{d}{d\lambda} l(\lambda|y_1\hdots y_n) &= \frac{d}{d\lambda}\ln(\lambda)\sum_{i=1}^n y_i - \frac{d}{d\lambda}n\lambda - \frac{d}{d\lambda}\ln \prod_{i=1}^n y_i! = 0 \\
          0 &= \frac{\sum_{i=1}^n y_i}{\hat\lambda} - n \\
          n\hat\lambda &= \sum_{i=1}^n y_i  \\
-         \hat\lambda &= \frac{\sum_{i=1}^n y_i}{\lambda} \\
+         \hat\lambda &= \frac{\sum_{i=1}^n y_i}{n} \\
          \hat\lambda &= \bar y
     \end{align*}
     To confirm it's a maximum we have to take a look at the second derivative:
@@ -269,7 +259,12 @@ Suppose that we wish to test $H_0$: $\lambda =\lambda_0$ vs. $H_1$: $\lambda \ne
 
     \item[f] Report the approximate p-value.\par
     {\it Hint: calculate $-2\log$(LRT), and compare to the appropriate $\chi^2$ distribution. See Lecture 10, slide 43. Recall that small values of the LRT correspond to evidence against $H_0$.}
-
+    
+    \begin{align*}
+        P(\Lambda \leq \lambda_{lrt} | H_0) &= 1 - F_{\chi} (-2 \cdot \ln(\lambda_{lrt}) )\\
+        &= 2.696\cdot 10^{-9}
+    \end{align*} 
+    
 \end{itemize}
 
 
@@ -329,16 +324,9 @@ Suppose that we are planning an experiment to test hypotheses about the mean of 
 
 \newpage
 \subsection*{Problem 5}
-A researcher performs a sequence of independent experiments, up to and including the first `success', after which the researcher stops. Each experiment has the same probability $p$ of success. Let $T$ be the number of experiments  performed (including the first observed success). The researcher wishes to test the null hypothesis 
-\begin{enumerate}
-    \item $H_0$: $p=0.25$, 
-    \item against the alternative hypothesis
-    \item $H_1$:  $p>0.25$. 
-\end{enumerate}
-The researcher proposes to reject the null hypothesis if $T<4$.
+A researcher performs a sequence of independent experiments, up to and including the first `success', after which the researcher stops. Each experiment has the same probability $p$ of success. Let $T$ be the number of experiments  performed (including the first observed success). The researcher wishes to test the null hypothesis $H_0$: $p=0.25$, against the alternative hypothesis $H_1$:  $p>0.25$. The researcher proposes to reject the null hypothesis if $T<4$.
 \begin{enumerate}
     \item  What is the significance level $\alpha$ of the test proposed by the researcher?
-   
     \begin{align*}
         \alpha &= P(T<4|H_0) \\
         &= P(T\leq 3 | H_0) \\
@@ -348,7 +336,6 @@ The researcher proposes to reject the null hypothesis if $T<4$.
     \end{align*}
     
     \item What is the power of the researcher's test against the specific alternative hypothesis that $p=0.5$.
-    
      \begin{align*}
         1- \beta &= P(T<4|H_1) \\
         &= P(T\leq 3 | H_1) \\
@@ -358,15 +345,26 @@ The researcher proposes to reject the null hypothesis if $T<4$.
         &= \frac{7}{8}
     \end{align*}
     
+    \newpage
     \item  Re-express the researcher's rule for rejecting the null hypothesis in terms of the likelihood ratio:
     $$ {\rm LRT} = p(t \mid p=0.25)/p(t \mid p=0.5). $$
     Specifically, find the value $\ell$ such that the researcher will reject $H_0$ $p=0.25$ in favor of $p=0.5$ if LRT$<\ell$.\par  {(Note: There will be a range of values for $\ell$ that will give the same test.)}
-    
     \begin{align*}
         \Lambda (t) &= \frac{P(T=t|H_0}{P(T=t|H_1)} \\
         &= \frac{p_0(1-p_0)^{t-1}}{p_1(1-p_1)^{t-1}} \\
         &= \frac{1}{2}\left(\frac{3}{2}\right)^{t-1}
     \end{align*}
+    Writing this out in a table:
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{l|l|l}
+        t & $P(t\leq t|p=0.25)$ & $\lambda_{lrt}(t)$ \\ \hline 
+        1 & 0.25                             & 0.5                                \\
+        2 & 0.4375                           & 0.75                               \\
+        3 & 0.5781                           & 1.125                              \\
+        4 & 0.6836                           & 1.6875                            
+        \end{tabular}
+    \end{table}
     
 \end{enumerate}
 {\it Hint: (For all parts) Geometric distribution!}
@@ -407,5 +405,25 @@ Consider a $95\%$ confidence interval for the mean height $\mu$ in a population.
 \newpage
 \subsection*{Problem 7}
 Goldberger Qu.~11.6 (Assume that the observations are drawn from a Normal Distribution and see Lecture 10, slide 46.)
+
+\begin{enumerate}
+    \item A random sample $n=30$ with $\sum x_i = 120$ and $\sum X_i^2 = 8310$ where $x_i\sim N(\mu, \sigma^2/n)$ we can say: 
+    
+    \begin{align*}
+        \mu &= \frac{1}{n} \sum_{i=1}^n x_i = 4 \\
+        \sigma^2 &= \frac{n}{n-1} \sum_{i=1}^n (x_i - \bar x)^2 = \frac{8310}{29} \approx 286.55 \\
+        V[\bar X] &= \frac{\sigma^2}{n} = \frac{8310}{29\cdot 30} \approx 9.55
+    \end{align*}
+    
+    \item Give 95\% CI interval:
+    
+    Lecture 10 slide 46 tells us 95\% CI is given as
+    
+    $$ P\left(\bar X - 1.96\frac{\sigma}{\sqrt n} \leq \mu \leq \bar X + 1.96\frac{\sigma}{\sqrt n}\right) = 0.95 $$
+    
+    so we can say 95\% CI$=[-2.06, 10.06]$ 
+\end{enumerate}
+
+
 
 \end{document}
