@@ -23,7 +23,7 @@ def problem1():
 
 
 def problem2():
-    n, lambd = 25, 4
+    n, lambd = 20, 4
     nTrials = 10000
     means = []
     for i in range(nTrials):
@@ -55,6 +55,6 @@ def problem4c():
 
 
 if __name__ == "__main__":
-    #problem1()
-    #problem2()
+    problem1()
+    problem2()
     problem4c()
