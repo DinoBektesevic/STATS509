@@ -73,18 +73,64 @@
 \maketitle
 
 \subsection*{Problem 1: Sampling Distributions}
+
 A researcher plans to carry out an opinion survey regarding a yes/no question. Suppose that (unknown to the researcher) $89\%$ of people in the target population answer `yes'. We will use $1$ to denote `yes' and $0$ to denote `no'.
+
 \begin{itemize}
     \item[a.] Let $X_1$ be the response from the first person the researcher asks. Before this person is asked, what is the distribution of $X_1$. What is $E[X_1]$ and $V(X_1)$?
+    
+    First draw is just a single Bernoulli experiment with $p=0.89$ so:
+    \begin{align*}
+        P(X=X_1) &= p^k(1-p)^{1-k} = p = 0.89 \\
+        E[X_1] = p = 0.89 \\
+        V[X_1] = p(1-p) = 0.0979 \\
+    \end{align*}
 \end{itemize}
+
 The researcher plans to obtain a random sample of size $25$: $X_1,\ldots , X_{25}$. \par
 (Suppose either that the researcher is sampling with replacement or that the population is so large that we may regard the samples as being taken with replacement.)
+
 \begin{itemize} 
     \item[b.] Write down the distribution of $X_i$ for $i=1,\ldots ,25$; also write down $E[X_i]$, $V(X_i)$ and Cov$(X_i,X_j)$ for $i\neq j$.
     
+    Each draw is just a single Bernoulli experiment with $p=0.89$ because of i.i.d. so:
+    \begin{align*}
+        P(X_i=x_1) &= p^k(1-p)^{1-k} = p = 0.89 \\
+        E[X_i] &= p = 0.89 \\
+        V[X_i] &= p(1-p) = 0.0979 \\
+        Cov(X_i, X_j) &= E[X_iX_j] - E[X_i]E[X_j] = 0
+    \end{align*}
+    
+    If it's the joint distribution we are after then:
+    \begin{align*}
+        P(X_1=x_1 \hdots X_{25}=x_{25}) &= P(X_1=x_1)\hdots P(X_{25}=x_{25}) \\
+        &= \prod_{i=1}^{25} P(X_i=x_i) = 0.89^{25} \\
+        &= 0.054 \\
+        E[P(X_i)] &= E\left[ \prod_{i=1}^{25} P(X_i=x_i)\right] \\
+        &= \prod_{i=1}^{25} E[P(X_i=x_i)] = 0.89^{25} \\
+        &= 0.054 \\
+        V[P(X_i)] &= E[ (X_1\cdots X_{25})^2 ] - \left( E[ X_1\cdots X_{25} ] \right)^2 \\
+        &= E[X_1^2] \cdots E[X_{25}^2] - E[X_1]^2 \cdots E[X_{25}]^2 \\
+        &= \prod_{i=1}^{25} E[X_i^2] - \prod_{i=1}^{25} (E[X_i])^2 \\
+        &= \prod_{i=1}^{25} V[X_i] + E[X_i]^2  - \prod_{i=1}^{25} (E[X_i])^2 \\
+        &= (0.0979 + 0.89^2)^{25} - 0.89^{50} \\
+        &= 0.0513 \\
+        Cov(X_i, X_j) &= 0
+    \end{align*}
+    
+
     \item[c.] What is the distribution of $\bar{X}$? {\it Hint: see lecture notes.}\par
     What is the mean and variance of this distribution?
-        
+    
+    Lecture 10 slide 5 tells us that $X_i\sim Bernoulli(p)$ then $n\bar X \sim Binomial(n, p)$ and slide 8 of the same lecture also tells us via the sample mean theorem that the expected value of sample matches the expected value of the random variable but the variance reduces by the number of samples:
+    \begin{align*}
+        P(25\bar X) &\sim Bin(25, 0.9) \\
+        E[\bar X] &= p = 0.89 \\
+        V[\bar X] &= \frac{V[X_i]}{n} = 0.003916 \\
+    \end{align*}
+    
+    
+    
     \newpage
     \item[d.] Use {\tt R} or Python, replicate the experiment $10,000$ times. \par
     {\it Hint: Recall that a Bernoulli$(p)$ random variable is just a Binomial$(1,p)$ random variable; thus to obtain a sample of size $25$ from a Bernoulli$(0.89)$ random variable, one might use:\par
@@ -106,20 +152,30 @@ The researcher plans to obtain a random sample of size $25$: $X_1,\ldots , X_{25
     \item[e.] Find the mean and variance of $\bar{X}$, based on your 10K simulations.  Does this agree with your calculation in c.?
 
     \lstinline[language=Python]{Mean of means: 0.8891480000000002}\newline
-    \lstinline[language=Python]{Variance of means: 0.003957434095999998}
+    \lstinline[language=Python]{Variance of means: 0.003957434095999998} \newline
+    The simulated values match the calculated ones rather closely.
+    
 
     \item[f] Compute the mean squared error of $\bar{X}$ as an estimate of the unknown proportion $\theta=0.89$ (i.e. find the squared error of the estimate, which is $(\bar{X} - \theta)^2$, in each repetition and then average over all repetitions). What do you notice? Give a simple explanation by referring to a result from the course.
     
     \lstinline[language=Python]{Mean squared error: 0.0039581600000000005} \newline
     It is very close to the variance of means calculated above. 
-    
-    \end{itemize}
+\end{itemize}
+
+
+
 
 \newpage
 \subsection*{Problem 2}
 Given a sample $X_1,\ldots , X_n$  of independent Poisson$(\lambda)$ random variables, a researcher  intends to use $\bar{X}$, the sample mean, as an estimate of $\lambda$.  Suppose that $n=20$, and $\lambda=4$.
 \begin{itemize}
     \item[a.] Write down the mean and variance of this distribution.
+    
+    As in problem 1 c we have:
+    \begin{align*}
+        E[\bar X] &= \lambda = 4 \\
+        V[\bar X] &= \frac{\lambda}{n} = 0.2
+    \end{align*}
     
     \item[b.] Using {\tt R} or Python, replicate the experiment $10,000$ times. Construct a histogram with the distribution of $\bar{X}$ for each sample. Does the distribution of sample means appear to be normal? Explain your answer.
     
@@ -206,14 +262,14 @@ Suppose that we wish to test $H_0$: $\lambda =\lambda_0$ vs. $H_1$: $\lambda \ne
     
     \begin{align*}
         \lambda_{lrt}(y_1\hdots y_n) &= e^{-n(\lambda_0 - \bar y)} \left(\frac{\lambda_0}{\bar y}\right)^{n\bar y} \\
-        &= e^{-200(1-0.6) }\left(\frac{200}{122}\right)^{200\frac{122}{200}} \\
+        &= e^{-200(1 - \frac{122}{200}) }\left(\frac{200}{122}\right)^{200\frac{122}{200}} \\
         &= e^{-80}\left(\frac{200}{122}\right)^{122} \\
-        &= 2.79\cdot 10^{-9}
+        &= 2.064\cdot 10^{-8}
     \end{align*}
 
     \item[f] Report the approximate p-value.\par
     {\it Hint: calculate $-2\log$(LRT), and compare to the appropriate $\chi^2$ distribution. See Lecture 10, slide 43. Recall that small values of the LRT correspond to evidence against $H_0$.}
-    
+
 \end{itemize}
 
 
@@ -248,7 +304,7 @@ Suppose that we are planning an experiment to test hypotheses about the mean of 
         &=  1 - \Phi  \left(\frac{\sqrt{n}(c - \mu)}{\sigma}\right) \\
         &= 1- \Phi\left( \frac{\sqrt{n}(c - \mu)}{\sigma}  \bigg | \mu=0.3 \right) \\
         &= 1- \Phi\left( \frac{\sqrt{n} \left(\frac{6.579416}{\sqrt{n}} - \mu \right)}{\sigma}  \bigg | \mu=0.3 \right) \\
-        &= 1- \Phi\left( \frac{6\frac{6.579416}{6} - 0.3}{4} \right) \\
+        &= 1- \Phi\left( \frac{6\left(\frac{6.579416}{6} - 0.3\right)}{4} \right) \\
         &= 1- \Phi(1.194854 ) \\
         &= 0.116
     \end{align*}
