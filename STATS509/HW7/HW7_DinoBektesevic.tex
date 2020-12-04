@@ -178,12 +178,12 @@ Given a sample $X_1,\ldots , X_n$  of independent Poisson$(\lambda)$ random vari
     
     \item[c.] Find the mean and variance of $\bar{X}$, based on your 10K simulations. Does this agree with your calculation in a.?
     
-    \lstinline[language=Python]{Mean of means: 3.9952959999999997}\newline
-    \lstinline[language=Python]{Variance of means: 0.16090299238400002}
+    \lstinline[language=Python]{Mean of means: 4.002459999999999}\newline
+    \lstinline[language=Python]{Variance of means: 0.19974544839999997}
     
     \item[d.] Compute the mean squared error of $\bar{X}$ as an estimate of $\lambda$. Again what do you notice? 
     
-    \lstinline[language=Python]{Mean squared error: 0.16092512} \newline
+    \lstinline[language=Python]{Mean squared error: 0.1997515} \newline
     It is very close to the variance of means calculated above. 
 \end{itemize}
 
@@ -226,8 +226,8 @@ Suppose that we wish to test $H_0$: $\lambda =\lambda_0$ vs. $H_1$: $\lambda \ne
     \begin{align*}
         \lambda_{lrt}(y_1\hdots y_n) &= \frac{f(y_1\hdots y_n|\lambda_0)}{\sup_{\lambda\in\R} f(y_1\hdots y_n|\lambda)} \\
         &= \frac{\lambda^{\sum_{i=1}^n y_i} e^{-n\lambda}_0}{\hat\lambda^{\sum_{i=1}^n y_i} e^{-n\hat\lambda}} \\
-        &= \frac{\lambda^{\sum_{i=1}^n y_i} e^{-n\lambda}_0}{\bar y^{\sum_{i=1}^n y_i} e^{-n\bar y}} \\
-        &= e^{-n(\lambda_0 - \bar y)} \left(\frac{\lambda_0}{\bar y}\right)^{n\bar y}
+        &= \frac{\lambda^{\sum_{i=1}^n y_i} e^{-n\lambda}_0}{\bar y^{\sum_{i=1}^n y_i} e^{-n\hat\lambda}} \\
+        &= e^{-n(\lambda_0 - \hat\lambda)} \left(\frac{\lambda_0}{\hat\lambda}\right)^{n\hat\lambda}
     \end{align*}
     
     \item[d.] Consider Bortkiewicz's Prussian Cavalry horse-kick fatality data:
@@ -348,23 +348,26 @@ A researcher performs a sequence of independent experiments, up to and including
     \newpage
     \item  Re-express the researcher's rule for rejecting the null hypothesis in terms of the likelihood ratio:
     $$ {\rm LRT} = p(t \mid p=0.25)/p(t \mid p=0.5). $$
-    Specifically, find the value $\ell$ such that the researcher will reject $H_0$ $p=0.25$ in favor of $p=0.5$ if LRT$<\ell$.\par  {(Note: There will be a range of values for $\ell$ that will give the same test.)}
+    Specifically, find the value $\ell$ such that the researcher will reject $H_0$: $p=0.25$ in favor of $p=0.5$ if LRT$<\ell$.\par  {(Note: There will be a range of values for $\ell$ that will give the same test.)}
     \begin{align*}
-        \Lambda (t) &= \frac{P(T=t|H_0}{P(T=t|H_1)} \\
+        \Lambda (t) &= \frac{P(T=t|H_0)}{P(T=t|H_1)} \\
         &= \frac{p_0(1-p_0)^{t-1}}{p_1(1-p_1)^{t-1}} \\
         &= \frac{1}{2}\left(\frac{3}{2}\right)^{t-1}
     \end{align*}
-    Writing this out in a table:
+    Writing out the values we want to compare in a table:
     \begin{table}[h!]
         \centering
         \begin{tabular}{l|l|l}
-        t & $P(t\leq t|p=0.25)$ & $\lambda_{lrt}(t)$ \\ \hline 
-        1 & 0.25                             & 0.5                                \\
-        2 & 0.4375                           & 0.75                               \\
-        3 & 0.5781                           & 1.125                              \\
-        4 & 0.6836                           & 1.6875                            
+        t & $\alpha(t)$ & $\Lambda(t)$ \\ \hline 
+        1 & 0.25                             & 0.5                           \\
+        2 & 0.4375                           & 0.75                           \\
+        3 & {\color{blue} 0.5781}            & 1.125                          \\
+        4 & 0.6836                           & 1.6875                         \\
+        5 & 0.7627                           & 2.53125                        \\
         \end{tabular}
     \end{table}
+    
+    The LRT test will match the significance level of the test when $l = \Lambda(t=4)=1.125$. Since geometric distribution is discreet we can chose any $l\in <1.125, 1.6975]$ range to achieve the same test significance level (and conversely re-express the researchers rule for rejecting the null hypothesis). 
     
 \end{enumerate}
 {\it Hint: (For all parts) Geometric distribution!}
@@ -388,7 +391,7 @@ Consider a $95\%$ confidence interval for the mean height $\mu$ in a population.
     
     \item $95\%$ of individuals in the population have heights that lie in the $95\%$ confidence interval for $\mu$. 
     
-    False. CI tells us the confidence that after drawing a random sample it's mean will lie in that range, not the other way around.
+    False. CI tells us the confidence that after drawing a random sample, its mean will lie in that range, not the other way around.
     
     \item Over hypothetical replications out of one hundred $95\%$ confidence intervals for $\mu$, on average $95$ will contain $\mu$.
     
