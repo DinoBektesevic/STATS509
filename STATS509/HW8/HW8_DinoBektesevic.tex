@@ -93,8 +93,9 @@ Goldberger Qu. 11.2\par
     \end{align*}
     
     \item By analogy with b) we can just say:
-    
     $$V(T) =  \frac{S^2_X + S^2_Y - 2S_{XY}}{n} $$
+    
+    \item For standard error of T I would report $\sqrt(V(T))$
 \end{enumerate}
 
 
@@ -168,119 +169,124 @@ Where we used the fact $Y_1$ and $Y_2$ are independent. Minimizing this expressi
 So we would want to draw 41 sample from $Y_1$ and 59 from $Y_2$. 
 
 
+\newpage
+\subsection*{Problem 4: Maximum Likelihood / ZES Estimation / GLRTs}
+Suppose that $X_1,\ldots ,X_n$ are i.i.d.~observations from the following pmf:
+$$ f(x \mid \theta)  = \left\{\begin{array}{cl}
+        \left. e^{\theta x}\right/\left(1+e^{\theta}\right) & x \in \{0,1\} \\[4pt]
+        0 & \hbox{otherwise}
+        \end{array}
+        \right.
+$$
+where $\theta \in \mathbb{R}$.
+\begin{enumerate}
+    \item Confirm that for any value of $\theta$, this is a probability mass function.
+    
+    \begin{align*}
+        \sum_x f(x|\theta) &= 1 \\
+        f(0|\theta) + f(1|\theta) &= 1\\
+        \frac{1}{1+e^\theta}  + \frac{e^\theta}{1+e^\theta} &= 1 \\
+        \frac{1+e^\theta}{1+e^\theta} &= 1 \,\,\, \forall \theta \in \R
+    \end{align*}
+    
+    \item Write down the likelihood for one observation $f(x \mid \theta)$. Find the log-likelihood, $\ell = \log f(x \mid \theta)$.
+
+    
+    \item Find the score variable $Z = ({\partial\ell / \partial \theta})$. Using the fact that $E[Z]=0$, find $E(X)$ (see Goldberger p.128). 
+    \item Find the maximum likelihood estimator $\hat{\theta}$ of $\theta$ based on the random sample $X_1,\ldots , X_n$.
+    \item Derive the ZES estimator for $\theta$. Confirm that this leads to the same estimator for $\theta$ that you obtained in (d).
+    \item Find the asymptotic variance of $\hat{\theta}$ (this will be a function of $\theta$).
+    \item By plugging in $\hat{\theta}$ for $\theta$ in your answer to (f), find the standard error of $\hat{\theta}$. In other words, find an estimate of the standard deviation of the estimator $\hat{\theta}$.
+    \item Use your answer to (g) to construct an approximate 95\% confidence interval for $\theta$. {\it Hint: make sure that your interval is a function of $\hat{\theta}$, NOT the true value of $\theta$, which is unknown.}
+\end{enumerate}
 
 
 \newpage
-\subsection*{Maximum Likelihood / ZES Estimation / GLRTs}
+\subsection*{Problem 5}
 
-\begin{itemize}
-
-
-
-
-
-
-\item[4.] Suppose that $X_1,\ldots ,X_n$ are i.i.d.~observations from the following pmf:
-\[
-f(x \mid \theta)  = \left\{
-\begin{array}{cl}
-\left. e^{\theta x}\right/\left(1+e^{\theta}\right) & x \in \{0,1\} \\[4pt]
-0 & \hbox{otherwise}
-\end{array}
-\right.
-\]
-where $\theta \in \mathbb{R}$.
-\begin{itemize}
-\item[(a)] Confirm that for any value of $\theta$, this is a probability mass function.
-\item[(b)] Write down the likelihood for one observation $f(x \mid \theta)$. Find the log-likelihood,
-$\ell = \log f(x \mid \theta)$.
-\item[(c)] Find the score variable $Z = ({\partial\ell / \partial \theta})$. Using the fact that $E[Z]=0$, find $E(X)$ (see Goldberger p.128). 
-\item[(d)] Find the maximum likelihood estimator $\hat{\theta}$ of $\theta$ based on the random sample $X_1,\ldots , X_n$.
-\item[(e)] Derive the ZES estimator for $\theta$. Confirm that this leads to the same estimator for $\theta$ that you obtained in (d).
-\item[(f)] Find the asymptotic variance of $\hat{\theta}$ (this will be a function of $\theta$).
-\item[(g)] By plugging in $\hat{\theta}$ for $\theta$ in your answer to (f), find the standard error of $\hat{\theta}$. In other words, find an estimate of the standard deviation of the estimator $\hat{\theta}$.
-\item[(h)] Use your answer to (g) to construct an approximate 95\% confidence interval for $\theta$.
-{\it Hint: make sure that your interval is a function of $\hat{\theta}$, NOT the true value of $\theta$, which is unknown.}
-
-\end{itemize}
-
-\item[5.] 
-Suppose $Y_1,\ldots, Y_n$ are an i.i.d.~sample from a population
-with pmf given by:
+Suppose $Y_1,\ldots, Y_n$ are an i.i.d.~sample from a population with pmf given by:
 \begin{equation}
-p(y\, |\, \theta) = (y!)^{-1} \theta^y e^{-\theta} 
+    p(y\, |\, \theta) = (y!)^{-1} \theta^y e^{-\theta} 
 \end{equation}
 where {$\theta > 0$}, $y_i \in \{0,1,\ldots \}$.
 \begin{itemize}
+    \item[(a)] Write down the log-likelihood for a single observation:
+    $$l(\theta|y) = -\ln(y!) + y\ln(\theta) - \theta$$
 
-\item[(a)] Write down the log-likelihood for a single observation:
+    \item[(b)] Using your answer to (a) find the score variable for $\theta$:
+    
+    As per Goldbergers definition in chapter 12.1, p 128:
+    $$ Z = \frac{\partial}{\partial\theta} l(\theta|x) = \frac{\partial}{\partial\theta}\left[  -\ln(y!) + y\ln(\theta) - \theta  \right] = \frac{y}{\theta} -1$$
 
-\item[(b)] Using your answer to (a) find the score variable for $\theta$:
+    \item[(c)] Find the information variable for $\theta$, and find its expectation:
+    
+    Information variable as defined in Goldberger 12.2, p 131:
+    $$W = -\frac{\partial}{\partial\theta} Z = -\frac{\partial}{\partial\theta } \left(\frac{y}{\theta} -1\right) = - \frac{y}{\theta^2}$$
+    Expectation of which:
+    $$E[W] = \frac{E[y]}{\theta^2}$$
 
-\item[(c)] Find the information variable for $\theta$, and find its expectation:
+    \item[(d)]  Find the maximum likelihood estimator $\hat{\theta}_{MLE}$ for $\theta$ given the sample $Y_1,\ldots, Y_n$:
+    \begin{align*}
+        0 &= \frac{\partial}{\partial\theta} \ln(l(\theta|y_1,\hdots ,y_n) \\
+        0 &= \frac{\partial}{\partial\theta} \ln\left( \prod_{i=1}^n l(\theta|y_i) \right) \\
+        0 &= \frac{\partial}{\partial\theta} \sum_{i=1}^n \ln(l(\theta|y_i) \\
+        0 &= \sum_{i=1}^n \frac{\partial}{\partial\theta} \ln(l(\theta|y_i) \\
+        0 &= \sum_{i=1}^n \frac{y_i}{\theta} -1 \\
+        0 &= \frac{1}{\theta} \sum_{i=1}^n y_i - n \\
+        n\theta  &= \sum_{i=1}^n y_i \\
+        \theta_{MLE} &= \frac{1}{n} \sum_{i=1}^n y_i = \bar y 
+    \end{align*}
 
-\item[(d)]  Find the maximum likelihood estimator $\hat{\theta}_{MLE}$ for $\theta$ given
-the sample $Y_1,\ldots, Y_n$:
-
-\item[(e)]  Using your answers to (c) and (d) give an approximate $90\%$ confidence interval
-for $\theta$: {\it Hint: your answer should be a function of $\hat{\theta}_{MLE}$ and $n$.}
-
+    \item[(e)]  Using your answers to (c) and (d) give an approximate $90\%$ confidence interval for $\theta$: {\it Hint: your answer should be a function of $\hat{\theta}_{MLE}$ and $n$.}
+    
+    \begin{align*}
+        P\left(\bar Y - 1.96\frac{\sigma}{\sqrt n} \leq \mu \leq \bar Y + 1.96\frac{\sigma}{\sqrt n}\right) &= 0.90 \\
+        P\left(\theta_{MLE}- 1.96\frac{\sigma}{\sqrt n} \leq \mu \leq \theta_{MLE} + 1.96\frac{\sigma}{\sqrt n}\right) &= 0.90
+    \end{align*} 
 \end{itemize}
 
 
-\item[6.]
+\newpage
+\subsection*{Problem 6}
 Let $X_1, \ldots ,X_n$ be i.i.d. observations from a N$(\mu,1)$ population so that $f(x \,|\, \mu ) = (2\pi)^{-\frac{1}{2}}e^{-\frac{1}{2}(x-\mu)^2}$.\par
  {\it Hint: See quiz section notes from 12/4/20}
  
  \begin{itemize}
-\item[(a)] Find the MLE $\hat{\mu}_{MLE}$ for $\mu$.
-
+    \item[(a)] Find the MLE $\hat{\mu}_{MLE}$ for $\mu$.
 \end{itemize}
-\noindent Suppose that we wish to perform a likelihood ratio test of the hypothesis $H_0:\mu = 0$ against 
-$H_1: \mu \neq 0$.
+\noindent Suppose that we wish to perform a likelihood ratio test of the hypothesis $H_0:\mu = 0$ against  $H_1: \mu \neq 0$.
 \begin{itemize}
-\item[(b)]  Using your answer to (a) write down the generalized likelihood ratio test statistic (LRT).
+    \item[(b)]  Using your answer to (a) write down the generalized likelihood ratio test statistic (LRT).
 
+    \item[(c)] Re-express your answer to (b) as a function of $\bar{X}$, and draw the LRT as a function of $\bar{X}$.\par
+    {\it Hint: $\sum_{i=1}^n (X_i - \bar{X})^2  = \left(\sum_{i=1}^n X_i^2 \right) -n(\bar{X})^2$.}
 
-
-\item[(c)] Re-express your answer to (b) as a function of $\bar{X}$, and draw the LRT as a function of $\bar{X}$.\par
-{\it Hint: $\sum_{i=1}^n (X_i - \bar{X})^2  = \left(\sum_{i=1}^n X_i^2 \right) -n(\bar{X})^2$.}
-
-\item[(d)]  If we wish to perform a hypothesis test with significance level $\alpha = 0.05$, use your answer to (c) to find the values of $\bar{X}$ for which we reject $H_0$. {\it Hint: your answer should be a function of $n$.}
+    \item[(d)]  If we wish to perform a hypothesis test with significance level $\alpha = 0.05$, use your answer to (c) to find the values of $\bar{X}$ for which we reject $H_0$. {\it Hint: your answer should be a function of $n$.}
 \end{itemize}
 Suppose that $n=100$ and $\bar{x}=0.16$. 
 \begin{itemize}
-\item[(e)] Using your answer to (d), would we reject $H_0$ in favor of $H_1$ using significance level $\alpha=0.05$?
-\item[(f)] Find the p-value for this hypothesis test.
+    \item[(e)] Using your answer to (d), would we reject $H_0$ in favor of $H_1$ using significance level $\alpha=0.05$?
+    \item[(f)] Find the p-value for this hypothesis test.
 \end{itemize}
 
 
-\item[7.] A set of  times $T_1,\ldots ,T_n$ are sampled independently from a population with the following density:
-\[
-f(t \mid \theta)  = \left\{
-\begin{array}{cl}
-e^{-(t-\theta)} & t \geq \theta \\
-0 & \hbox{otherwise}
-\end{array}
-\right.
-\]
+\newpage
+\subsection*{Problem 7}
+A set of  times $T_1,\ldots ,T_n$ are sampled independently from a population with the following density:
+$$f(t \mid \theta)  = \left\{\begin{array}{cl}
+    e^{-(t-\theta)} & t \geq \theta \\
+    0 & \hbox{otherwise}
+    \end{array}\right.
+$$
 where $\theta >0$. \par
-
 \begin{itemize}
-\item[(a)] Find the maximum likelihood estimate for $\theta$.\par
-{\it Hint: do some plots, examining the values of $\theta$ for which $f(t_1,\ldots,t_n|\theta)>0$. It may help you first to think about the cases where $n=1$ and $n=2$.  Do {\bf not}  rush into differentiating anything!}
-\item[(b)] Is there a ZES estimator for $\theta$ ? Briefly explain your answer.
+    \item[(a)] Find the maximum likelihood estimate for $\theta$.\par
+    {\it Hint: do some plots, examining the values of $\theta$ for which $f(t_1,\ldots,t_n|\theta)>0$. It may help you first to think about the cases where $n=1$ and $n=2$.  Do {\bf not}  rush into differentiating anything!}
+    \item[(b)] Is there a ZES estimator for $\theta$ ? Briefly explain your answer.
 \end{itemize}
 
 \medskip
 [{\bf Motivation:} (not necessary to answer the problem, but may help with intuition). For example,  the observations $T_1,\ldots , T_n$ might be the observed times taken for
 $n$ messages to be transmitted across a network. In this case, 
 $\theta$ represents the (non-random) minimum time for a message to be transmitted across the network if there were no delays; the additional random component of the time $(T-\theta)$ is due to bottlenecks and queues encountered by the message.]
-\bigskip
-\medskip
-
-
-
-\end{itemize}
-
 \end{document}
