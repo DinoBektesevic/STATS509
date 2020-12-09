@@ -95,7 +95,7 @@ Goldberger Qu. 11.2\par
     \item By analogy with b) we can just say:
     $$V(T) =  \frac{S^2_X + S^2_Y - 2S_{XY}}{n} $$
     
-    \item For standard error of T I would report $\sqrt(V(T))$
+    \item For standard error of T I would report $\sqrt{V(T)}$
 \end{enumerate}
 
 
@@ -146,7 +146,10 @@ Goldberger Qu. 11.3
 \newpage
 \subsection*{Problem 3}
 Goldberger Qu. 11.4. Assume that $Y_1$ and $Y_2$ are independent.
-We are told that we have $N=100$ samples where $n_1$ comes from $Y_1\sim N(\mu_1, 50)$ and $n_2$ comes from $Y_2\sim N(\mu_2, 100)$ so that $N=n_1+n_2$. We are estimating $T=\mu_1 - \mu_2$ just like in question 1 so we can use $T=\bar Y_1 - \bar Y_2$ as an unbiased estimator of $\theta$. TO get the best estimation of $\theta$ we want to minimize the variance of T. So we can write:
+
+We are told that we have $N=100$ samples where $n_1$ comes from $Y_1\sim N(\mu_1, 50)$ and $n_2$ comes from $Y_2\sim N(\mu_2, 100)$ so that $N=n_1+n_2$. 
+
+We are estimating $T=\mu_1 - \mu_2$ just like in question 1 so we can use $T=\bar Y_1 - \bar Y_2$ as an unbiased estimator of $\theta$. To get the best estimation of $\theta$ we want to minimize the variance of T. So we can write:
 \begin{align*}
     V(T) &= V(\bar Y_1) + V(\bar Y_2) \\
     &= \frac{\sigma^2_1}{n_1} + \frac{\sigma^2_2}{n_2} \\
