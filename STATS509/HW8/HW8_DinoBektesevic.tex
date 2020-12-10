@@ -227,7 +227,9 @@ where $\theta \in \mathbb{R}$.
        \frac{ne^\theta}{1+e^\theta} &= \sum_i^n x_i \\
        ne^\theta &= \sum_i^n x_i + e^\theta\sum_i^n x_i \\
        \left(n - \sum_i^n x_i\right) e^\theta &= \sum_i^n x_i \\
-       \theta_{MLE} &= \ln{\left( \frac{\sum_i^n x_i}{n - \sum_i^n x_i} \right)  }
+       \theta_{MLE} &= \ln{\left( \frac{\sum_i^n x_i}{n - \sum_i^n x_i} \right)  } \\
+       \theta_{MLE} &= \ln{\left( \frac{n\bar x}{n - n\bar x} \right)  } \\
+       \theta_{MLE} &= \ln{\left( \frac{\bar x}{1 - \bar x} \right)  } \\
     \end{align*}
     
     \item Derive the ZES estimator for $\theta$. Confirm that this leads to the same estimator for $\theta$ that you obtained in (d).
