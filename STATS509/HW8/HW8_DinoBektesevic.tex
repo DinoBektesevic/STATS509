@@ -126,6 +126,11 @@ Goldberger Qu. 11.3
         c_1 &= \frac{V(\bar Y_2)}{V(\bar Y_1) + V(\bar Y_2)} \\
         &\rightarrow c_2 = 1 - c_1 = \frac{V(\bar Y_1)}{V(\bar Y_1) + V(\bar Y_2)}
     \end{align*}
+    We verify that this is the minimum:
+    \begin{align*}
+        \frac{\partial^2}{\partial c_1^2} V(T) &= \frac{\partial}{\partial c_1}   2c_1( V(\bar Y_1) + V(\bar Y_2) ) - 2V(\bar Y_2) = 2( V(\bar Y_1) + V(\bar Y_2) ) \geq 0
+    \end{align*}
+    since variance is always positive or zero.
     
      \item to verify that $V(T) < V(\bar Y_1), V(\bar Y_2)$ we can write: 
      \begin{align*}
@@ -140,7 +145,6 @@ Goldberger Qu. 11.3
         \frac{V(T)}{V(\bar Y_1)} &= \frac{V(\bar Y_2)}{V(\bar Y_1) + V(\bar Y_2)} \leq 1 \\
         \frac{V(T)}{V(\bar Y_2)} &= \frac{V(\bar Y_1)}{V(\bar Y_1) + V(\bar Y_2)} \leq 1 
     \end{align*}
-    since variance is always positive or zero. 
  \end{enumerate}
  
 
@@ -171,7 +175,14 @@ Where we used the fact $Y_1$ and $Y_2$ are independent. Minimizing this expressi
     \rightarrow &n_{1,1} = 41.42\\
     &n_{1,2} = -241.42
 \end{align*}
-So we would want to draw 41 sample from $Y_1$ and 59 from $Y_2$. 
+So we would want to draw 41 sample from $Y_1$ and 59 from $Y_2$. We can verify that this is a minimum:
+
+\begin{align*}
+    \frac{\partial^2}{\partial n_1^2} V(T) &=  \frac{\partial}{\partial n_1} \left[\left(\frac{\sigma^2_2}{\sigma^2_1} - 1\right) n_1^2 + 2Nn_1 - N^2 \right]  \\
+    &= 2\left(\frac{\sigma^2_2}{\sigma^2_1} - 1\right) n_1|_{n_1=41.42} + 2N   \\
+    &= 2 n_1|_{n_1=41.42} + 200 = 282.84 > 0   \\
+\end{align*}
+
 
 
 \newpage
@@ -231,6 +242,17 @@ where $\theta \in \mathbb{R}$.
        \theta_{MLE} &= \ln{\left( \frac{n\bar x}{n - n\bar x} \right)  } \\
        \theta_{MLE} &= \ln{\left( \frac{\bar x}{1 - \bar x} \right)  } \\
     \end{align*}
+    We can verify this is a maximum:
+    \begin{align*}
+       \frac{\partial^2 }{\partial\theta^2} \ln l(\theta | x_1,\hdots,x_n) &= \frac{\partial }{\partial\theta}  \sum_i^n x_i - \frac{e^\theta}{1+e^\theta} = -n \frac{\partial }{\partial\theta} \frac{e^\theta}{1+e^\theta}  \\
+        &= -n\left(e^\theta \frac{\partial}{\partial\theta} \frac{1}{1+e^\theta}  +  \frac{1}{1+e^\theta} \frac{\partial}{\partial\theta} e^\theta \right) \\
+        &= -n\left(e^\theta \frac{-1}{(1+e^\theta)^2}e^\theta  +  \frac{1}{1+e^\theta} e^\theta \right) \\
+        &= -n\left(\frac{-e^{2\theta}}{(1+e^\theta)^2}  +  \frac{e^\theta}{1+e^\theta}  \right) \\
+        &= -n\left(\frac{-e^{2\theta} + (1+e^\theta)e^\theta}{(1+e^\theta)^2} \right) \\
+        &= -\frac{ne^\theta}{(1+e^\theta)^2} < 0    
+    \end{align*}
+    No need to evaluate at $\theta_{MLE}$ this will always be negative. 
+    
     
     \newpage
     \item Derive the ZES estimator for $\theta$. Confirm that this leads to the same estimator for $\theta$ that you obtained in (d).
@@ -248,8 +270,40 @@ where $\theta \in \mathbb{R}$.
     \end{align*}
     
     \item Find the asymptotic variance of $\hat{\theta}$ (this will be a function of $\theta$).
+    
+    By definition asymptotic variance is given as :
+    $$V_a = \frac{1}{I(\theta)}$$
+    where $I$ is the Fischer information given by: 
+    \begin{align*}
+        I(\theta) &= - E\left[  \frac{\partial^2}{\partial\theta^2} \ln f(y_i,\theta)  \right] \\
+        &= - E\left[  \frac{\partial}{\partial\theta} x - \frac{e^\theta}{1+e^\theta}  \right] \\
+        &= - E\left[ - \left(e^\theta \frac{\partial}{\partial\theta} \frac{1}{1+e^\theta}  +  \frac{1}{1+e^\theta} \frac{\partial}{\partial\theta} e^\theta \right)\right] \\
+        &= - E\left[ - \left(e^\theta \frac{-1}{(1+e^\theta)^2}e^\theta  +  \frac{1}{1+e^\theta} e^\theta \right)\right] \\
+        &= - E\left[ - \left(\frac{-e^{2\theta}}{(1+e^\theta)^2}  +  \frac{e^\theta}{1+e^\theta}  \right)\right] \\
+        &= - E\left[ - \left(\frac{-e^{2\theta} + (1+e^\theta)e^\theta}{(1+e^\theta)^2} \right)\right] \\
+        &= - E\left[ - \frac{e^\theta}{(1+e^\theta)^2} \right] \\
+        &= \frac{e^\theta}{(1+e^\theta)^2}
+    \end{align*}
+    so asymptotic variance is: 
+    $$V_a = \frac{(1+e^\theta)^2}{e^\theta}$$
+    
+    \newpage
     \item By plugging in $\hat{\theta}$ for $\theta$ in your answer to (f), find the standard error of $\hat{\theta}$. In other words, find an estimate of the standard deviation of the estimator $\hat{\theta}$.
+    
+    By definition the standard error is:
+    \begin{align*}
+        SE(\theta) &= \frac{1}{\sqrt{nI(\theta)}} \\
+        &= \sqrt{\frac{(1+e^{ \ln{\left( \frac{\bar x}{1 - \bar x} \right)  }})^2}{ne^{ \ln{\left( \frac{\bar x}{1 - \bar x} \right)  }}}} \\
+        &= \sqrt{\frac{(1 + \frac{\bar x}{1 - \bar x} )^2}{n\frac{\bar x}{1 - \bar x} }} \\
+    \end{align*}
+    
     \item Use your answer to (g) to construct an approximate 95\% confidence interval for $\theta$. {\it Hint: make sure that your interval is a function of $\hat{\theta}$, NOT the true value of $\theta$, which is unknown.}
+    
+    Following the notes from quiz section we have: 
+        \begin{align*}
+        P\left(\theta_{MLE} - \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE}) \leq \mu \leq \theta_{MLE} + \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE})\right) &= 0.95 \\
+        P\left(  \ln{\left( \frac{\bar x}{1 - \bar x} \right)  }   - 1.96\sqrt{\frac{(1 + \frac{\bar x}{1 - \bar x} )^2}{n\frac{\bar x}{1 - \bar x} }}  \leq \mu \leq  \ln{\left( \frac{\bar x}{1 - \bar x} \right)  }  + 1.96\sqrt{\frac{(1 + \frac{\bar x}{1 - \bar x} )^2}{n\frac{\bar x}{1 - \bar x} }} \right) &= 0.95
+    \end{align*} 
 \end{enumerate}
 
 
@@ -288,12 +342,18 @@ where {$\theta > 0$}, $y_i \in \{0,1,\ldots \}$.
         n\theta  &= \sum_{i=1}^n y_i \\
         \theta_{MLE} &= \frac{1}{n} \sum_{i=1}^n y_i = \bar y 
     \end{align*}
+    We can verify that this is a maximum:
+    \begin{align*}
+        \frac{\partial^2}{\partial\theta^2} \ln(l(\theta|y_1,\hdots ,y_n) =   \frac{\partial}{\partial\theta} \frac{1}{\theta} \sum_{i=1}^n y_i - n = -\frac{1}{\theta^2} \sum_{i=1}^n y_i < 0
+    \end{align*}
+    since $y_i \in \{0,1,\ldots \}$ by definition the sum will be positive and so will $\theta^2$ so the expression is always negative even without evaluating it at $\theta_{MLE}$
 
     \item[(e)]  Using your answers to (c) and (d) give an approximate $90\%$ confidence interval for $\theta$: {\it Hint: your answer should be a function of $\hat{\theta}_{MLE}$ and $n$.}
     
+    To find the standard error from $W$ we can 
     \begin{align*}
-        P\left(\bar Y - 1.96\frac{\sigma}{\sqrt n} \leq \mu \leq \bar Y + 1.96\frac{\sigma}{\sqrt n}\right) &= 0.90 \\
-        P\left(\theta_{MLE}- 1.96\frac{\sigma}{\sqrt n} \leq \mu \leq \theta_{MLE} + 1.96\frac{\sigma}{\sqrt n}\right) &= 0.90
+        P\left(\theta_{MLE} - \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE}) \leq \mu \leq \theta_{MLE} + \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE})\right) &= 0.90 \\
+        P\left(\bar y - 1.645 SE(\theta_{MLE}) \leq \mu \leq \bar y + 1.645SE(\theta_{MLE})\right) &= 0.90
     \end{align*} 
 \end{itemize}
 
@@ -314,7 +374,7 @@ Let $X_1, \ldots ,X_n$ be i.i.d. observations from a N$(\mu,1)$ population so th
         &= \sum_i^n\left( -\frac{1}{2}\ln{2\pi} - \frac{1}{2}(x_i -\mu)^2 \right) \\
         &=  -\frac{n}{2}\ln{2\pi} - \frac{1}{2} \sum_i^n (x_i -\mu)^2
     \end{align*}
-    Minimizing yields:
+    Maximizing yields:
     \begin{align*}
         0 &= \frac{\partial}{\partial\mu} l(\theta|x) \\
         0 &= \frac{\partial}{\partial\mu} \left[  -\frac{n}{2}\ln{2\pi} - \frac{1}{2} \sum_i^n (x_i -\mu)^2 \right] \\
@@ -323,6 +383,11 @@ Let $X_1, \ldots ,X_n$ be i.i.d. observations from a N$(\mu,1)$ population so th
         0 &= \sum_i^n x_i - n\mu \\
         &\rightarrow \mu_{MLE} = \frac{1}{n} \sum_i^n x_i = \bar x
     \end{align*}
+    We can verify this is a maximum:
+    \begin{align*}
+        \frac{\partial^2}{\partial\mu^2} l(\theta|x) &= \frac{\partial}{\partial\mu} \sum_i^n x_i - n\mu = -n < 0\\
+    \end{align*}
+    
 \end{itemize}
 \newpage
 \noindent Suppose that we wish to perform a likelihood ratio test of the hypothesis $H_0:\mu = 0$ against  $H_1: \mu \neq 0$.
@@ -376,10 +441,11 @@ Suppose that $n=100$ and $\bar{x}=0.16$.
     
     \item[(f)] Find the p-value for this hypothesis test.
     
-    
     \begin{align*}
-        p_{val} &= P(\bar X > \bar x | H_0) \\
-        &= 
+        p_{val} &= P(\Lambda > n\bar x^2) = 1 - \chi^2(x > n\bar x^2, 1) \\
+        &= 1 - \chi^2(x \leq 100*0.0256, 1) \\
+        &= 1 - \chi^2(x \leq 2.56, 1) \\
+        &= 0.1096
     \end{align*}
 \end{itemize}
 
