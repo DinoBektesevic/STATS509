@@ -129,7 +129,7 @@ Goldberger Qu. 11.3
     
      \item to verify that $V(T) < V(\bar Y_1), V(\bar Y_2)$ we can write: 
      \begin{align*}
-        V(T) &=  c_1\bar Y_1 + c_2 \bar Y_2 \\
+        V(T) &=  V(c_1\bar Y_1 + c_2 \bar Y_2) \\
         &= \left(\frac{V(\bar Y_2)}{V(\bar Y_1) + V(\bar Y_2)}\right)^2 V(\bar Y_1)  +  \left(\frac{V(\bar Y_1)}{V(\bar Y_1) + V(\bar Y_2)} \right)^2 V(\bar Y_2) \\
         &= \frac{V(\bar Y_2)^2 V(\bar Y_1) + V(\bar Y_1)^2V(\bar Y_2)}{\left(V(\bar Y_1) + V(\bar Y_2)\right)^2} \\
         &= \frac{V(\bar Y_1)V(\bar Y_2)\left(V(\bar Y_2) + V(\bar Y_1)\right)}{\left(V(\bar Y_1) + V(\bar Y_2)\right)^2} \\
@@ -310,14 +310,44 @@ Let $X_1, \ldots ,X_n$ be i.i.d. observations from a N$(\mu,1)$ population so th
         &\rightarrow \mu_{MLE} = \frac{1}{n} \sum_i^n x_i = \bar x
     \end{align*}
 \end{itemize}
+\newpage
 \noindent Suppose that we wish to perform a likelihood ratio test of the hypothesis $H_0:\mu = 0$ against  $H_1: \mu \neq 0$.
 \begin{itemize}
     \item[(b)]  Using your answer to (a) write down the generalized likelihood ratio test statistic (LRT).
+    
+    \begin{align*}
+        \Lambda &= \frac{f(x_1,\hdots ,x_n|\mu)}{\sup_{\mu\neq 0} f(x_1,\hdots ,x_n|\mu\neq 0) } \\
+        &= \frac{\prod_i^n  (2\pi)^{-\frac{1}{2}}e^{-\frac{1}{2}x_i^2}   }{\prod_i^n (2\pi)^{-\frac{1}{2}}e^{-\frac{1}{2}(x_i-\mu)^2} } \\
+        &= \frac{\prod_i^n  e^{-\frac{1}{2}x_i^2}   }{\prod_i^n e^{-\frac{1}{2}(x_i-\mu)^2} } \\
+        &= \prod_i^n  e^{\frac{1}{2}(x_i-\mu)^2 -\frac{1}{2}x_i^2}  \\
+        % &= \prod_i^n e^{\frac{1}{2}(x_i^2 - 2x_i\mu + \mu^2) -\frac{1}{2}x_i^2} = \prod_i^n e^{\mu^2 - 2x_i\mu} \\
+        % &= e^{\sum_i^n  \mu^2 - 2x_i\mu} \\
+        % &= e^{n\mu^2 - 2\mu \sum_i^n x_i} \\
+        &= e^{  \sum_i^n \frac{1}{2}(x_i-\mu)^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
+    \end{align*}
 
     \item[(c)] Re-express your answer to (b) as a function of $\bar{X}$, and draw the LRT as a function of $\bar{X}$.\par
     {\it Hint: $\sum_{i=1}^n (X_i - \bar{X})^2  = \left(\sum_{i=1}^n X_i^2 \right) -n(\bar{X})^2$.}
+    % \Lambda &= e^{n\mu^2 - 2\mu n \bar x} = e^{- n\mu(\mu - 2\bar x)} \\
+    \begin{align*}
+        \Lambda &= e^{  \sum_i^n \frac{1}{2}(x_i-\mu)^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
+        &= e^{ \left(\sum_i^n \frac{1}{2}x_i^2\right) - \frac{n}{2}\mu^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
+        &= e^{ -\frac{n}{2}\mu^2 }
+    \end{align*}
+    Where, in line 2, we used the given hint.
 
     \item[(d)]  If we wish to perform a hypothesis test with significance level $\alpha = 0.05$, use your answer to (c) to find the values of $\bar{X}$ for which we reject $H_0$. {\it Hint: your answer should be a function of $n$.}
+    
+    %\begin{align*}
+    %    \alpha &= P(\Lambda \leq c |\mu=0) \\
+    %    &= P\left( e^{ -\frac{n}{2}\mu^2}  \leq c \bigg | \mu=0\right) \\
+    %    &= P\left( -\frac{n}{2}\mu^2  \leq \ln c \bigg | \mu=0\right) \\
+    %    &= P\left( \mu^2  > -\frac{2}{n} \ln c \bigg | \mu=0\right) \\
+    %    &= P\left( \mu  > \sqrt{-\frac{2}{n} \ln c} \bigg | \mu=0\right) \\
+    %    &\rightarrow P\left( \mu  \leq \chi(2n) \bigg | \mu=0\right) = 0.95
+    %\end{align*}
+    
+    
 \end{itemize}
 Suppose that $n=100$ and $\bar{x}=0.16$. 
 \begin{itemize}
