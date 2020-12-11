@@ -316,23 +316,23 @@ Let $X_1, \ldots ,X_n$ be i.i.d. observations from a N$(\mu,1)$ population so th
     \item[(b)]  Using your answer to (a) write down the generalized likelihood ratio test statistic (LRT).
     
     \begin{align*}
-        \Lambda &= \frac{f(x_1,\hdots ,x_n|\mu)}{\sup_{\mu\neq 0} f(x_1,\hdots ,x_n|\mu\neq 0) } \\
-        &= \frac{\prod_i^n  (2\pi)^{-\frac{1}{2}}e^{-\frac{1}{2}x_i^2}   }{\prod_i^n (2\pi)^{-\frac{1}{2}}e^{-\frac{1}{2}(x_i-\mu)^2} } \\
-        &= \frac{\prod_i^n  e^{-\frac{1}{2}x_i^2}   }{\prod_i^n e^{-\frac{1}{2}(x_i-\mu)^2} } \\
-        &= \prod_i^n  e^{\frac{1}{2}(x_i-\mu)^2 -\frac{1}{2}x_i^2}  \\
-        % &= \prod_i^n e^{\frac{1}{2}(x_i^2 - 2x_i\mu + \mu^2) -\frac{1}{2}x_i^2} = \prod_i^n e^{\mu^2 - 2x_i\mu} \\
-        % &= e^{\sum_i^n  \mu^2 - 2x_i\mu} \\
-        % &= e^{n\mu^2 - 2\mu \sum_i^n x_i} \\
-        &= e^{  \sum_i^n \frac{1}{2}(x_i-\mu)^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
+        \Lambda &= \frac{f(x_1,\hdots ,x_n|\mu=0)}{\sup_{\mu\in\R} f(x_1,\hdots ,x_n|\mu) } \\
+        &= \frac{\prod_i^n  (2\pi)^{-\frac{1}{2}}e^{-\frac{1}{2}x_i^2}   }{\prod_i^n (2\pi)^{-\frac{1}{2}}e^{-\frac{1}{2}(x_i-\bar x)^2} } \\
+        &= \frac{\prod_i^n  e^{-\frac{1}{2}x_i^2}   }{\prod_i^n e^{-\frac{1}{2}(x_i-\bar x)^2} } \\
+        &= \prod_i^n  e^{\frac{1}{2}(x_i-\bar x)^2 -\frac{1}{2}x_i^2}  \\
+        % &= \prod_i^n e^{\frac{1}{2}(x_i^2 - 2x_i\bar x + \bar x^2) -\frac{1}{2}x_i^2} = \prod_i^n e^{\bar x^2 - 2x_i\bar x} \\
+        % &= e^{\sum_i^n  \bar x^2 - 2x_i\bar x} \\
+        % &= e^{n\bar x^2 - 2\bar x \sum_i^n x_i} \\
+        &= e^{  \sum_i^n \frac{1}{2}(x_i-\bar x)^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
     \end{align*}
 
     \item[(c)] Re-express your answer to (b) as a function of $\bar{X}$, and draw the LRT as a function of $\bar{X}$.\par
     {\it Hint: $\sum_{i=1}^n (X_i - \bar{X})^2  = \left(\sum_{i=1}^n X_i^2 \right) -n(\bar{X})^2$.}
-    % \Lambda &= e^{n\mu^2 - 2\mu n \bar x} = e^{- n\mu(\mu - 2\bar x)} \\
+    % \Lambda &= e^{n\bar x^2 - 2\bar x n \bar x} = e^{- n\bar x(\bar x - 2\bar x)} \\
     \begin{align*}
-        \Lambda &= e^{  \sum_i^n \frac{1}{2}(x_i-\mu)^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
-        &= e^{ \left(\sum_i^n \frac{1}{2}x_i^2\right) - \frac{n}{2}\mu^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
-        &= e^{ -\frac{n}{2}\mu^2 }
+        \Lambda &= e^{  \sum_i^n \frac{1}{2}(x_i-\bar x)^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
+        &= e^{ \left(\sum_i^n \frac{1}{2}x_i^2\right) - \frac{n}{2}\bar x^2 -  \sum_i^n \frac{1}{2}x_i^2}  \\
+        &= e^{ -\frac{n}{2}\bar x^2 }
     \end{align*}
     Where, in line 2, we used the given hint.
     
@@ -341,24 +341,32 @@ Let $X_1, \ldots ,X_n$ be i.i.d. observations from a N$(\mu,1)$ population so th
     \end{center}
     \lstinputlisting[language=Python]{STATS509/HW8/HW8Code/HW8_DinoBektesevic.py}
     
-
+    \newpage
     \item[(d)]  If we wish to perform a hypothesis test with significance level $\alpha = 0.05$, use your answer to (c) to find the values of $\bar{X}$ for which we reject $H_0$. {\it Hint: your answer should be a function of $n$.}
     
-    %\begin{align*}
-    %    \alpha &= P(\Lambda \leq c |\mu=0) \\
-    %    &= P\left( e^{ -\frac{n}{2}\mu^2}  \leq c \bigg | \mu=0\right) \\
-    %    &= P\left( -\frac{n}{2}\mu^2  \leq \ln c \bigg | \mu=0\right) \\
-    %    &= P\left( \mu^2  > -\frac{2}{n} \ln c \bigg | \mu=0\right) \\
-    %    &= P\left( \mu  > \sqrt{-\frac{2}{n} \ln c} \bigg | \mu=0\right) \\
-    %    &\rightarrow P\left( \mu  \leq \chi(2n) \bigg | \mu=0\right) = 0.95
-    %\end{align*}
-    
-    
+    \begin{align*}
+    -2\ln{\Lambda} &= \chi^2(1) \\
+    -2\ln{\left( e^{ -\frac{n}{2}\bar x^2 } \right)} &= \chi^2(x\leq 1-\alpha, 1) \\
+    n\bar x^2 &= \chi^2(x\leq 1-\alpha, 1) \\
+    \bar x &= \sqrt{\frac{\chi^2(x\leq 0.95, 1)}{n}} \\
+    \bar x &= \frac{\sqrt{3.841458820694125958361}}{\sqrt{n}} \\
+    \bar x &= \frac{1.95996}{\sqrt{n}}
+    \end{align*}    
+    We will reject when $\bar x$ is larger than the right hand side of the last expression.
 \end{itemize}
 Suppose that $n=100$ and $\bar{x}=0.16$. 
 \begin{itemize}
     \item[(e)] Using your answer to (d), would we reject $H_0$ in favor of $H_1$ using significance level $\alpha=0.05$?
+    
+    Since $\bar x = 0.16 < \frac{1.95996}{\sqrt{100}} = 0.195996$ we would not reject.
+    
     \item[(f)] Find the p-value for this hypothesis test.
+    
+    
+    \begin{align*}
+        p_{val} &= P(\bar X > \bar x | H_0) \\
+        &= 
+    \end{align*}
 \end{itemize}
 
 
