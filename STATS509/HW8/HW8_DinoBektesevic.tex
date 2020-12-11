@@ -232,7 +232,21 @@ where $\theta \in \mathbb{R}$.
        \theta_{MLE} &= \ln{\left( \frac{\bar x}{1 - \bar x} \right)  } \\
     \end{align*}
     
+    \newpage
     \item Derive the ZES estimator for $\theta$. Confirm that this leads to the same estimator for $\theta$ that you obtained in (d).
+    
+    By definition:
+    
+    \begin{align*}
+        \frac{1}{n}\sum_{i=1}^n z_i(y_i ; \theta) &= \frac{1}{n} \sum_{i=1}^n \frac{\partial}{\partial \theta} \ln{f(y_i; \theta} = 0\\
+        0 &= \frac{1}{n} \sum_{i=1}^n  \left( x_i - \frac{e^\theta}{1+e^\theta} \right) \\
+        0 &= \bar x - \frac{e^\theta}{1+e^\theta} \\
+        \bar x &= \frac{e^\theta}{1+e^\theta} \\
+        e^\theta &= \bar x (1+e^\theta) \\
+        (1 - \bar x) e^\theta &= \bar x \\
+        \theta_{ZES} &= \ln{\frac{\bar x}{1-\bar x}}
+    \end{align*}
+    
     \item Find the asymptotic variance of $\hat{\theta}$ (this will be a function of $\theta$).
     \item By plugging in $\hat{\theta}$ for $\theta$ in your answer to (f), find the standard error of $\hat{\theta}$. In other words, find an estimate of the standard deviation of the estimator $\hat{\theta}$.
     \item Use your answer to (g) to construct an approximate 95\% confidence interval for $\theta$. {\it Hint: make sure that your interval is a function of $\hat{\theta}$, NOT the true value of $\theta$, which is unknown.}
