@@ -330,7 +330,7 @@ where {$\theta > 0$}, $y_i \in \{0,1,\ldots \}$.
     $$W = -\frac{\partial}{\partial\theta} Z = -\frac{\partial}{\partial\theta } \left(\frac{y}{\theta} -1\right) = - \frac{y}{\theta^2}$$
     Expectation of which:
     \begin{align*}
-        E[W] &= \frac{E[y]}{\theta^2} \\
+        E[W] &= \frac{E[Y]}{\theta^2} \\
         E[Y] &= y_1p(y_1|\theta) + y_2p(y_2|\theta) + \hdots = e^\theta \sum_{i=0}^\infty \frac{y_i\theta^{y_i}}{y_i!} \\
         &= e^{-\theta} \sum_{i=0}^\infty \frac{\theta^{y_i}}{(y_i-1)!} \\
         &= e^{-\theta} \theta \sum_{i=1}^\infty \frac{\theta^{y_i-1}}{(y_i-1)!} \\
@@ -365,8 +365,8 @@ where {$\theta > 0$}, $y_i \in \{0,1,\ldots \}$.
     \end{align*}
     Which gives us 90\% CIs as:
     \begin{align*}
-        P\left(\theta_{MLE} - \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE}) \leq \mu \leq \theta_{MLE} + \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE})\right) &= 0.90 \\
-        P\left(\bar y - 1.645  \sqrt{\frac{\theta_{MLE}}{n}} \leq \mu \leq \bar y + 1.645 \sqrt{\frac{\theta_{MLE}}{n}}\right) &= 0.90
+        P\left(\bar Y - \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE}) \leq \mu \leq \bar Y + \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE})\right) &= 0.90 \\
+        P\left(\theta_{MLE} - 1.645  \sqrt{\frac{\theta_{MLE}}{n}} \leq \mu \leq \theta_{MLE}  + 1.645 \sqrt{\frac{\theta_{MLE}}{n}}\right) &= 0.90
     \end{align*} 
 \end{itemize}
 
