@@ -329,7 +329,16 @@ where {$\theta > 0$}, $y_i \in \{0,1,\ldots \}$.
     Information variable as defined in Goldberger 12.2, p 131:
     $$W = -\frac{\partial}{\partial\theta} Z = -\frac{\partial}{\partial\theta } \left(\frac{y}{\theta} -1\right) = - \frac{y}{\theta^2}$$
     Expectation of which:
-    $$E[W] = \frac{E[y]}{\theta^2}$$
+    \begin{align*}
+        E[W] &= \frac{E[y]}{\theta^2} \\
+        E[Y] &= y_1p(y_1|\theta) + y_2p(y_2|\theta) + \hdots = e^\theta \sum_{i=0}^\infty \frac{y_i\theta^{y_i}}{y_i!} \\
+        &= e^{-\theta} \sum_{i=0}^\infty \frac{\theta^{y_i}}{(y_i-1)!} \\
+        &= e^{-\theta} \theta \sum_{i=1}^\infty \frac{\theta^{y_i-1}}{(y_i-1)!} \\
+        &= e^{-\theta} \theta e^\theta \\
+        &= \theta \\
+        \rightarrow  E[W] &= \frac{\theta}{\theta^2} = \frac{1}{\theta}\\
+    \end{align*}
+    Where we noticed that the sum can be written in the form of Taylor series expansion of the exponential function. 
 
     \item[(d)]  Find the maximum likelihood estimator $\hat{\theta}_{MLE}$ for $\theta$ given the sample $Y_1,\ldots, Y_n$:
     \begin{align*}
@@ -350,10 +359,14 @@ where {$\theta > 0$}, $y_i \in \{0,1,\ldots \}$.
 
     \item[(e)]  Using your answers to (c) and (d) give an approximate $90\%$ confidence interval for $\theta$: {\it Hint: your answer should be a function of $\hat{\theta}_{MLE}$ and $n$.}
     
-    To find the standard error from $W$ we can 
+    In problem 4g we had the definition of SE given over via Fischer information I which is defined analogous to Golbergers W so we can determine SE:
+    \begin{align*}
+        SE(\theta) &= \frac{1}{\sqrt{nI(\theta)}} = \frac{1}{\sqrt{nW}} = \sqrt{\frac{\theta}{n}}\\
+    \end{align*}
+    Which gives us 90\% CIs as:
     \begin{align*}
         P\left(\theta_{MLE} - \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE}) \leq \mu \leq \theta_{MLE} + \Phi\left(1-\frac{\alpha}{2}\right)SE(\theta_{MLE})\right) &= 0.90 \\
-        P\left(\bar y - 1.645 SE(\theta_{MLE}) \leq \mu \leq \bar y + 1.645SE(\theta_{MLE})\right) &= 0.90
+        P\left(\bar y - 1.645  \sqrt{\frac{\theta}{n}} \leq \mu \leq \bar y + 1.645 \sqrt{\frac{\theta}{n}}\right) &= 0.90
     \end{align*} 
 \end{itemize}
 
