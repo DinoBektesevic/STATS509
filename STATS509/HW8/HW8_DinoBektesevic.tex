@@ -258,9 +258,8 @@ where $\theta \in \mathbb{R}$.
     \item Derive the ZES estimator for $\theta$. Confirm that this leads to the same estimator for $\theta$ that you obtained in (d).
     
     By definition:
-    
     \begin{align*}
-        \frac{1}{n}\sum_{i=1}^n z_i(y_i ; \theta) &= \frac{1}{n} \sum_{i=1}^n \frac{\partial}{\partial \theta} \ln{f(y_i; \theta} = 0\\
+        \frac{1}{n}\sum_{i=1}^n z_i(y_i ; \theta) &= \frac{1}{n} \sum_{i=1}^n \frac{\partial}{\partial \theta} \ln{f(y_i; \theta)} = 0\\
         0 &= \frac{1}{n} \sum_{i=1}^n  \left( x_i - \frac{e^\theta}{1+e^\theta} \right) \\
         0 &= \bar x - \frac{e^\theta}{1+e^\theta} \\
         \bar x &= \frac{e^\theta}{1+e^\theta} \\
@@ -431,7 +430,7 @@ Let $X_1, \ldots ,X_n$ be i.i.d. observations from a N$(\mu,1)$ population so th
     \begin{center}
         \includegraphics[width=0.5\textwidth]{STATS509/HW8/HW8Figures/problem6c.png}
     \end{center}
-    \lstinputlisting[language=Python]{STATS509/HW8/HW8Code/HW8_DinoBektesevic.py}
+    \lstinputlisting[language=Python,linerange={0-14}]{STATS509/HW8/HW8Code/HW8_DinoBektesevic.py}
     
     \newpage
     \item[(d)]  If we wish to perform a hypothesis test with significance level $\alpha = 0.05$, use your answer to (c) to find the values of $\bar{X}$ for which we reject $H_0$. {\it Hint: your answer should be a function of $n$.}
@@ -475,11 +474,34 @@ where $\theta >0$. \par
 \begin{itemize}
     \item[(a)] Find the maximum likelihood estimate for $\theta$.\par
     {\it Hint: do some plots, examining the values of $\theta$ for which $f(t_1,\ldots,t_n|\theta)>0$. It may help you first to think about the cases where $n=1$ and $n=2$.  Do {\bf not}  rush into differentiating anything!}
+    
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{STATS509/HW8/HW8Figures/problem7a_i.png}
+        \includegraphics[width=0.45\textwidth]{STATS509/HW8/HW8Figures/problem7a_ii.png}
+    \end{center}
+    \lstinputlisting[language=Python,linerange={0-3,16-41}]{STATS509/HW8/HW8Code/HW8_DinoBektesevic.py}
+    
+    In context of the provided motivation and right hand plot we can say that the MLE estimator for this problem will be the function:
+    $$\min{x_1,\hdots,x_n}$$ 
+    The motivation tells us that there is a minimum latency time of the system on top of which a random additional system delay time is added. The question is asking us to use this data to determine the minimum system latency. In a best case scenario, i.e. Sunday evening in a holiday season, when the system bottlenecks and queues are minimal it is conceivable that a message transmission time is equal to the system latency. But in principle we will always run into some additional time added to the system latency so in principle the closest we can get to the pure system latency is the minimal time we observe in our sample. 
+    
+    \newpage
     \item[(b)] Is there a ZES estimator for $\theta$ ? Briefly explain your answer.
+    
+    By definition:
+    \begin{align*}
+        Z &= \frac{\partial}{\partial \theta} l(\theta|t) \\
+        &= \frac{\partial}{\partial\theta} \left( \ln \prod_{i=1}^n e^{-(t_i-\theta)} \right) \\
+        &= \frac{\partial}{\partial\theta}  \ln  e^{-\sum_{i=1}^n(t_i-\theta)}  \\
+        &= \frac{\partial}{\partial\theta} \sum_{i=1}^n(\theta - t_i) \\
+        &= \frac{\partial}{\partial\theta} \left( n\theta - \sum_{i=1}^n(\theta - t_i) \right) \\
+        &= n \\
+        &\rightarrow E[Z] = E[n] = n \neq 0
+    \end{align*}
+    So it would be impossible to perform zero-expected score estimation because the estimator we want is not at a stationary point of the distribution.
+    
 \end{itemize}
 
 \medskip
-[{\bf Motivation:} (not necessary to answer the problem, but may help with intuition). For example,  the observations $T_1,\ldots , T_n$ might be the observed times taken for
-$n$ messages to be transmitted across a network. In this case, 
-$\theta$ represents the (non-random) minimum time for a message to be transmitted across the network if there were no delays; the additional random component of the time $(T-\theta)$ is due to bottlenecks and queues encountered by the message.]
+[{\bf Motivation:} (not necessary to answer the problem, but may help with intuition). For example,  the observations $T_1,\ldots , T_n$ might be the observed times taken for $n$ messages to be transmitted across a network. In this case, $\theta$ represents the (non-random) minimum time for a message to be transmitted across the network if there were no delays; the additional random component of the time $(T-\theta)$ is due to bottlenecks and queues encountered by the message.]
 \end{document}
